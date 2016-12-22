@@ -4,7 +4,7 @@
   <subtitle><![CDATA[越积极，越幸运]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://qsli.github.io/"/>
-  <updated>2016-12-22T16:47:30.453Z</updated>
+  <updated>2016-12-22T17:10:59.477Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -13,6 +13,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[idea文件模板]]></title>
+    <link href="http://qsli.github.io/2016/12/23/idea-template/"/>
+    <id>http://qsli.github.io/2016/12/23/idea-template/</id>
+    <published>2016-12-22T17:10:59.000Z</published>
+    <updated>2016-12-22T17:10:59.477Z</updated>
+    <content type="html"><![CDATA[<h1 id="版权信息">版权信息</h1><p>代码前面一般都会有相应的版权信息，拿guava的代码为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * Copyright (C) 2007 The Guava Authors</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> * http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.google.common.collect;</span><br></pre></td></tr></table></figure>
+<h2 id="idea自动生成版权信息">idea自动生成版权信息</h2><p><code>File</code> &gt; <code>Settings</code> &gt; <code>Copyright</code> &gt; <code>Copyright Profiles</code></p>
+<p>新建一个profile，填入如下的内容<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* * Copyright (c) <span class="variable">$today</span>.year xx.com. All Rights Reserved. */</span><br></pre></td></tr></table></figure></p>
+<p><code>$today.year</code>代表当前的年</p>
+<p><img src="profiles.jpg" alt=""></p>
+<p>新建java文件时就自动生成了版权信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> *  * Copyright (c) 2016 Qunar.com. All Rights Reserved. </span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.xxx.handler;</span><br></pre></td></tr></table></figure>
+<h1 id="作者、日期、邮箱等">作者、日期、邮箱等</h1><p><code>File</code> &gt; <code>Settings</code> &gt; <code>File and Ocde Templates</code> &gt; <code>Includes</code> &gt; <code>File Header</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#set( $email = "xx@xx.com")</span><br><span class="line">#set( $author = "xxx")</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @email $&#123;email&#125;</span><br><span class="line"> * @date $&#123;DATE&#125; $&#123;TIME&#125;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<p>这个使用的<code>velocity</code>渲染的，可以参考<code>velocity</code>的语法</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="版权信息">版权信息</h1><p>代码前面一般都会有相应的版权信息，拿guava的代码为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="li]]>
+    </summary>
+    
+      <category term="template" scheme="http://qsli.github.io/tags/template/"/>
+    
+      <category term="idea" scheme="http://qsli.github.io/categories/idea/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[tomcat中文编码设置]]></title>
@@ -203,7 +232,7 @@
     <link href="http://qsli.github.io/2016/12/18/python-util/"/>
     <id>http://qsli.github.io/2016/12/18/python-util/</id>
     <published>2016-12-18T03:57:35.000Z</published>
-    <updated>2016-12-18T03:57:35.231Z</updated>
+    <updated>2016-12-22T16:56:45.844Z</updated>
     <content type="html"><![CDATA[<h2 id="开启一个简单的HTTP_Server">开启一个简单的HTTP Server</h2><ul>
 <li>命令：</li>
 </ul>
@@ -251,7 +280,39 @@
 <blockquote>
 <p>python filter.py data.json<br>{“爱”: “我”, “中”: “华”}<br>cat data.json| python filter.py<br>{“爱”: “我”, “中”: “华”}</p>
 </blockquote>
-<h2 id="to_be_continued">to be continued</h2>]]></content>
+<h2 id="编码问题">编码问题</h2><p>python 2.x 默认使用的编码是ascii编码，中文总是出问题。</p>
+<p>遇到乱码问题，一般使用如下的步骤即可解决:</p>
+<ol>
+<li>python文件自身的编码</li>
+</ol>
+<blockquote>
+<pre><code>Python will <span class="keyword">default</span> <span class="keyword">to</span> ASCII <span class="keyword">as</span> standard <span class="keyword">encoding</span> <span class="keyword">if</span> no other
+<span class="keyword">encoding</span> hints are given.
+</code></pre></blockquote>
+<pre><code>To define <span class="operator">a</span> source code encoding, <span class="operator">a</span> magic comment must
+be placed <span class="keyword">into</span> <span class="operator">the</span> source <span class="built_in">files</span> either <span class="keyword">as</span> <span class="keyword">first</span> <span class="operator">or</span> <span class="keyword">second</span>
+<span class="built_in">line</span> <span class="operator">in</span> <span class="operator">the</span> <span class="built_in">file</span>, such <span class="keyword">as</span>:
+
+      <span class="comment"># coding=&lt;encoding name&gt;</span>
+
+<span class="operator">or</span> (<span class="keyword">using</span> formats recognized <span class="keyword">by</span> popular editors)
+
+      <span class="comment">#!/usr/bin/python</span>
+      <span class="comment"># -*- coding: &lt;encoding name&gt; -*-</span>
+</code></pre><p>在文件头加上默认编码即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ol>
+<li>重新设置系统模块的编码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用Unicode</li>
+</ol>
+<p><code>s = u&#39;中文&#39;</code> </p>
+<h2 id="to_be_continued">to be continued</h2><h1 id="参考">参考</h1><ol>
+<li><a href="https://www.python.org/dev/peps/pep-0263/" target="_blank" rel="external">Defining Python Source Code Encodings</a></li>
+</ol>
+]]></content>
     <summary type="html">
     <![CDATA[<h2 id="开启一个简单的HTTP_Server">开启一个简单的HTTP Server</h2><ul>
 <li>命令：</li>
@@ -1363,186 +1424,6 @@
     </summary>
     
       <category term="postgresql" scheme="http://qsli.github.io/tags/postgresql/"/>
-    
-      <category term="base" scheme="http://qsli.github.io/categories/base/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Unicode历史]]></title>
-    <link href="http://qsli.github.io/2016/09/26/character-encoding/"/>
-    <id>http://qsli.github.io/2016/09/26/character-encoding/</id>
-    <published>2016-09-26T08:56:08.000Z</published>
-    <updated>2016-12-18T05:21:42.639Z</updated>
-    <content type="html"><![CDATA[<h1 id="字符编码">字符编码</h1><blockquote>
-<p>字符编码（英语：Character encoding）、字集码是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。</p>
-</blockquote>
-<p>简单的说，就是计算机只认<code>0</code>和<code>1</code>，于是在数据取出来的时候根据一个类似字典的东西，按照一定的规则将比特信息转换成对应的字符信息，这样人们才可以理解到底存储了什么。</p>
-<h2 id="ASCII编码">ASCII编码</h2><p><code>ASCII</code>（American Standard Code for Information Interchange） 编码是基于拉丁字母的一套编码系统。</p>
-<p><code>ASCII</code>使用指定的<code>7</code> 位或<code>8</code> 位二进制数组合来表示<code>128</code> 或<code>256</code> 种可能的字符。</p>
-<blockquote>
-<p>ASCII的局限在于只能显示26个基本拉丁字母、阿拉伯数目字和英式标点符号，因此只能用于显示现代美国英语（而且在处理英语当中的外来词如naïve、café、élite等等时，所有重音符号都不得不去掉，即使这样做会违反拼写规则）。而EASCII虽然解决了部分西欧语言的显示问题，但对更多其他语言依然无能为力。因此现在的软件系统大多采用Unicode。</p>
-</blockquote>
-<p>后续有其扩展版本<code>EASCII</code>。这个扩展的版本虽然扩充了一些字符，增大了EASCII的表达能力，但是仍不能满足全球各个国家的需求。于是各个国家就自己搞了一套编码的规则，但是随着web的发展，越来越需要一套统一的编解码标准，于是Unicode应运而出。</p>
-<h2 id="Unicode编码">Unicode编码</h2><p><img src="Unicode_logo.jpg" alt=""></p>
-<blockquote>
-<p>Unicode provides a unique number for every character,</p>
-<p>no matter what the platform,</p>
-<p>no matter what the program,</p>
-<p>no matter what the language.</p>
-</blockquote>
-<p>定义：</p>
-<blockquote>
-<p>Unicode（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得电脑可以用更为简单的方式来呈现和处理文字。</p>
-<p>In Unicode, a character is dened as the smallest component of a written language that has semantic value.<br>The number assigned to a character is called a <strong>code point</strong>. A code point is denoted by U+ following by a<br>hexadecimal number from 4 to 8 digits long. Most of the code points in use are 4 digits long. For example,<br><code>U+03C6</code> is the code point for the Greek character f.</p>
-</blockquote>
-<p><img src="unicode-layout.jpg" alt=""></p>
-<blockquote>
-<p>在文字处理方面，统一码为每一个字符而非字形定义唯一的代码（即一个整数）。换句话说，统一码以一种抽象的方式（即数字）来处理字符，并将视觉上的演绎工作（例如字体大小、外观形状、字体形态、文体等）留给其他软件来处理，例如网页浏览器或是文字处理器。</p>
-</blockquote>
-<h3 id="Java中判断是否是中文字符">Java中判断是否是中文字符</h3><blockquote>
-<p>Java判断一个字符串是否有中文一般情况是利用Unicode编码(CJK统一汉字的编码区间：0x4e00–0x9fbb)的正则来做判断，但是其实这个区间来判断中文不是非常精确，因为有些中文的标点符号比如：，。等等是不能识别的。</p>
-</blockquote>
-<p>具体的参见参考中的<code>Java 完美判断中文字符</code></p>
-<h3 id="遗留的问题">遗留的问题</h3><blockquote>
-<p>需要注意的是，Unicode只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储。</p>
-</blockquote>
-<p>存储中存在的问题：</p>
-<ol>
-<li><p>如何区分Unicode和ASCII码？</p>
-</li>
-<li><p>如何存储能节省空间？</p>
-</li>
-</ol>
-<blockquote>
-<p>它们造成的结果是：</p>
-<p>1）出现了Unicode的多种存储方式，也就是说有许多种不同的二进制格式，可以用来表示Unicode。</p>
-<p>2）Unicode在很长一段时间内无法推广，直到互联网的出现。</p>
-</blockquote>
-<h3 id="CJK">CJK</h3><blockquote>
-<p>Q: What does the term “CJK” mean?</p>
-<p>A: It is a commonly used acronym for “Chinese, Japanese, and Korean”. The term “CJK character” generally refers to “Chinese characters”, or more specifically, the Chinese (= Han) ideographs used in the writing systems of the Chinese and Japanese languages, occasionally for Korean, and historically in Vietnam.</p>
-</blockquote>
-<h3 id="UTF-8编码">UTF-8编码</h3><blockquote>
-<p>互联网的普及，强烈要求出现一种统一的编码方式。<strong>UTF-8就是在互联网上使用最广的一种Unicode的实现方式。</strong>其他实现方式还包括UTF-16（字符用两个字节或四个字节表示）和UTF-32（字符用四个字节表示），不过在互联网上基本不用。重复一遍，这里的关系是，UTF-8是Unicode的实现方式之一。</p>
-</blockquote>
-<h4 id="8的含义">8的含义</h4><blockquote>
-<p>unicode在很长一段时间内无法推广，直到互联网的出现，为解决unicode如何在网络上传输的问题，于是面向传输的众多 <strong>UTF（UCS Transfer Format）标准出现了，顾名思义，UTF-8就是每次8个位传输数据，而UTF-16就是每次16个位。</strong>UTF-8就是在互联网上使用最广的一种unicode的实现方式，这是为传输而设计的编码，并使编码无国界，这样就可以显示全世界上所有文化的字符了。</p>
-</blockquote>
-<h4 id="UTF-8和Unicode">UTF-8和Unicode</h4><blockquote>
-<p>UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度，当字符在ASCII 码的范围时，就用一个字节表示，保留了ASCII字符一个字节的编码做为它的一部分，注意的是unicode一个中文字符占2个字节，而UTF-8一个中 文字符占3个字节）。从unicode到uft-8并不是直接的对应，而是要过一些算法和规则来转换。</p>
-</blockquote>
-<h3 id="编码方式">编码方式</h3><blockquote>
-<p>UTF-8的编码规则很简单，只有二条：</p>
-<p>1）对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</p>
-<p>2）对于n字节的符号（n&gt;1），<strong>第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10</strong>。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
-</blockquote>
-<p>所以如果第一个字节是<code>0</code>开头的，那么就是兼容ASCII码的单字节字符；如果第一个字节是<code>1</code>开头的就是多字节字符，数一数前面有多少个<code>1</code>，就知道这个字符占了几个字节。</p>
-<p>所以UTF-8编码后的二进制形式应该如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>xxxxxxx <span class="number">1</span>个byte</span><br><span class="line"></span><br><span class="line"><span class="number">110</span>xxxxx <span class="number">10</span>xxxxxx <span class="number">2</span>个byte</span><br><span class="line"></span><br><span class="line"><span class="number">1110</span>xxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">3</span>个byte</span><br><span class="line"></span><br><span class="line"><span class="number">11110</span>xxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">4</span>个byte</span><br><span class="line"></span><br><span class="line"><span class="number">111110</span>xx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">5</span>个byte</span><br><span class="line"></span><br><span class="line"><span class="number">111110</span>x <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">6</span>个byte</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>The bytes <code>0xFE(11111110)</code> and <code>0xFF(11111111)</code> are never used in the UTF-8 encoding.</p>
-</blockquote>
-<p>这两个特殊的字节被用来标示是大端编码和小端编码</p>
-<p>UTF-8编码的范围和Unicode对应的关系如下：</p>
-<table>
-<thead>
-<tr>
-<th>总比特数</th>
-<th>Code Point占的位数</th>
-<th>范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>7</td>
-<td>00000000 - 0000007F</td>
-</tr>
-<tr>
-<td>2</td>
-<td>11</td>
-<td>00000080 - 000007FF</td>
-</tr>
-<tr>
-<td>3</td>
-<td>16</td>
-<td>00000800 - 0000FFFF</td>
-</tr>
-<tr>
-<td>4</td>
-<td>21</td>
-<td>00001000 - 001FFFFF</td>
-</tr>
-<tr>
-<td>5</td>
-<td>26</td>
-<td>00200000 - 03FFFFFF</td>
-</tr>
-<tr>
-<td>6</td>
-<td>31</td>
-<td>04000000 - FFFFFFFF</td>
-</tr>
-</tbody>
-</table>
-<p>编码示例：</p>
-<p><code>U+05E7</code> 使用<code>UTF-8</code>编码示例:</p>
-<ol>
-<li><p>查上表得知， <code>05E7</code>在 <code>0080 - 07FF</code> 范围内，总共占2个字节<br>应该是类似 <code>110xxxxx 10xxxxxx</code></p>
-</li>
-<li><p>将其写成二进制形式，<code>0000 0101 1110 0111</code></p>
-</li>
-<li><p>将数据替换上述的<code>x</code>，得到 <code>11010111 10100111 = 0xD7A7</code></p>
-</li>
-</ol>
-<h4 id="字节序">字节序</h4><p>UTF-8最多使用6个byte表示一个字符，于是就存在一个字节序的问题。<br>字节序分为两种：</p>
-<ol>
-<li><strong>Little-Endian</strong>:<br>字节序低位在前  小尾 在操作系统上很常用，也是计算机系统上最常用的字节序</li>
-<li><strong>Big-Endian</strong>: 字节序高位在前 大尾  也称为网络字节序</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span>进制数字<span class="number">0x12345678</span>，little-endian的存储为:  <span class="number">0x78</span> <span class="number">0x56</span> <span class="number">0x34</span> <span class="number">0x12</span>     地址依次为<span class="number">100</span>, <span class="number">101</span>, <span class="number">102</span>, <span class="number">103</span></span><br><span class="line"></span><br><span class="line"><span class="number">16</span>进制数字<span class="number">0x12345678</span>，big-endian的存储为:     <span class="number">0x12</span> <span class="number">0x34</span> <span class="number">0x56</span> <span class="number">0x78</span>       地址依次为<span class="number">100</span>, <span class="number">101</span>, <span class="number">102</span>, <span class="number">103</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>“endian”这个词出自《格列佛游记》。小人国的内战就源于吃鸡蛋时是究竟从大头(Big-Endian)敲开还是从小头(Little-Endian)敲开，由此曾发生过六次叛乱，其中一个皇帝送了命，另一个丢了王位。</p>
-</blockquote>
-<h4 id="字节序用途">字节序用途</h4><blockquote>
-<p>Little-Endian最常用，大部分用户的操作系统（如windows, FreeBsd,Linux）是Little Endian的。</p>
-<p>Big-Endian最常用在网络协议上，例如TCP/IP协议使用的是big endian. 操作系统上如MAC OS ,是Big Endian 的。<br>本质上说，Little Endian还是Big Endian与操作系统和芯片类型都有关系。PowerPC系列采用big endian方式存储数据，x86系列则采用little endian方式存储数据。</p>
-</blockquote>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Big Endian</span><br><span class="line">   低地址                                           高地址</span><br><span class="line">   -----------------------------------------&gt;</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line">   |<span class="string">     12     </span>|<span class="string">      34    </span>|<span class="string">     56      </span>|<span class="string">     78    </span>|</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line"></span><br><span class="line">Little Endian</span><br><span class="line">   低地址                                           高地址</span><br><span class="line">   -----------------------------------------&gt;</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line">   |<span class="string">     78     </span>|<span class="string">      56    </span>|<span class="string">     34      </span>|<span class="string">     12    </span>|</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Unicode规范中定义，每一个文件的最前面分别加入一个表示编码顺序的字符，这个字符的名字叫做”零宽度非换行空格”（ZERO WIDTH NO-BREAK SPACE），用FEFF表示。这正好是两个字节，而且FF比FE大1。<br>如果一个文本文件的头两个字节是FE FF，就表示该文件采用大头方式；如果头两个字节是FF FE，就表示该文件采用小头方式。</p>
-</blockquote>
-<h2 id="emoji">emoji</h2><p><img src="emoji.jpg" alt=""></p>
-<p>emoji表情采用的是 Unicode编码，Emoji就是一种在Unicode位于<code>\u1F601-\u1F64F</code>区段的字符。这个显然超过了目前常用的UTF-8字符集的编码范围<code>\u0000-\uFFFF</code>。</p>
-<p>使用utf8mb4编码便可以解决上述的问题</p>
-<h2 id="宽字符">宽字符</h2><p>宽字符（Wide character） 是程序设计的术语。它是一个抽象的术语（没有规定具体实现细节），用以表示比8位字符还宽的数据类型。它不同于Unicode。</p>
-<p>wchar_t在ANSI/ISO C中是一个数据类型，且某些其它的编程语言也用它来表示宽字符。</p>
-<h2 id="参考文章">参考文章</h2><ol>
-<li><p><a href="https://zh.wikipedia.org/wiki/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81" target="_blank" rel="external">字符编码</a></p>
-</li>
-<li><p><a href="https://github.com/acmerfight/insight_python/blob/master/Unicode_and_Character_Sets.md" target="_blank" rel="external">Unicode_and_Character_Sets.md</a></p>
-</li>
-<li><p><a href="http://www.compsci.hunter.cuny.edu/~sweiss/resources/Unicode.pdf" target="_blank" rel="external">Unicode and UTF-8</a></p>
-</li>
-<li><p><a href="http://www.micmiu.com/lang/java/java-check-chinese/" target="_blank" rel="external">Java 完美判断中文字符</a></p>
-</li>
-<li><p><a href="http://unicode.org/emoji/charts/full-emoji-list.html" target="_blank" rel="external">Full Emoji Data, v3.0</a></p>
-</li>
-<li><p><a href="http://www.tuicool.com/articles/aQBVny" target="_blank" rel="external">微信emoji表情编码</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/sunshine1314/article/details/2309655" target="_blank" rel="external">关于Big Endian 和 Little Endian</a></p>
-</li>
-<li><p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">字符编码笔记：ASCII，Unicode和UTF-8</a></p>
-</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h1 id="字符编码">字符编码</h1><blockquote>
-<p>字符编码（英语：Character encoding）、字集码是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。</]]>
-    </summary>
-    
-      <category term="编码" scheme="http://qsli.github.io/tags/%E7%BC%96%E7%A0%81/"/>
     
       <category term="base" scheme="http://qsli.github.io/categories/base/"/>
     

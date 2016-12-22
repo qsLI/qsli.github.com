@@ -4,44 +4,27 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ssh免密码登录设置 | KL&#39;s blog</title>
+    <title>idea文件模板 | KL&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kevin Leo">
     
 
     
-    <meta name="description" content="应用场景  现有A和B两台机器，我们要实现A在ssh登录到B的时候不用输入密码，B-&amp;gt;A的过程类似
-具体过程
-在A机器上，生成 ssh 公钥密钥对
-1$ ssh-keygen -t rsa
-
-生成的文件存在 ~/.ssh/目录下，windows存在C\Users\your_name.ssh\ 目录下id_rsa是私钥，id_rsa.pub是公钥
-
-将A中生成的公钥加入到B机器的 author">
+    <meta name="description" content="版权信息代码前面一般都会有相应的版权信息，拿guava的代码为例
+1234567891011121314151617/* * Copyright (C) 2007 The Guava Authors * * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); * you may not use this file exce">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssh免密码登录设置">
-<meta property="og:url" content="http://qsli.github.io/2015/10/08/ssh-passwd-free/index.html">
+<meta property="og:title" content="idea文件模板">
+<meta property="og:url" content="http://qsli.github.io/2016/12/23/idea-template/index.html">
 <meta property="og:site_name" content="KL's blog">
-<meta property="og:description" content="应用场景  现有A和B两台机器，我们要实现A在ssh登录到B的时候不用输入密码，B-&amp;gt;A的过程类似
-具体过程
-在A机器上，生成 ssh 公钥密钥对
-1$ ssh-keygen -t rsa
-
-生成的文件存在 ~/.ssh/目录下，windows存在C\Users\your_name.ssh\ 目录下id_rsa是私钥，id_rsa.pub是公钥
-
-将A中生成的公钥加入到B机器的 author">
-<meta property="og:updated_time" content="2016-12-18T05:08:16.377Z">
+<meta property="og:description" content="版权信息代码前面一般都会有相应的版权信息，拿guava的代码为例
+1234567891011121314151617/* * Copyright (C) 2007 The Guava Authors * * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); * you may not use this file exce">
+<meta property="og:image" content="http://qsli.github.io/profiles.jpg">
+<meta property="og:updated_time" content="2016-12-22T17:10:59.477Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ssh免密码登录设置">
-<meta name="twitter:description" content="应用场景  现有A和B两台机器，我们要实现A在ssh登录到B的时候不用输入密码，B-&amp;gt;A的过程类似
-具体过程
-在A机器上，生成 ssh 公钥密钥对
-1$ ssh-keygen -t rsa
-
-生成的文件存在 ~/.ssh/目录下，windows存在C\Users\your_name.ssh\ 目录下id_rsa是私钥，id_rsa.pub是公钥
-
-将A中生成的公钥加入到B机器的 author">
+<meta name="twitter:title" content="idea文件模板">
+<meta name="twitter:description" content="版权信息代码前面一般都会有相应的版权信息，拿guava的代码为例
+1234567891011121314151617/* * Copyright (C) 2007 The Guava Authors * * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); * you may not use this file exce">
 
     
     <link rel="alternative" href="/atom.xml" title="KL&#39;s blog" type="application/atom+xml">
@@ -97,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/08/ssh-passwd-free/" title="ssh免密码登录设置" itemprop="url">ssh免密码登录设置</a>
+      <a href="/2016/12/23/idea-template/" title="idea文件模板" itemprop="url">idea文件模板</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kevin Leo" target="_blank" itemprop="author">Kevin Leo</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-08T08:00:08.000Z" itemprop="datePublished"> 发表于 2015-10-08</time>
+    <time datetime="2016-12-22T17:10:59.000Z" itemprop="datePublished"> 发表于 2016-12-23</time>
   </p>
   <p class="article-views">
     <span id="busuanzi_value_page_pv"></span>
@@ -116,25 +99,21 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#应用场景"><span class="toc-number">1.</span> <span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体过程"><span class="toc-number">2.</span> <span class="toc-text">具体过程</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#版权信息"><span class="toc-number">1.</span> <span class="toc-text">版权信息</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#idea自动生成版权信息"><span class="toc-number">1.1.</span> <span class="toc-text">idea自动生成版权信息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#作者、日期、邮箱等"><span class="toc-number">2.</span> <span class="toc-text">作者、日期、邮箱等</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="应用场景">应用场景</h2><p>  现有A和B两台机器，我们要实现A在ssh登录到B的时候不用输入密码，B-&gt;A的过程类似</p>
-<h2 id="具体过程">具体过程</h2><ol>
-<li><p>在<strong>A机器</strong>上，生成 ssh 公钥密钥对</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成的文件存在 ~/.ssh/目录下，windows存在C\Users\your_name.ssh\ 目录下<br>id_rsa是私钥，id_rsa.pub是公钥</p>
-</li>
-<li><p>将A中生成的公钥加入到<strong>B机器</strong>的 authorized_keys 这个文件中，默认目录linux下是~/.ssh/ ，没有的话可以自己新建<br>拷贝的过程可以使用以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i 公钥文件路径 -p ssh端口  user@server</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>ssh-copy-id  -  install  your  public  key in a remote machine’s autho‐rized_keys.<br>If the  -i  option  is  given  then  the  identity  file  (defaults  to ~/.ssh/id_rsa.pub) is used,<br>regardless of whether there are any keys in your ssh-agent.</p>
-</blockquote>
-</li>
-</ol>
-<p>此时A机器 ssh 登录B机器是不需要密码的</p>
+		<h1 id="版权信息">版权信息</h1><p>代码前面一般都会有相应的版权信息，拿guava的代码为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * Copyright (C) 2007 The Guava Authors</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> * http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.google.common.collect;</span><br></pre></td></tr></table></figure>
+<h2 id="idea自动生成版权信息">idea自动生成版权信息</h2><p><code>File</code> &gt; <code>Settings</code> &gt; <code>Copyright</code> &gt; <code>Copyright Profiles</code></p>
+<p>新建一个profile，填入如下的内容<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* * Copyright (c) <span class="variable">$today</span>.year xx.com. All Rights Reserved. */</span><br></pre></td></tr></table></figure></p>
+<p><code>$today.year</code>代表当前的年</p>
+<p><img src="profiles.jpg" alt=""></p>
+<p>新建java文件时就自动生成了版权信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> *  * Copyright (c) 2016 Qunar.com. All Rights Reserved. </span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.xxx.handler;</span><br></pre></td></tr></table></figure>
+<h1 id="作者、日期、邮箱等">作者、日期、邮箱等</h1><p><code>File</code> &gt; <code>Settings</code> &gt; <code>File and Ocde Templates</code> &gt; <code>Includes</code> &gt; <code>File Header</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#set( $email = "xx@xx.com")</span><br><span class="line">#set( $author = "xxx")</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author $&#123;author&#125;</span><br><span class="line"> * @email $&#123;email&#125;</span><br><span class="line"> * @date $&#123;DATE&#125; $&#123;TIME&#125;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<p>这个使用的<code>velocity</code>渲染的，可以参考<code>velocity</code>的语法</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -142,13 +121,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/linux/">linux</a>
+  <a class="article-category-link" href="/categories/idea/">idea</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/ssh/">ssh</a>
+  <span></span> <a href="/tags/template/">template</a>
   </div>
 
 </div>
@@ -157,7 +136,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://qsli.github.io/2015/10/08/ssh-passwd-free/" data-title="ssh免密码登录设置 | KL&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://qsli.github.io/2016/12/23/idea-template/" data-title="idea文件模板 | KL&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -170,19 +149,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/10/09/shadowsocks/" title="linux 下使用 shadowsocks">
-  <strong>上一篇：</strong><br/>
-  <span>
-  linux 下使用 shadowsocks</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/10/08/hello-world/"  title="Hexo搭建博客">
+<a href="/2016/12/23/tomcat-encoding/"  title="tomcat中文编码设置">
  <strong>下一篇：</strong><br/> 
- <span>Hexo搭建博客
+ <span>tomcat中文编码设置
 </span>
 </a>
 </div>
@@ -191,7 +162,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/08/ssh-passwd-free/" data-title="ssh免密码登录设置" data-url="http://qsli.github.io/2015/10/08/ssh-passwd-free/"></div>
+	<div class="ds-thread" data-thread-key="2016/12/23/idea-template/" data-title="idea文件模板" data-url="http://qsli.github.io/2016/12/23/idea-template/"></div>
 </section>
 
 
