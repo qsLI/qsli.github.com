@@ -1,0 +1,692 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>正则总结 | KL&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kevin Leo">
+    
+
+    
+    <meta name="description" content="测试推荐使用RegexBudy
+
+界面如下:
+
+推荐python的 VerbalExpressions PythonVerbalExpressions 
+使用心得匹配多个单词\b可以匹配一个单词的开头或者结尾
+匹配单个单词： \bfoo\b 可以匹配单个单测 foo
+匹配多个单词： \b(foo|bar)\b 可以匹配foo 或者 bar
+匹配开头和结尾^可以匹配字符串的开头
+$可以匹配字符串的结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则总结">
+<meta property="og:url" content="http://qsli.github.io/2016/12/14/re/index.html">
+<meta property="og:site_name" content="KL's blog">
+<meta property="og:description" content="测试推荐使用RegexBudy
+
+界面如下:
+
+推荐python的 VerbalExpressions PythonVerbalExpressions 
+使用心得匹配多个单词\b可以匹配一个单词的开头或者结尾
+匹配单个单词： \bfoo\b 可以匹配单个单测 foo
+匹配多个单词： \b(foo|bar)\b 可以匹配foo 或者 bar
+匹配开头和结尾^可以匹配字符串的开头
+$可以匹配字符串的结">
+<meta property="og:image" content="https://www.regexbuddy.com/img/icon.png">
+<meta property="og:image" content="https://www.regexbuddy.com/screens/regexbuddy.png">
+<meta property="og:updated_time" content="2016-12-14T15:48:12.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则总结">
+<meta name="twitter:description" content="测试推荐使用RegexBudy
+
+界面如下:
+
+推荐python的 VerbalExpressions PythonVerbalExpressions 
+使用心得匹配多个单词\b可以匹配一个单词的开头或者结尾
+匹配单个单词： \bfoo\b 可以匹配单个单测 foo
+匹配多个单词： \b(foo|bar)\b 可以匹配foo 或者 bar
+匹配开头和结尾^可以匹配字符串的开头
+$可以匹配字符串的结">
+
+    
+    <link rel="alternative" href="/atom.xml" title="KL&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="KL&#39;s blog">KL&#39;s blog</a></h1>
+				<h2 class="blog-motto">越积极，越幸运</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:qsli.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/14/re/" title="正则总结" itemprop="url">正则总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kevin Leo" target="_blank" itemprop="author">Kevin Leo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-14T15:48:12.000Z" itemprop="datePublished"> 发表于 2016-12-14</time>
+  </p>
+  <p class="article-views">
+    <span id="busuanzi_value_page_pv"></span>
+  </p>
+</header>
+
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#测试"><span class="toc-number">1.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用心得"><span class="toc-number">2.</span> <span class="toc-text">使用心得</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配多个单词"><span class="toc-number">2.1.</span> <span class="toc-text">匹配多个单词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配开头和结尾"><span class="toc-number">2.2.</span> <span class="toc-text">匹配开头和结尾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#零宽断言"><span class="toc-number">2.3.</span> <span class="toc-text">零宽断言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#先行断言"><span class="toc-number">2.3.1.</span> <span class="toc-text">先行断言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后发断言"><span class="toc-number">2.3.2.</span> <span class="toc-text">后发断言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负向零宽断言"><span class="toc-number">2.3.3.</span> <span class="toc-text">负向零宽断言</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="测试">测试</h1><p>推荐使用<code>RegexBudy</code></p>
+<p><img src="https://www.regexbuddy.com/img/icon.png" alt="RegexBuddy"></p>
+<p>界面如下:</p>
+<p><img src="https://www.regexbuddy.com/screens/regexbuddy.png" alt="regexbuddy"></p>
+<p>推荐python的 <code>VerbalExpressions</code> <a href="https://github.com/VerbalExpressions/PythonVerbalExpressions" target="_blank" rel="external">PythonVerbalExpressions </a></p>
+<h1 id="使用心得">使用心得</h1><h2 id="匹配多个单词">匹配多个单词</h2><p><code>\b</code>可以匹配一个单词的开头或者结尾</p>
+<p>匹配单个单词： <code>\bfoo\b</code> 可以匹配单个单测 foo</p>
+<p>匹配多个单词： <code>\b(foo|bar)\b</code> 可以匹配foo 或者 bar</p>
+<h2 id="匹配开头和结尾">匹配开头和结尾</h2><p><code>^</code>可以匹配字符串的开头</p>
+<p><code>$</code>可以匹配字符串的结尾</p>
+<h2 id="零宽断言">零宽断言</h2><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>代码/语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>捕获</td>
+<td>(exp)</td>
+<td>匹配exp,并捕获文本到自动命名的组里</td>
+</tr>
+<tr>
+<td></td>
+<td>(?<name>exp)</name></td>
+<td>匹配exp,并捕获文本到名称为name的组里，也可以写成(?’name’exp)</td>
+</tr>
+<tr>
+<td></td>
+<td>(?:exp)</td>
+<td>匹配exp,不捕获匹配的文本，也不给此分组分配组号</td>
+</tr>
+<tr>
+<td>零宽断言</td>
+<td>(?=exp) 匹配exp前面的位置</td>
+</tr>
+<tr>
+<td></td>
+<td>(?&lt;=exp)</td>
+<td>匹配exp后面的位置</td>
+</tr>
+<tr>
+<td></td>
+<td>(?!exp)</td>
+<td>匹配后面跟的不是exp的位置</td>
+</tr>
+<tr>
+<td></td>
+<td>(?&lt;!exp)</td>
+<td>匹配前面不是exp的位置</td>
+</tr>
+<tr>
+<td>注释  (?#comment)</td>
+<td>这种类型的分组不对正则表达式的处理产生任何影响，用于提供注释让人阅读</td>
+</tr>
+</tbody>
+</table>
+<h3 id="先行断言">先行断言</h3><p>语法格式</p>
+<p><code>[a-z]*(?=ing)</code></p>
+<p>可匹配 cooking singing 中的cook 与 sing</p>
+<h3 id="后发断言">后发断言</h3><p>语法格式</p>
+<p><code>(?&lt;=abc)[a-z]*</code></p>
+<p>可匹配 abcdefg 中的defg</p>
+<h3 id="负向零宽断言">负向零宽断言</h3><p>语法格式</p>
+<p><code>(?!exp)</code></p>
+<p>断言此位置的后面不能匹配表达式<code>exp</code></p>
+<p><code>\b\w*q(?!u)\w*\b</code> 匹配q后面不出现u（可以以q结尾）</p>
+<h1 id="参考">参考</h1><ol>
+<li><p><a href="https://www.regexbuddy.com/" target="_blank" rel="external">RegexBuddy官网</a></p>
+</li>
+<li><p><a href="https://luke0922.gitbooks.io/learnregularexpressionin30minutes/content/" target="_blank" rel="external">正则表达式30分钟入门教程</a></p>
+</li>
+<li><p><a href="http://www.biliyu.com/article/1321.html" target="_blank" rel="external">正则表达式怎样匹配多个单词</a></p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/base/">base</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/re/">re</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://qsli.github.io/2016/12/14/re/" data-title="正则总结 | KL&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/12/17/spi/" title="Java SPI 总结">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Java SPI 总结</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/13/atnode/"  title="atnode——在集群上批量执行命令">
+ <strong>下一篇：</strong><br/> 
+ <span>atnode——在集群上批量执行命令
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/12/14/re/" data-title="正则总结" data-url="http://qsli.github.io/2016/12/14/re/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="qsLI" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/base/" title="base">base<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/fe/" title="fe">fe<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/idea/" title="idea">idea<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python-linux/" title="python linux">python linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/spring/" title="spring">spring<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/tomcat/" title="tomcat">tomcat<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/web/" title="web">web<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/spring-mvc/" title="spring mvc">spring mvc<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/编码/" title="编码">编码<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spi/" title="spi">spi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/re/" title="re">re<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python-util/" title="python-util">python-util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/placeholder/" title="placeholder">placeholder<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/postgresql/" title="postgresql">postgresql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/uml/" title="uml">uml<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ssh/" title="ssh">ssh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/netcat/" title="netcat">netcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/access-log/" title="access-log">access-log<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Javadoc/" title="Javadoc">Javadoc<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/访问权限/" title="访问权限">访问权限<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/exception/" title="exception">exception<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jackson/" title="jackson">jackson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://chenyuzuoo.github.io/" target="_blank" title="Chenyu&#39;s Script">Chenyu&#39;s Script</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+    <ul>
+        <li>
+            <span id="busuanzi_container_site_pv">
+          本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+            </span>
+        </li>
+        <li>
+            <span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>人次
+            </span>
+        </li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Kevin Leo">Kevin Leo</a>
+						
+		</p>		
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dr0p"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b86170f998d4ba7d7e834894b1f02595";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

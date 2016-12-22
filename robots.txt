@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /fancybox/
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /about/
+Sitemap: http://qsli.github.io/sitemap.xml

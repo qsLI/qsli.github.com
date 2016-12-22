@@ -1,0 +1,695 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>机器学习框架调研 | KL&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kevin Leo">
+    
+
+    
+    <meta name="description" content="机器学习框架调研DMTK 
+项目地址：https://github.com/Microsoft/DMTK文档地址:http://www.dmtk.io/document.html语言: CPP项目简介: Microsoft Distributed Machine Learning Tookit
+
+DMTK分布式机器学习框架：
+
+它由参数服务器和客户端软件开发包（SDK）两部分构成。参数服务器在原有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习框架调研">
+<meta property="og:url" content="http://qsli.github.io/2015/11/03/machine_learning/index.html">
+<meta property="og:site_name" content="KL's blog">
+<meta property="og:description" content="机器学习框架调研DMTK 
+项目地址：https://github.com/Microsoft/DMTK文档地址:http://www.dmtk.io/document.html语言: CPP项目简介: Microsoft Distributed Machine Learning Tookit
+
+DMTK分布式机器学习框架：
+
+它由参数服务器和客户端软件开发包（SDK）两部分构成。参数服务器在原有">
+<meta property="og:image" content="http://www.dmtk.io/img/pic1_V7.jpg">
+<meta property="og:image" content="http://www.msra.cn/zh-cn/research/release/images/dmtk-2.png">
+<meta property="og:image" content="http://tensorflow.org/images/tensors_flowing.gif">
+<meta property="og:image" content="http://torch.ch/static/flow-hero-logo.png">
+<meta property="og:image" content="http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png">
+<meta property="og:image" content="http://deeplearning4j.org/img/schematic_overview.png">
+<meta property="og:image" content="http://d.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=520e49ddb51bb0519b29bb7a5713b1d1/5882b2b7d0a20cf4cad4bb2070094b36adaf998d.jpg">
+<meta property="og:image" content="http://img.ptcms.csdn.net/article/201507/08/559cebc9330f2_middle.jpg">
+<meta property="og:updated_time" content="2016-09-23T15:48:44.835Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习框架调研">
+<meta name="twitter:description" content="机器学习框架调研DMTK 
+项目地址：https://github.com/Microsoft/DMTK文档地址:http://www.dmtk.io/document.html语言: CPP项目简介: Microsoft Distributed Machine Learning Tookit
+
+DMTK分布式机器学习框架：
+
+它由参数服务器和客户端软件开发包（SDK）两部分构成。参数服务器在原有">
+
+    
+    <link rel="alternative" href="/atom.xml" title="KL&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="KL&#39;s blog">KL&#39;s blog</a></h1>
+				<h2 class="blog-motto">越积极，越幸运</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:qsli.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/03/machine_learning/" title="机器学习框架调研" itemprop="url">机器学习框架调研</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kevin Leo" target="_blank" itemprop="author">Kevin Leo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-03T15:55:34.000Z" itemprop="datePublished"> 发表于 2015-11-03</time>
+  </p>
+  <p class="article-views">
+    <span id="busuanzi_value_page_pv"></span>
+  </p>
+</header>
+
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习框架调研"><span class="toc-number">1.</span> <span class="toc-text">机器学习框架调研</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DMTK"><span class="toc-number">1.1.</span> <span class="toc-text">DMTK</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">1.1.1.</span> <span class="toc-text">Reference</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TensorFlow"><span class="toc-number">1.2.</span> <span class="toc-text">TensorFlow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接"><span class="toc-number">1.2.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Torch"><span class="toc-number">1.3.</span> <span class="toc-text">Torch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GraphLab"><span class="toc-number">1.4.</span> <span class="toc-text">GraphLab</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deeplearning4j"><span class="toc-number">1.5.</span> <span class="toc-text">Deeplearning4j</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe"><span class="toc-number">1.6.</span> <span class="toc-text">Caffe</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接-4"><span class="toc-number">1.6.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theano"><span class="toc-number">1.7.</span> <span class="toc-text">Theano</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pylearn2"><span class="toc-number">1.8.</span> <span class="toc-text">Pylearn2</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="机器学习框架调研">机器学习框架调研</h1><h2 id="DMTK">DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
+<p>项目地址：<a href="https://github.com/Microsoft/DMTK" target="_blank" rel="external">https://github.com/Microsoft/DMTK</a><br>文档地址:<a href="http://www.dmtk.io/document.html" target="_blank" rel="external">http://www.dmtk.io/document.html</a><br>语言: CPP<br>项目简介:<br> Microsoft Distributed Machine Learning Tookit</p>
+<ul>
+<li><p>DMTK分布式机器学习框架：</p>
+<blockquote>
+<p>它由参数服务器和客户端软件开发包（SDK）两部分构成。参数服务器在原有基础上从性能和功能上都得到了进一步提升——支持存储混合数据结构模型、接受并聚合工作节点服务器的数据模型更新、控制模型同步逻辑等。客户端软件开发包（SDK）支持维护节点模型缓存（与全局模型服务器同步）、节点模型训练和模型通讯的流水线控制、以及片状调度大模型训练等。</p>
+</blockquote>
+</li>
+<li><p>LightLDA：</p>
+<blockquote>
+<p>LightLDA是一种全新的用于训练主题模型，计算复杂度与主题数目无关的高效算法。在其分布式实现中，我们做了大量的系统优化使得LightLDA能够在一个普通计算机集群上处理超大规模的数据和模型。例如，在一个由8台计算机组成的集群上，我们可以在具有2千亿训练样本（token）的数据集上训练具有1百万词汇表和1百万个话题（topic）的LDA模型（约1万亿个参数），这种规模的实验以往要在数千台计算机的集群上才能运行。</p>
+</blockquote>
+</li>
+<li><p>分布式词向量：</p>
+<blockquote>
+<p>词向量技术近来被普遍地应用于计算词汇的语义表示，它可以用作很多自然语言处理任务的词特征。我们为两种计算词向量的算法提供了高效的分步式实现：</p>
+<pre><code><span class="number">1.</span> 一种是标准的word2vec算法
+<span class="number">2.</span> 另一种是可以对多义词计算多个词向量的新算法。
+</code></pre></blockquote>
+</li>
+</ul>
+<p><img src="http://www.msra.cn/zh-cn/research/release/images/dmtk-2.png" width="500" height="200" alt="图片名称" align="center"></p>
+<h3 id="Reference">Reference</h3><blockquote>
+<p>[1] Tian, F., Dai, H., Bian, J., Gao, B., Zhang, R., Chen, E., &amp; Liu, T. Y. (2014). <a href="http://www.aclweb.org/anthology/C14-1016" target="_blank" rel="external">A probabilistic model for learning multi-prototype word embeddings</a>. In Proceedings of COLING (pp. 151-160).</p>
+</blockquote>
+<h2 id="TensorFlow">TensorFlow</h2><p><img src="http://tensorflow.org/images/tensors_flowing.gif" alt=""><br>文档地址: <a href="http://tensorflow.org/get_started/index.html" target="_blank" rel="external">http://tensorflow.org/get_started/index.html</a><br>项目地址： <a href="http://tensorflow.org/" target="_blank" rel="external">http://tensorflow.org/</a><br>语言: Python<br>简介：</p>
+<blockquote>
+<ol>
+<li><p>TensorFlow是谷歌研发的第二代人工智能学习系统，而第一代的DistBelief比这个要早好多年。</p>
+</li>
+<li><p>TensorFlow支持CNN、RNN和LSTM算法，这都是目前在Image，Speech和NLP最流行的深度神经网络模型。</p>
+</li>
+<li><p>此外，TensorFlow一大亮点是支持异构设备分布式计算，它能够在各个平台上自动运行模型，从电话、单个CPU / GPU到成百上千GPU卡组成的分布式系统。也就是说，任何基于梯度的机器学习算法都能够受益于TensorFlow的自动分化（auto-differentiation）。</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="参考链接">参考链接</h3><p><a href="http://news.zol.com.cn/551/5513527.html" target="_blank" rel="external">http://news.zol.com.cn/551/5513527.html</a><br><a href="http://www.leiphone.com/news/201511/Voza1pFNQB4bzKdR.html" target="_blank" rel="external">http://www.leiphone.com/news/201511/Voza1pFNQB4bzKdR.html</a></p>
+<h2 id="Torch">Torch</h2><p><img src="http://torch.ch/static/flow-hero-logo.png" alt=""><br>项目地址: <a href="https://github.com/torch/torch7" target="_blank" rel="external">https://github.com/torch/torch7</a><br>项目博客: <a href="http://torch.ch/blog/" target="_blank" rel="external">http://torch.ch/blog/</a><br>Slides: <a href="https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf" target="_blank" rel="external">https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf</a><br>语言: Lua<br>项目简介:</p>
+<blockquote>
+<p>Torch并没有跟随Python的潮流，它是基于Lua的。对于解释器没有必要像Matlab或者Python那样，Lua会给你神奇的控制台。Torch被Facebook人工智能研究实验室和位于伦敦的谷歌DeepMind大量使用。</p>
+<p>Torch is a scientific computing framework with wide support for machine learning algorithms. It is &gt; &gt; easy to use and efficient, thanks to an easy and fast scripting language, LuaJIT, and an underlying &gt; C/CUDA implementation.</p>
+<p>A summary of core features:</p>
+<ul>
+<li>a powerful N-dimensional array</li>
+<li>lots of routines for indexing, slicing, transposing, …</li>
+<li>amazing interface to C, via LuaJIT</li>
+<li>linear algebra routines</li>
+<li>neural network, and energy-based models</li>
+<li>numeric optimization routines</li>
+<li>Fast and efficient GPU support</li>
+<li>Embeddable, with ports to iOS, Android and FPGA backends</li>
+</ul>
+</blockquote>
+<h3 id="参考链接-1">参考链接</h3><p><a href="http://www.chinacloud.cn/show.aspx?id=21212&amp;cid=17" target="_blank" rel="external">2015深度学习回顾：ConvNet、Caffe、Torch及其他</a></p>
+<h2 id="GraphLab">GraphLab</h2><p>项目简介： <a href="http://www.select.cs.cmu.edu/code/graphlab/" target="_blank" rel="external">http://www.select.cs.cmu.edu/code/graphlab/</a><br>语言: Java/Python<br>简介:</p>
+<blockquote>
+<p>GraphLab是一个流行的图谱分析（Graph Analysis）和机器学习的开源项目，2013年该项目剥离出一个独立运作的商业公司GraphLab Inc</p>
+<ul>
+<li>HDFS。GraphLab 内置对HDFS 的支持，GraphLab 能够直接从HDFS中读数据或者将计算结果数据直接写入到HDFS 中。</li>
+</ul>
+</blockquote>
+<p><img src="http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png" alt="http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png"></p>
+<h3 id="参考链接-2">参考链接</h3><p><a href="http://planckscale.info/?p=226" target="_blank" rel="external">GraphLab Create使深度学习更easy</a><br><a href="https://blog.inf.ed.ac.uk/graphprocs/2014/11/25/graphlab%E6%96%B0%E7%9A%84%E9%9D%A2%E5%90%91%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%B9%B6%E8%A1%8C%E6%A1%86%E6%9E%B6/" target="_blank" rel="external">GraphLab:新的面向机器学习的并行框架</a></p>
+<h2 id="Deeplearning4j">Deeplearning4j</h2><p>项目文档: <a href="http://deeplearning4j.org/" target="_blank" rel="external">http://deeplearning4j.org/</a><br>项目地址: <a href="https://github.com/deeplearning4j/deeplearning4j" target="_blank" rel="external">https://github.com/deeplearning4j/deeplearning4j</a><br>语言: Java/Scala<br>项目简介:</p>
+<blockquote>
+<p>Deeplearning4j is the first commercial-grade, open-source, distributed deep-learning library written for Java and Scala. Integrated with Hadoop and Spark, DL4J is designed to be used in business environments, rather than as a research tool.</p>
+<ul>
+<li>Versatile n-dimensional array class</li>
+<li>GPU integration</li>
+<li>Scalable on Hadoop, Spark and Akka + AWS et al</li>
+</ul>
+</blockquote>
+<p><img src="http://deeplearning4j.org/img/schematic_overview.png" alt=""></p>
+<h3 id="参考链接-3">参考链接</h3><p><a href="http://deeplearning4j.org/compare-dl4j-torch7-pylearn.html" target="_blank" rel="external">DL4J vs. Torch vs. Theano vs. Caffe</a></p>
+<h2 id="Caffe">Caffe</h2><p>项目主页: <a href="http://caffe.berkeleyvision.org/" target="_blank" rel="external">http://caffe.berkeleyvision.org/</a><br>项目地址: <a href="https://github.com/BVLC/caffe" target="_blank" rel="external">https://github.com/BVLC/caffe</a><br>Slides: <a href="https://docs.google.com/presentation/d/1UeKXVgRvvxg9OUdh_UiC5G71UMscNPlvArsWER41PsU/edit#slide=id.gc2fcdcce7_216_211" target="_blank" rel="external">https://docs.google.com/presentation/d/1UeKXVgRvvxg9OUdh_UiC5G71UMscNPlvArsWER41PsU/edit#slide=id.gc2fcdcce7_216_211</a><br>项目简介:</p>
+<blockquote>
+<p>The Caffe framework from UC Berkeley is designed to let researchers create and explore CNNs and other Deep Neural Networks (DNNs) easily, while delivering high speed needed for both experiments and industrial deployment [5]. Caffe provides state-of-the-art modeling for advancing and deploying deep learning in research and industry with support for a wide variety of architectures and efficient implementations of prediction and learning.</p>
+</blockquote>
+<p><img src="http://d.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=520e49ddb51bb0519b29bb7a5713b1d1/5882b2b7d0a20cf4cad4bb2070094b36adaf998d.jpg" alt=""><br><img src="http://img.ptcms.csdn.net/article/201507/08/559cebc9330f2_middle.jpg" alt=""></p>
+<h3 id="参考链接-4">参考链接</h3><p><a href="http://ucb-icsi-vision-group.github.io/caffe-paper/caffe.pdf" target="_blank" rel="external">Caffe: Convolutional Architecture for Fast Feature Embedding</a></p>
+<p><a href="http://www.csdn.net/article/1970-01-01/2825166" target="_blank" rel="external">KDnuggets热门深度学习工具排行：Pylearn2 居首，Caffe第三</a></p>
+<h2 id="Theano">Theano</h2><p>项目主页: <a href="http://deeplearning.net/software/theano/" target="_blank" rel="external">http://deeplearning.net/software/theano/</a><br>项目地址: <a href="https://github.com/Theano/Theano" target="_blank" rel="external">https://github.com/Theano/Theano</a></p>
+<h2 id="Pylearn2">Pylearn2</h2><p> 文档地址: <a href="http://deeplearning.net/software/pylearn2/" target="_blank" rel="external">http://deeplearning.net/software/pylearn2/</a><br> 项目地址: <a href="https://github.com/lisa-lab/pylearn2" target="_blank" rel="external">https://github.com/lisa-lab/pylearn2</a><br>项目简介:</p>
+<blockquote>
+<p>Pylearn2和Theano由同一个开发团队开发，Pylearn2是一个机器学习库，它把深度学习和人工智能研究许多常用的模型以及训练算法封装成一个单一的实验包，如随机梯度下降。</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://qsli.github.io/2015/11/03/machine_learning/" data-title="机器学习框架调研 | KL&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/09/25/mysql-time/" title="mysql中时间相关的问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  mysql中时间相关的问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/11/03/fabric/"  title="fabric 分布式部署">
+ <strong>下一篇：</strong><br/> 
+ <span>fabric 分布式部署
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/11/03/machine_learning/" data-title="机器学习框架调研" data-url="http://qsli.github.io/2015/11/03/machine_learning/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="qsLI" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/base/" title="base">base<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/fe/" title="fe">fe<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/idea/" title="idea">idea<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/java/" title="java">java<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>5</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python/" title="python">python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/python-linux/" title="python linux">python linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/spring/" title="spring">spring<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/tomcat/" title="tomcat">tomcat<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/web/" title="web">web<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/spring-mvc/" title="spring mvc">spring mvc<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/编码/" title="编码">编码<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spi/" title="spi">spi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/shadowsocks/" title="shadowsocks">shadowsocks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/re/" title="re">re<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python-util/" title="python-util">python-util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/placeholder/" title="placeholder">placeholder<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/postgresql/" title="postgresql">postgresql<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/uml/" title="uml">uml<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ssh/" title="ssh">ssh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/netcat/" title="netcat">netcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/access-log/" title="access-log">access-log<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Javadoc/" title="Javadoc">Javadoc<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/访问权限/" title="访问权限">访问权限<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/exception/" title="exception">exception<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jackson/" title="jackson">jackson<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://chenyuzuoo.github.io/" target="_blank" title="Chenyu&#39;s Script">Chenyu&#39;s Script</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+    <ul>
+        <li>
+            <span id="busuanzi_container_site_pv">
+          本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+            </span>
+        </li>
+        <li>
+            <span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>人次
+            </span>
+        </li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Kevin Leo">Kevin Leo</a>
+						
+		</p>		
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dr0p"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b86170f998d4ba7d7e834894b1f02595";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
