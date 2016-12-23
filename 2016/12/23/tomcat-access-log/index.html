@@ -21,7 +21,7 @@
 <meta property="og:description" content="Tomcat access log 日志格式文件位置: conf/server.xml
 默认配置
 123456&amp;lt;!-- Access log processes all example.     Documentation at: /docs/config/valve.html     Note: The pattern used is equivalent to using pattern">
-<meta property="og:updated_time" content="2016-12-22T16:45:26.152Z">
+<meta property="og:updated_time" content="2016-12-23T02:24:57.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat access log 格式设置">
 <meta name="twitter:description" content="Tomcat access log 日志格式文件位置: conf/server.xml
@@ -101,7 +101,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat_access_log_日志格式"><span class="toc-number">1.</span> <span class="toc-text">Tomcat access log 日志格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat_access_log_日志格式"><span class="toc-number">1.</span> <span class="toc-text">Tomcat access log 日志格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header、cookie、session其他字段的支持"><span class="toc-number">1.1.</span> <span class="toc-text">header、cookie、session其他字段的支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
 		
 		</div>
 		
@@ -236,8 +236,55 @@
 </tr>
 </tbody>
 </table>
+<h3 id="header、cookie、session其他字段的支持">header、cookie、session其他字段的支持</h3><blockquote>
+<p>There is also support to write information incoming or outgoing headers, cookies, session or request attributes and special timestamp formats. It is modeled after the Apache HTTP Server log configuration syntax:</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%{xxx}i</td>
+<td>for incoming headers</td>
+</tr>
+<tr>
+<td>%{xxx}o</td>
+<td>for outgoing response headers</td>
+</tr>
+<tr>
+<td>%{xxx}c</td>
+<td>for a specific cookie</td>
+</tr>
+<tr>
+<td>%{xxx}r</td>
+<td>xxx is an attribute in the ServletRequest</td>
+</tr>
+<tr>
+<td>%{xxx}s</td>
+<td>xxx is an attribute in the HttpSession</td>
+</tr>
+<tr>
+<td>%{xxx}t</td>
+<td>xxx is an enhanced SimpleDateFormat pattern</td>
+</tr>
+</tbody>
+</table>
+<p>例如： <code>%{X-Forwarded-For}i</code>即可打印出实际访问的ip地址（考虑到ng的反向代理）</p>
+<p>HTTP头一般格式如下:</p>
+<p><code>X-Forwarded-For: client1, proxy1, proxy2</code></p>
+<blockquote>
+<p>其中的值通过一个 逗号+空格 把多个IP地址区分开, 最左边（client1）是最原始客户端的IP地址, 代理服务器每成功收到一个请求，就把请求来源IP地址添加到右边。 在上面这个例子中，这个请求成功通过了三台代理服务器：proxy1, proxy2 及 proxy3。请求由client1发出，到达了proxy3（proxy3可能是请求的终点）。请求刚从client1中发出时，XFF是空的，请求被发往proxy1；通过proxy1的时候，client1被添加到XFF中，之后请求被发往proxy2;通过proxy2的时候，proxy1被添加到XFF中，之后请求被发往proxy3；通过proxy3时，proxy2被添加到XFF中，之后请求的的去向不明，如果proxy3不是请求终点，请求会被继续转发。</p>
+<p>鉴于伪造这一字段非常容易，应该谨慎使用X-Forwarded-For字段。正常情况下XFF中最后一个IP地址是最后一个代理服务器的IP地址, 这通常是一个比较可靠的信息来源。</p>
+</blockquote>
 <h2 id="参考">参考</h2><ol>
-<li><a href="http://tomcat.apache.org/tomcat-7.0-doc/config/valve.html" target="_blank" rel="external">The Valve Component</a></li>
+<li><p><a href="http://tomcat.apache.org/tomcat-7.0-doc/config/valve.html" target="_blank" rel="external">The Valve Component</a></p>
+</li>
+<li><p><a href="https://zh.wikipedia.org/wiki/X-Forwarded-For" target="_blank" rel="external">X-Forwarded-For</a></p>
+</li>
 </ol>
   
 	</div>
