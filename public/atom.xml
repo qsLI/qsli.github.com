@@ -4,7 +4,7 @@
   <subtitle><![CDATA[越积极，越幸运]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://qsli.github.io/"/>
-  <updated>2016-12-23T02:13:03.539Z</updated>
+  <updated>2016-12-24T22:07:21.534Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -16,1213 +16,61 @@
   
   <entry>
     <title></title>
-    <link href="http://qsli.github.io/2016/12/23/tomcat-access-log/"/>
-    <id>http://qsli.github.io/2016/12/23/tomcat-access-log/</id>
-    <published>2016-12-23T02:13:03.539Z</published>
-    <updated>2016-12-23T02:13:03.539Z</updated>
-    <content type="html"><![CDATA[<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="category" content="tomcat">
-<meta name="tags" content="access-log">
-<meta name="date" content="2016-12-23 00:43:10"><style>body {
-  width: 45em;
-  border: 1px solid #ddd;
-  outline: 1300px solid #fff;
-  margin: 16px auto;
-}
-
-body .markdown-body
-{
-  padding: 30px;
-}
-
-@font-face {
-  font-family: fontawesome-mini;
-  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
-}
-
-@font-face {
-  font-family: octicons-anchor;
-  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
-}
-
-.markdown-body {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  color: #333333;
-  overflow: hidden;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-
-.markdown-body a {
-  background: transparent;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline: 0;
-}
-
-.markdown-body b,
-.markdown-body strong {
-  font-weight: bold;
-}
-
-.markdown-body mark {
-  background: #ff0;
-  color: #000;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.markdown-body sub,
-.markdown-body sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-.markdown-body sup {
-  top: -0.5em;
-}
-.markdown-body sub {
-  bottom: -0.25em;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-.markdown-body img {
-  border: 0;
-}
-
-.markdown-body hr {
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  height: 0;
-}
-
-.markdown-body pre {
-  overflow: auto;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre,
-.markdown-body samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-
-.markdown-body input {
-  color: inherit;
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body html input[disabled] {
-  cursor: default;
-}
-
-.markdown-body input {
-  line-height: normal;
-}
-
-.markdown-body input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body .codehilitetable {
-  border: 0;
-  border-spacing: 0;
-}
-
-.markdown-body .codehilitetable tr {
-  border: 0;
-}
-
-.markdown-body .codehilitetable pre,
-.markdown-body .codehilitetable div.codehilite {
-  margin: 0;
-}
-
-.markdown-body .linenos,
-.markdown-body .code,
-.markdown-body .codehilitetable td {
-  border: 0;
-  padding: 0;
-}
-
-.markdown-body td:not(.linenos) .linenodiv {
-  padding: 0 !important;
-}
-
-.markdown-body .code {
-  width: 100%;
-}
-
-.markdown-body .linenos div pre,
-.markdown-body .linenodiv pre,
-.markdown-body .linenodiv {
-  border: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -moz-border-radius-topleft: 3px;
-  -moz-border-radius-bottomleft: 3px;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-.markdown-body .code div pre,
-.markdown-body .code div {
-  border: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-.markdown-body * {
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.markdown-body input {
-  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-  line-height: 1.4;
-}
-
-.markdown-body a {
-  color: #4183c4;
-  text-decoration: none;
-}
-
-.markdown-body a:hover,
-.markdown-body a:focus,
-.markdown-body a:active {
-  text-decoration: underline;
-}
-
-.markdown-body hr {
-  height: 0;
-  margin: 15px 0;
-  overflow: hidden;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.markdown-body hr:before,
-.markdown-body hr:after {
-  display: table;
-  content: " ";
-}
-
-.markdown-body hr:after {
-  clear: both;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  line-height: 1.1;
-}
-
-.markdown-body h1 {
-  font-size: 30px;
-}
-
-.markdown-body h2 {
-  font-size: 21px;
-}
-
-.markdown-body h3 {
-  font-size: 16px;
-}
-
-.markdown-body h4 {
-  font-size: 14px;
-}
-
-.markdown-body h5 {
-  font-size: 12px;
-}
-
-.markdown-body h6 {
-  font-size: 11px;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ul,
-.markdown-body ol {
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code,
-.markdown-body pre,
-.markdown-body samp {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 12px;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body kbd {
-  background-color: #e7e7e7;
-  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
-  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
-  background-image: linear-gradient(#fefefe, #e7e7e7);
-  background-repeat: repeat-x;
-  border-radius: 2px;
-  border: 1px solid #cfcfcf;
-  color: #000;
-  padding: 3px 5px;
-  line-height: 10px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  display: inline-block;
-}
-
-.markdown-body>*:first-child {
-  margin-top: 0 !important;
-}
-
-.markdown-body>*:last-child {
-  margin-bottom: 0 !important;
-}
-
-.markdown-body .headeranchor-link {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: block;
-  padding-right: 6px;
-  padding-left: 30px;
-  margin-left: -30px;
-}
-
-.markdown-body .headeranchor-link:focus {
-  outline: none;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  position: relative;
-  margin-top: 1em;
-  margin-bottom: 16px;
-  font-weight: bold;
-  line-height: 1.4;
-}
-
-.markdown-body h1 .headeranchor,
-.markdown-body h2 .headeranchor,
-.markdown-body h3 .headeranchor,
-.markdown-body h4 .headeranchor,
-.markdown-body h5 .headeranchor,
-.markdown-body h6 .headeranchor {
-  display: none;
-  color: #000;
-  vertical-align: middle;
-}
-
-.markdown-body h1:hover .headeranchor-link,
-.markdown-body h2:hover .headeranchor-link,
-.markdown-body h3:hover .headeranchor-link,
-.markdown-body h4:hover .headeranchor-link,
-.markdown-body h5:hover .headeranchor-link,
-.markdown-body h6:hover .headeranchor-link {
-  height: 1em;
-  padding-left: 8px;
-  margin-left: -30px;
-  line-height: 1;
-  text-decoration: none;
-}
-
-.markdown-body h1:hover .headeranchor-link .headeranchor,
-.markdown-body h2:hover .headeranchor-link .headeranchor,
-.markdown-body h3:hover .headeranchor-link .headeranchor,
-.markdown-body h4:hover .headeranchor-link .headeranchor,
-.markdown-body h5:hover .headeranchor-link .headeranchor,
-.markdown-body h6:hover .headeranchor-link .headeranchor {
-  display: inline-block;
-}
-
-.markdown-body h1 {
-  padding-bottom: 0.3em;
-  font-size: 2.25em;
-  line-height: 1.2;
-  border-bottom: 1px solid #eee;
-}
-
-.markdown-body h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-  border-bottom: 1px solid #eee;
-}
-
-.markdown-body h3 {
-  font-size: 1.5em;
-  line-height: 1.43;
-}
-
-.markdown-body h4 {
-  font-size: 1.25em;
-}
-
-.markdown-body h5 {
-  font-size: 1em;
-}
-
-.markdown-body h6 {
-  font-size: 1em;
-  color: #777;
-}
-
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre,
-.markdown-body .admonition {
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-.markdown-body hr {
-  height: 4px;
-  padding: 0;
-  margin: 16px 0;
-  background-color: #e7e7e7;
-  border: 0 none;
-}
-
-.markdown-body ul,
-.markdown-body ol {
-  padding-left: 2em;
-}
-
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li>p {
-  margin-top: 16px;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 16px;
-  font-size: 1em;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.markdown-body dl dd {
-  padding: 0 16px;
-  margin-bottom: 16px;
-}
-
-.markdown-body blockquote {
-  padding: 0 15px;
-  color: #777;
-  border-left: 4px solid #ddd;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
-}
-
-.markdown-body table th {
-  font-weight: bold;
-}
-
-.markdown-body table th,
-.markdown-body table td {
-  padding: 6px 13px;
-  border: 1px solid #ddd;
-}
-
-.markdown-body table tr {
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-
-.markdown-body img {
-  max-width: 100%;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.markdown-body code,
-.markdown-body samp {
-  padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  margin: 0;
-  font-size: 85%;
-  background-color: rgba(0,0,0,0.04);
-  border-radius: 3px;
-}
-
-.markdown-body code:before,
-.markdown-body code:after {
-  letter-spacing: -0.2em;
-  content: "\00a0";
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .codehilite {
-  margin-bottom: 16px;
-}
-
-.markdown-body .codehilite pre,
-.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f7f7;
-  border-radius: 3px;
-}
-
-.markdown-body .codehilite pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: initial;
-  padding: 0;
-  margin: 0;
-  overflow: initial;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: transparent;
-  border: 0;
-}
-
-.markdown-body pre code:before,
-.markdown-body pre code:after {
-  content: normal;
-}
-
-/* Admonition */
-.markdown-body .admonition {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  position: relative;
-  border-radius: 3px;
-  border: 1px solid #e0e0e0;
-  border-left: 6px solid #333;
-  padding: 10px 10px 10px 30px;
-}
-
-.markdown-body .admonition table {
-  color: #333;
-}
-
-.markdown-body .admonition p {
-  padding: 0;
-}
-
-.markdown-body .admonition-title {
-  font-weight: bold;
-  margin: 0;
-}
-
-.markdown-body .admonition>.admonition-title {
-  color: #333;
-}
-
-.markdown-body .attention>.admonition-title {
-  color: #a6d796;
-}
-
-.markdown-body .caution>.admonition-title {
-  color: #d7a796;
-}
-
-.markdown-body .hint>.admonition-title {
-  color: #96c6d7;
-}
-
-.markdown-body .danger>.admonition-title {
-  color: #c25f77;
-}
-
-.markdown-body .question>.admonition-title {
-  color: #96a6d7;
-}
-
-.markdown-body .note>.admonition-title {
-  color: #d7c896;
-}
-
-.markdown-body .admonition:before,
-.markdown-body .attention:before,
-.markdown-body .caution:before,
-.markdown-body .hint:before,
-.markdown-body .danger:before,
-.markdown-body .question:before,
-.markdown-body .note:before {
-  font: normal normal 16px fontawesome-mini;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  line-height: 1.5;
-  color: #333;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-
-.markdown-body .admonition:before {
-  content: "\f056\00a0";
-  color: 333;
-}
-
-.markdown-body .attention:before {
-  content: "\f058\00a0";
-  color: #a6d796;
-}
-
-.markdown-body .caution:before {
-  content: "\f06a\00a0";
-  color: #d7a796;
-}
-
-.markdown-body .hint:before {
-  content: "\f05a\00a0";
-  color: #96c6d7;
-}
-
-.markdown-body .danger:before {
-  content: "\f057\00a0";
-  color: #c25f77;
-}
-
-.markdown-body .question:before {
-  content: "\f059\00a0";
-  color: #96a6d7;
-}
-
-.markdown-body .note:before {
-  content: "\f040\00a0";
-  color: #d7c896;
-}
-
-.markdown-body .admonition::after {
-  content: normal;
-}
-
-.markdown-body .attention {
-  border-left: 6px solid #a6d796;
-}
-
-.markdown-body .caution {
-  border-left: 6px solid #d7a796;
-}
-
-.markdown-body .hint {
-  border-left: 6px solid #96c6d7;
-}
-
-.markdown-body .danger {
-  border-left: 6px solid #c25f77;
-}
-
-.markdown-body .question {
-  border-left: 6px solid #96a6d7;
-}
-
-.markdown-body .note {
-  border-left: 6px solid #d7c896;
-}
-
-.markdown-body .admonition>*:first-child {
-  margin-top: 0 !important;
-}
-
-.markdown-body .admonition>*:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* progress bar*/
-.markdown-body .progress {
-  display: block;
-  width: 300px;
-  margin: 10px 0;
-  height: 24px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #ededed;
-  position: relative;
-  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
-}
-
-.markdown-body .progress-label {
-  position: absolute;
-  text-align: center;
-  font-weight: bold;
-  width: 100%; margin: 0;
-  line-height: 24px;
-  color: #333;
-  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
-  -webkit-font-smoothing: antialiased !important;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.markdown-body .progress-bar {
-  height: 24px;
-  float: left;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background-color: #96c6d7;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
-  background-size: 30px 30px;
-  background-image: -webkit-linear-gradient(
-    135deg, rgba(255, 255, 255, .4) 27%,
-    transparent 27%,
-    transparent 52%, rgba(255, 255, 255, .4) 52%,
-    rgba(255, 255, 255, .4) 77%,
-    transparent 77%, transparent
-  );
-  background-image: -moz-linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .4) 27%, transparent 27%,
-    transparent 52%, rgba(255, 255, 255, .4) 52%,
-    rgba(255, 255, 255, .4) 77%, transparent 77%,
-    transparent
-  );
-  background-image: -ms-linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .4) 27%, transparent 27%,
-    transparent 52%, rgba(255, 255, 255, .4) 52%,
-    rgba(255, 255, 255, .4) 77%, transparent 77%,
-    transparent
-  );
-  background-image: -o-linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .4) 27%, transparent 27%,
-    transparent 52%, rgba(255, 255, 255, .4) 52%,
-    rgba(255, 255, 255, .4) 77%, transparent 77%,
-    transparent
-  );
-  background-image: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, .4) 27%, transparent 27%,
-    transparent 52%, rgba(255, 255, 255, .4) 52%,
-    rgba(255, 255, 255, .4) 77%, transparent 77%,
-    transparent
-  );
-}
-
-.markdown-body .progress-100plus .progress-bar {
-  background-color: #a6d796;
-}
-
-.markdown-body .progress-80plus .progress-bar {
-  background-color: #c6d796;
-}
-
-.markdown-body .progress-60plus .progress-bar {
-  background-color: #d7c896;
-}
-
-.markdown-body .progress-40plus .progress-bar {
-  background-color: #d7a796;
-}
-
-.markdown-body .progress-20plus .progress-bar {
-  background-color: #d796a6;
-}
-
-.markdown-body .progress-0plus .progress-bar {
-  background-color: #c25f77;
-}
-
-.markdown-body .candystripe-animate .progress-bar{
-  -webkit-animation: animate-stripes 3s linear infinite;
-  -moz-animation: animate-stripes 3s linear infinite;
-  animation: animate-stripes 3s linear infinite;
-}
-
-@-webkit-keyframes animate-stripes {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 60px 0;
-  }
-}
-
-@-moz-keyframes animate-stripes {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 60px 0;
-  }
-}
-
-@keyframes animate-stripes {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 60px 0;
-  }
-}
-
-.markdown-body .gloss .progress-bar {
-  box-shadow:
-    inset 0 4px 12px rgba(255, 255, 255, .7),
-    inset 0 -12px 0 rgba(0, 0, 0, .05);
-}
-
-/* Multimarkdown Critic Blocks */
-.markdown-body .critic_mark {
-  background: #ff0;
-}
-
-.markdown-body .critic_delete {
-  color: #c82829;
-  text-decoration: line-through;
-}
-
-.markdown-body .critic_insert {
-  color: #718c00 ;
-  text-decoration: underline;
-}
-
-.markdown-body .critic_comment {
-  color: #8e908c;
-  font-style: italic;
-}
-
-.markdown-body .headeranchor {
-  font: normal normal 16px octicons-anchor;
-  line-height: 1;
-  display: inline-block;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.headeranchor:before {
-  content: '\f05c';
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 3px;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 4px 0.25em -20px;
-  vertical-align: middle;
-}
-
-/* Media */
-@media only screen and (min-width: 480px) {
-  .markdown-body {
-    font-size:14px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .markdown-body {
-    font-size:16px;
-  }
-}
-
-@media print {
-  .markdown-body * {
-    background: transparent !important;
-    color: black !important;
-    filter:none !important;
-    -ms-filter: none !important;
-  }
-
-  .markdown-body {
-    font-size:12pt;
-    max-width:100%;
-    outline:none;
-    border: 0;
-  }
-
-  .markdown-body a,
-  .markdown-body a:visited {
-    text-decoration: underline;
-  }
-
-  .markdown-body .headeranchor-link {
-    display: none;
-  }
-
-  .markdown-body a[href]:after {
-    content: " (" attr(href) ")";
-  }
-
-  .markdown-body abbr[title]:after {
-    content: " (" attr(title) ")";
-  }
-
-  .markdown-body .ir a:after,
-  .markdown-body a[href^="javascript:"]:after,
-  .markdown-body a[href^="#"]:after {
-    content: "";
-  }
-
-  .markdown-body pre {
-    white-space: pre;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  .markdown-body pre,
-  .markdown-body blockquote {
-    border: 1px solid #999;
-    padding-right: 1em;
-    page-break-inside: avoid;
-  }
-
-  .markdown-body .progress,
-  .markdown-body .progress-bar {
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .markdown-body .progress {
-    border: 1px solid #ddd;
-  }
-
-  .markdown-body .progress-bar {
-    height: 22px;
-    border-right: 1px solid #ddd;
-  }
-
-  .markdown-body tr,
-  .markdown-body img {
-    page-break-inside: avoid;
-  }
-
-  .markdown-body img {
-    max-width: 100% !important;
-  }
-
-  .markdown-body p,
-  .markdown-body h2,
-  .markdown-body h3 {
-    orphans: 3;
-    widows: 3;
-  }
-
-  .markdown-body h2,
-  .markdown-body h3 {
-    page-break-after: avoid;
-  }
-}
-</style><title>tomcat access log 格式设置</title></head><body><article class="markdown-body"><h2 id="tomcat-access-log"><a name="user-content-tomcat-access-log" href="#tomcat-access-log" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Tomcat access log 日志格式</h2>
-<p>文件位置: <code>conf/server.xml</code></p>
-<p>默认配置</p>
-<pre><code class="xml">        &lt;!-- Access log processes all example.
-             Documentation at: /docs/config/valve.html
-             Note: The pattern used is equivalent to using pattern=&quot;common&quot; --&gt;
-        &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;
-               prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot;
-               pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;
-</code></pre>
-
-<table>
+    <link href="http://qsli.github.io/2016/12/25/java-permission-control/"/>
+    <id>http://qsli.github.io/2016/12/25/java-permission-control/</id>
+    <published>2016-12-24T22:07:21.534Z</published>
+    <updated>2016-12-24T22:07:21.534Z</updated>
+    <content type="html"><![CDATA[<p>title: java 访问权限区别<br>date: 2015-10-20 09:57:22<br>tags: 访问权限<br>category: java<br>toc: true</p>
+<h2 id="类成员的访问权限">类成员的访问权限</h2><table>
 <thead>
 <tr>
-<th>名称</th>
-<th>含义</th>
+<th>Modifier</th>
+<th>Class</th>
+<th>Package</th>
+<th>Subclass</th>
+<th>World</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>%a</td>
-<td>Remote IP address</td>
+<td>public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr>
-<td>%A</td>
-<td>Local IP address</td>
+<td>protect</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>x</td>
 </tr>
 <tr>
-<td>%b</td>
-<td>Bytes sent, excluding HTTP headers, or &lsquo;-&lsquo; if zero</td>
+<td>no modifier</td>
+<td>√</td>
+<td>√</td>
+<td>x</td>
+<td>x</td>
 </tr>
 <tr>
-<td>%B</td>
-<td>Bytes sent, excluding HTTP headers</td>
-</tr>
-<tr>
-<td>%h</td>
-<td>Remote host name (or IP address if enableLookups for the connector is false)</td>
-</tr>
-<tr>
-<td>%H</td>
-<td>Request protocol</td>
-</tr>
-<tr>
-<td>%l</td>
-<td>Remote logical username from identd (always returns &lsquo;-&lsquo;)</td>
-</tr>
-<tr>
-<td>%m</td>
-<td>Request method (GET, POST, etc.)</td>
-</tr>
-<tr>
-<td>%p</td>
-<td>Local port on which this request was received</td>
-</tr>
-<tr>
-<td>%q</td>
-<td>Query string (prepended with a &lsquo;?&rsquo; if it exists)</td>
-</tr>
-<tr>
-<td>%r</td>
-<td>First line of the request (method and request URI)</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>HTTP status code of the response</td>
-</tr>
-<tr>
-<td>%S</td>
-<td>User session ID</td>
-</tr>
-<tr>
-<td>%t</td>
-<td>Date and time, in Common Log Format</td>
-</tr>
-<tr>
-<td>%u</td>
-<td>Remote user that was authenticated (if any), else &lsquo;-&lsquo;</td>
-</tr>
-<tr>
-<td>%U</td>
-<td>Requested URL path</td>
-</tr>
-<tr>
-<td>%v</td>
-<td>Local server name</td>
-</tr>
-<tr>
-<td>%D</td>
-<td>Time taken to process the request, in millis</td>
-</tr>
-<tr>
-<td>%T</td>
-<td>Time taken to process the request, in seconds</td>
-</tr>
-<tr>
-<td>%F</td>
-<td>Time taken to commit the response, in millis</td>
-</tr>
-<tr>
-<td>%I</td>
-<td>Current request thread name (can compare later with stacktraces)</td>
+<td>private</td>
+<td>√</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
 </tr>
 </tbody>
 </table>
-<p>默认的配置打出来的access日志如下：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>127.0.0.1</td>
-<td>-</td>
-<td>-</td>
-<td>[07/Oct/2016:22:31:56 +0800]</td>
-<td>&ldquo;GET /dubbo/ HTTP/1.1&rdquo;</td>
-<td>404</td>
-<td>963</td>
-</tr>
-<tr>
-<td>远程IP</td>
-<td>logical username</td>
-<td>remote user</td>
-<td>时间和日期</td>
-<td>http请求的第一行</td>
-<td>状态码</td>
-<td>除去http头的发送大小</td>
-</tr>
-</tbody>
-</table>
-<h3 id="headercookiesession"><a name="user-content-headercookiesession" href="#headercookiesession" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>header、cookie、session其他字段的支持</h3>
+<p>没有修饰符的话就相当于package可见，如果子类不在同一个package则也不能访问相应的方法。</p>
 <blockquote>
-<p>There is also support to write information incoming or outgoing headers, cookies, session or request attributes and special timestamp formats. It is modeled after the Apache HTTP Server log configuration syntax:</p>
+<p><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" target="_blank" rel="external">Controlling Access to Members of a Class</a><br><a href="http://blog.csdn.net/johnstrive/article/details/5880357" target="_blank" rel="external">JAVA修饰符类型</a></p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td xxx="xxx">%</td>
-<td>for incoming headers</td>
-</tr>
-<tr>
-<td xxx="xxx">%</td>
-<td>for outgoing response headers</td>
-</tr>
-<tr>
-<td xxx="xxx">%</td>
-<td>for a specific cookie</td>
-</tr>
-<tr>
-<td xxx="xxx">%</td>
-<td>xxx is an attribute in the ServletRequest</td>
-</tr>
-<tr>
-<td xxx="xxx">%</td>
-<td>xxx is an attribute in the HttpSession</td>
-</tr>
-<tr>
-<td xxx="xxx">%</td>
-<td>xxx is an enhanced SimpleDateFormat pattern</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>参考</h2>
-<ol>
-<li><a href="http://tomcat.apache.org/tomcat-7.0-doc/config/valve.html" target="_blank" rel="external">The Valve Component</a></li>
-</ol></article></body></html>]]></content>
+]]></content>
     <summary type="html">
-    <![CDATA[<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="category" content="tomcat">
-<meta name="tags" content="access-log">
-<meta name=]]>
+    <![CDATA[<p>title: java 访问权限区别<br>date: 2015-10-20 09:57:22<br>tags: 访问权限<br>category: java<br>toc: true</p>
+<h2 id="类成员的访问权限">类成员的访问权限</h2><table>
+<]]>
     </summary>
     
   </entry>
@@ -1232,13 +80,13 @@ body .markdown-body
     <link href="http://qsli.github.io/2016/12/23/idea-template/"/>
     <id>http://qsli.github.io/2016/12/23/idea-template/</id>
     <published>2016-12-22T17:10:59.000Z</published>
-    <updated>2016-12-22T17:10:59.477Z</updated>
+    <updated>2016-12-24T21:27:51.008Z</updated>
     <content type="html"><![CDATA[<h1 id="版权信息">版权信息</h1><p>代码前面一般都会有相应的版权信息，拿guava的代码为例</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * Copyright (C) 2007 The Guava Authors</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> * http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.google.common.collect;</span><br></pre></td></tr></table></figure>
 <h2 id="idea自动生成版权信息">idea自动生成版权信息</h2><p><code>File</code> &gt; <code>Settings</code> &gt; <code>Copyright</code> &gt; <code>Copyright Profiles</code></p>
 <p>新建一个profile，填入如下的内容<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/* * Copyright (c) <span class="variable">$today</span>.year xx.com. All Rights Reserved. */</span><br></pre></td></tr></table></figure></p>
 <p><code>$today.year</code>代表当前的年</p>
-<p><img src="profiles.jpg" alt=""></p>
+<img src="/2016/12/23/idea-template/profiles.jpg" alt="profiles.jpg" title="">
 <p>新建java文件时就自动生成了版权信息：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> *  * Copyright (c) 2016 Qunar.com. All Rights Reserved. </span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.xxx.handler;</span><br></pre></td></tr></table></figure>
 <h1 id="作者、日期、邮箱等">作者、日期、邮箱等</h1><p><code>File</code> &gt; <code>Settings</code> &gt; <code>File and Ocde Templates</code> &gt; <code>Includes</code> &gt; <code>File Header</code></p>
@@ -1261,7 +109,7 @@ body .markdown-body
     <link href="http://qsli.github.io/2016/12/23/tomcat-encoding/"/>
     <id>http://qsli.github.io/2016/12/23/tomcat-encoding/</id>
     <published>2016-12-22T16:43:20.000Z</published>
-    <updated>2016-12-22T16:47:30.453Z</updated>
+    <updated>2016-12-24T20:41:45.173Z</updated>
     <content type="html"><![CDATA[<h2 id="tomcat中文乱码">tomcat中文乱码</h2><p>tomcat 默认的编<code>ISO-8859-1</code>编码，部分中文会出现乱码</p>
 <blockquote>
 <p><em>URIEncoding</em><br>This specifies the character encoding used to decode the URI bytes, after %xx decoding the URL. If not specified, ISO-8859-1 will be used.</p>
@@ -1292,7 +140,7 @@ body .markdown-body
     <link href="http://qsli.github.io/2016/12/23/tomcat-access-log/"/>
     <id>http://qsli.github.io/2016/12/23/tomcat-access-log/</id>
     <published>2016-12-22T16:43:10.000Z</published>
-    <updated>2016-12-23T02:24:57.656Z</updated>
+    <updated>2016-12-24T20:41:18.433Z</updated>
     <content type="html"><![CDATA[<h2 id="Tomcat_access_log_日志格式">Tomcat access log 日志格式</h2><p>文件位置: <code>conf/server.xml</code></p>
 <p>默认配置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Access log processes all example.</span><br><span class="line">     Documentation at: /docs/config/valve.html</span><br><span class="line">     <span class="doctag">Note:</span> The pattern used is equivalent to using pattern="common" --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">Valve</span> <span class="attribute">className</span>=<span class="value">"org.apache.catalina.valves.AccessLogValve"</span> <span class="attribute">directory</span>=<span class="value">"logs"</span></span><br><span class="line">       <span class="attribute">prefix</span>=<span class="value">"localhost_access_log."</span> <span class="attribute">suffix</span>=<span class="value">".txt"</span></span><br><span class="line">       <span class="attribute">pattern</span>=<span class="value">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1492,7 +340,7 @@ body .markdown-body
     <link href="http://qsli.github.io/2016/12/18/python-util/"/>
     <id>http://qsli.github.io/2016/12/18/python-util/</id>
     <published>2016-12-18T03:57:35.000Z</published>
-    <updated>2016-12-22T16:56:45.844Z</updated>
+    <updated>2016-12-24T20:41:28.104Z</updated>
     <content type="html"><![CDATA[<h2 id="开启一个简单的HTTP_Server">开启一个简单的HTTP Server</h2><ul>
 <li>命令：</li>
 </ul>
@@ -1592,7 +440,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/12/18/nc/"/>
     <id>http://qsli.github.io/2016/12/18/nc/</id>
     <published>2016-12-18T03:29:28.000Z</published>
-    <updated>2016-12-18T05:11:56.048Z</updated>
+    <updated>2016-12-24T20:41:32.120Z</updated>
     <content type="html"><![CDATA[<p>nc的全称是netcat，提供了许多关于网络操作的功能，号称网络工具中的瑞士军刀。</p>
 <p>nc也有windows的移植版本：<a href="https://eternallybored.org/misc/netcat/" target="_blank" rel="external"></a></p>
 <blockquote>
@@ -1628,9 +476,9 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/12/17/spi/"/>
     <id>http://qsli.github.io/2016/12/17/spi/</id>
     <published>2016-12-17T13:39:32.000Z</published>
-    <updated>2016-12-18T05:07:04.767Z</updated>
+    <updated>2016-12-24T21:27:49.388Z</updated>
     <content type="html"><![CDATA[<h2 id="SPI_ABC">SPI ABC</h2><p>SPI 代表<code>Service Provider Interfaces</code>, 是一种服务提供发现的机制。JDK中为其提供了<code>ServiceLoader</code>用来加载接口对应的实现。</p>
-<h2 id="使用约定">使用约定</h2><p><img src="usage.jpg" alt="使用约定"></p>
+<h2 id="使用约定">使用约定</h2><img src="/2016/12/17/spi/usage.jpg" alt=" 使用约定" title=" 使用约定">
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">└── src</span><br><span class="line">├── com</span><br><span class="line">│   └── ivanzhang</span><br><span class="line">│       └── spi</span><br><span class="line">│           ├── HelloInterface<span class="class">.java</span></span><br><span class="line">│           ├── impl</span><br><span class="line">│           │   ├── ImageHello<span class="class">.java</span></span><br><span class="line">│           │   └── TextHello<span class="class">.java</span></span><br><span class="line">│           └── SPIMain<span class="class">.java</span></span><br><span class="line">└── META-INF</span><br><span class="line">    └── services</span><br><span class="line">        └── com<span class="class">.ivanzhang</span><span class="class">.spi</span><span class="class">.HelloInterface</span></span><br></pre></td></tr></table></figure>
 <h2 id="使用例子">使用例子</h2><ul>
 <li>common-logging</li>
@@ -1687,11 +535,11 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/12/14/re/"/>
     <id>http://qsli.github.io/2016/12/14/re/</id>
     <published>2016-12-14T15:48:12.000Z</published>
-    <updated>2016-12-14T15:48:12.927Z</updated>
+    <updated>2016-12-24T22:01:54.737Z</updated>
     <content type="html"><![CDATA[<h1 id="测试">测试</h1><p>推荐使用<code>RegexBudy</code></p>
-<p><img src="https://www.regexbuddy.com/img/icon.png" alt="RegexBuddy"></p>
+<p><img src="https://www.regexbuddy.com/img/icon.png" alt=""></p>
 <p>界面如下:</p>
-<p><img src="https://www.regexbuddy.com/screens/regexbuddy.png" alt="regexbuddy"></p>
+<p><img src="https://www.regexbuddy.com/screens/regexbuddy.png" alt=""></p>
 <p>推荐python的 <code>VerbalExpressions</code> <a href="https://github.com/VerbalExpressions/PythonVerbalExpressions" target="_blank" rel="external">PythonVerbalExpressions </a></p>
 <h1 id="使用心得">使用心得</h1><h2 id="匹配多个单词">匹配多个单词</h2><p><code>\b</code>可以匹配一个单词的开头或者结尾</p>
 <p>匹配单个单词： <code>\bfoo\b</code> 可以匹配单个单测 foo</p>
@@ -1768,8 +616,9 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 ]]></content>
     <summary type="html">
     <![CDATA[<h1 id="测试">测试</h1><p>推荐使用<code>RegexBudy</code></p>
-<p><img src="https://www.regexbuddy.com/img/icon.png" alt="RegexBuddy"></p>
-<p>界面如下:</p]]>
+<p><img src="https://www.regexbuddy.com/img/icon.png" alt=""></p>
+<p>界面如下:</p>
+<p><img ]]>
     </summary>
     
       <category term="re" scheme="http://qsli.github.io/tags/re/"/>
@@ -1783,7 +632,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/12/13/atnode/"/>
     <id>http://qsli.github.io/2016/12/13/atnode/</id>
     <published>2016-12-12T16:07:02.000Z</published>
-    <updated>2016-12-18T05:10:03.774Z</updated>
+    <updated>2016-12-24T20:41:41.150Z</updated>
     <content type="html"><![CDATA[<h2 id="atnodes">atnodes</h2><p>atnode是一个用perl写成的工具，它可以方便的在集群上执行命令</p>
 <p><a href="http://search.cpan.org/~agent/SSH-Batch-0.029/bin/atnodes" target="_blank" rel="external">官网链接</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">atnodes <span class="string">"echo alias grep=\'grep -n --color\' &gt;&gt; ~/.bashrc "</span>  xxx.xx[<span class="number">1</span>-<span class="number">10</span>].com  yyy.yy[<span class="number">1</span>-<span class="number">10</span>].com</span><br></pre></td></tr></table></figure>
@@ -1809,7 +658,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/12/07/grep/"/>
     <id>http://qsli.github.io/2016/12/07/grep/</id>
     <published>2016-12-06T16:12:54.000Z</published>
-    <updated>2016-12-06T16:12:54.740Z</updated>
+    <updated>2016-12-24T21:27:51.623Z</updated>
     <content type="html"><![CDATA[<h2 id="常见用法">常见用法</h2><p>示例文本：</p>
 <blockquote>
 <p>“Night gathers, and now my watch begins. It shall not end<br>until my death. I shall take no wife, hold no lands, father no<br>children. I shall wear no crowns and win no glory. I shall live<br>and die at my post. I am the sword in the darkness. I am the<br>watcher on the walls. I am the shield that guards the realms of<br>men. I pledge my life and honor to the Night’s Watch, for this<br>night and all the nights to come.”</p>
@@ -1859,7 +708,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <p>test.txt:”Night gathers, and now my watch begins. It shall not end<br>test.txt:watcher on the walls. I am the shield that guards the realms of</p>
 </blockquote>
 <h2 id="高亮">高亮</h2><h3 id="grep_–color">grep –color</h3><p><code>grep -H --color &#39;watch&#39; test.txt</code></p>
-<p><img src="color.jpg" alt=""></p>
+<img src="/2016/12/07/grep/color.jpg" alt="color.jpg" title="">
 <h3 id="设置环境变量">设置环境变量</h3><p>在用户目录下的<code>.bashrc</code>中设置环境变量，也可以达到高亮的目的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GREP_OPTIONS=<span class="string">'--color=auto'</span></span><br></pre></td></tr></table></figure>
 <p>添加之后记得<code>source ~/.bashrc</code>, 然后才能生效</p>
@@ -1869,7 +718,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <h3 id="多关键字">多关键字</h3><p>使用正则就可以同时搜索多个关键字</p>
 <p><code>grep -E &#39;keyword1 | keyword2&#39; filename</code></p>
 <p><code>grep --color -E  &#39;am | to&#39; test.txt</code></p>
-<p><img src="egrep.jpg" alt=""></p>
+<img src="/2016/12/07/grep/egrep.jpg" alt="egrep.jpg" title="">
 <h2 id="zgrep">zgrep</h2><p>zgrep 可以在压缩文件中搜索内容</p>
 <h2 id="参考">参考</h2><ol>
 <li><p><a href="https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/" target="_blank" rel="external">HowTo: Use grep Command In Linux / UNIX – Examples</a></p>
@@ -1895,8 +744,8 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/11/29/HttpMessageConverter/"/>
     <id>http://qsli.github.io/2016/11/29/HttpMessageConverter/</id>
     <published>2016-11-28T18:48:45.000Z</published>
-    <updated>2016-12-18T05:09:13.824Z</updated>
-    <content type="html"><![CDATA[<h2 id="架构">架构</h2><p><img src="arch.jpg" alt=""></p>
+    <updated>2016-12-24T22:01:01.603Z</updated>
+    <content type="html"><![CDATA[<h2 id="架构">架构</h2><img src="/2016/11/29/HttpMessageConverter/arch.jpg" alt="arch.jpg" title="">
 <h2 id="HttpMessageConverter接口">HttpMessageConverter接口</h2><p><img src="http-message-converter.jpg" alt=""></p>
 <blockquote>
 <p><code>HttpMessageConverter</code> used to<br>marshal objects into the HTTP request body and to unmarshal any response back into an object.</p>
@@ -1907,7 +756,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <p>java配置示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">extends</span> <span class="title">DelegatingWebMvcConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="annotation">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RequestMappingHandlerAdapter <span class="title">requestMappingHandlerAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Create or let "super" create the adapter</span></span><br><span class="line">    <span class="comment">// Then customize one of its properties</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="接口描述">接口描述</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.http.converter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpInputMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpOutputMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Strategy interface that specifies a converter that can convert from and to HTTP requests and responses.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@author</span> Arjen Poutsma</span><br><span class="line"> * <span class="doctag">@author</span> Juergen Hoeller</span><br><span class="line"> * <span class="doctag">@since</span> 3.0</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpMessageConverter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Indicates whether the given class can be read by this converter.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the class to test for readability</span><br><span class="line">	 * <span class="doctag">@param</span> mediaType the media type to read, can be &#123;<span class="doctag">@code</span> null&#125; if not specified.</span><br><span class="line">	 * Typically the value of a &#123;<span class="doctag">@code</span> Content-Type&#125; header.</span><br><span class="line">	 * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if readable; &#123;<span class="doctag">@code</span> false&#125; otherwise</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">canRead</span><span class="params">(Class&lt;?&gt; clazz, MediaType mediaType)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Indicates whether the given class can be written by this converter.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the class to test for writability</span><br><span class="line">	 * <span class="doctag">@param</span> mediaType the media type to write, can be &#123;<span class="doctag">@code</span> null&#125; if not specified.</span><br><span class="line">	 * Typically the value of an &#123;<span class="doctag">@code</span> Accept&#125; header.</span><br><span class="line">	 * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if writable; &#123;<span class="doctag">@code</span> false&#125; otherwise</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">canWrite</span><span class="params">(Class&lt;?&gt; clazz, MediaType mediaType)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return the list of &#123;<span class="doctag">@link</span> MediaType&#125; objects supported by this converter.</span><br><span class="line">	 * <span class="doctag">@return</span> the list of supported media types</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">List&lt;MediaType&gt; <span class="title">getSupportedMediaTypes</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Read an object of the given type form the given input message, and returns it.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the type of object to return. This type must have previously been passed to the</span><br><span class="line">	 * &#123;<span class="doctag">@link</span> #canRead canRead&#125; method of this interface, which must have returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> inputMessage the HTTP input message to read from</span><br><span class="line">	 * <span class="doctag">@return</span> the converted object</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException in case of I/O errors</span><br><span class="line">	 * <span class="doctag">@throws</span> HttpMessageNotReadableException in case of conversion errors</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">T <span class="title">read</span><span class="params">(Class&lt;? extends T&gt; clazz, HttpInputMessage inputMessage)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, HttpMessageNotReadableException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Write an given object to the given output message.</span><br><span class="line">	 * <span class="doctag">@param</span> t the object to write to the output message. The type of this object must have previously been</span><br><span class="line">	 * passed to the &#123;<span class="doctag">@link</span> #canWrite canWrite&#125; method of this interface, which must have returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> contentType the content type to use when writing. May be &#123;<span class="doctag">@code</span> null&#125; to indicate that the</span><br><span class="line">	 * default content type of the converter must be used. If not &#123;<span class="doctag">@code</span> null&#125;, this media type must have</span><br><span class="line">	 * previously been passed to the &#123;<span class="doctag">@link</span> #canWrite canWrite&#125; method of this interface, which must have</span><br><span class="line">	 * returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> outputMessage the message to write to</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException in case of I/O errors</span><br><span class="line">	 * <span class="doctag">@throws</span> HttpMessageNotWritableException in case of conversion errors</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(T t, MediaType contentType, HttpOutputMessage outputMessage)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, HttpMessageNotWritableException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="spring_提供的实现类">spring 提供的实现类</h3><p><img src="inherit.jpg" alt=""></p>
+<h3 id="spring_提供的实现类">spring 提供的实现类</h3><img src="/2016/11/29/HttpMessageConverter/inherit.jpg" alt="inherit.jpg" title="">
 <table>
 <thead>
 <tr>
@@ -1960,7 +809,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <blockquote>
 <p>The default implementation uses the “DispatcherServlet.properties” file (in the same<br>  package as the DispatcherServlet class) to determine the class names. </p>
 </blockquote>
-<p>  <img src="DispatcherServlet-properties.jpg" alt=""></p>
+  <img src="/2016/11/29/HttpMessageConverter/DispatcherServlet-properties.jpg" alt="DispatcherServlet-properties.jpg" title="">
 <p>Spring 4.3.2 中有一个实现了<code>HandlerAdapter</code>接口的类会被扫描到，这个类叫做<code>RequestMappingHandlerAdapter</code></p>
 <h3 id="RequestMappingHandlerAdapter">RequestMappingHandlerAdapter</h3><p>这个类在构造的时候就加载了许多messageConverter</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RequestMappingHandlerAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    StringHttpMessageConverter stringHttpMessageConverter = <span class="keyword">new</span> StringHttpMessageConverter();</span><br><span class="line">    stringHttpMessageConverter.setWriteAcceptCharset(<span class="keyword">false</span>);  <span class="comment">// see SPR-7316</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.messageConverters = <span class="keyword">new</span> ArrayList&lt;HttpMessageConverter&lt;?&gt;&gt;(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">this</span>.messageConverters.add(<span class="keyword">new</span> ByteArrayHttpMessageConverter());</span><br><span class="line">    <span class="keyword">this</span>.messageConverters.add(stringHttpMessageConverter);</span><br><span class="line">    <span class="keyword">this</span>.messageConverters.add(<span class="keyword">new</span> SourceHttpMessageConverter&lt;Source&gt;());</span><br><span class="line">    <span class="keyword">this</span>.messageConverters.add(<span class="keyword">new</span> AllEncompassingFormHttpMessageConverter());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1982,8 +831,8 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 </ol>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="架构">架构</h2><p><img src="arch.jpg" alt=""></p>
-<h2 id="HttpMessageConverter接口">HttpMessageConverter接口</h2><p><img src="http-message-c]]>
+    <![CDATA[<h2 id="架构">架构</h2><img src="/2016/11/29/HttpMessageConverter/arch.jpg" alt="arch.jpg" title="">
+<h2 id="HttpMessageConverter接口">HttpMessage]]>
     </summary>
     
       <category term="spring" scheme="http://qsli.github.io/tags/spring/"/>
@@ -1997,7 +846,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/11/20/spring-resource/"/>
     <id>http://qsli.github.io/2016/11/20/spring-resource/</id>
     <published>2016-11-20T12:12:14.000Z</published>
-    <updated>2016-12-18T05:07:29.230Z</updated>
+    <updated>2016-12-24T21:27:55.050Z</updated>
     <content type="html"><![CDATA[<h1 id="Spring_Resource">Spring Resource</h1><h2 id="Why_not_Java_URL类">Why not Java URL类</h2><p>原因： 对底层资源的支持不足。</p>
 <ol>
 <li><p>there is no standardized URL implementation that may be used to access a resource that needs to be obtained from the classpath,or relative to a ServletContext.</p>
@@ -2007,7 +856,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 </li>
 </ol>
 <h2 id="Resource_接口">Resource 接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">InputStreamSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return an &#123;<span class="doctag">@link</span> InputStream&#125;.</span><br><span class="line">	 * &lt;p&gt;It is expected that each call creates a &lt;i&gt;fresh&lt;/i&gt; stream.</span><br><span class="line">	 * &lt;p&gt;This requirement is particularly important when you consider an API such</span><br><span class="line">	 * as JavaMail, which needs to be able to read the stream multiple times when</span><br><span class="line">	 * creating mail attachments. For such a use case, it is &lt;i&gt;required&lt;/i&gt;</span><br><span class="line">	 * that each &#123;<span class="doctag">@code</span> getInputStream()&#125; call returns a fresh stream.</span><br><span class="line">	 * <span class="doctag">@return</span> the input stream for the underlying resource (must not be &#123;<span class="doctag">@code</span> null&#125;)</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the stream could not be opened</span><br><span class="line">	 * <span class="doctag">@see</span> org.springframework.mail.javamail.MimeMessageHelper#addAttachment(String, InputStreamSource)</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">InputStream <span class="title">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Resource</span> <span class="keyword">extends</span> <span class="title">InputStreamSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return whether this resource actually exists in physical form.</span><br><span class="line">	 * &lt;p&gt;This method performs a definitive existence check, whereas the</span><br><span class="line">	 * existence of a &#123;<span class="doctag">@code</span> Resource&#125; handle only guarantees a</span><br><span class="line">	 * valid descriptor handle.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return whether the contents of this resource can be read,</span><br><span class="line">	 * e.g. via &#123;<span class="doctag">@link</span> #getInputStream()&#125; or &#123;<span class="doctag">@link</span> #getFile()&#125;.</span><br><span class="line">	 * &lt;p&gt;Will be &#123;<span class="doctag">@code</span> true&#125; for typical resource descriptors;</span><br><span class="line">	 * note that actual content reading may still fail when attempted.</span><br><span class="line">	 * However, a value of &#123;<span class="doctag">@code</span> false&#125; is a definitive indication</span><br><span class="line">	 * that the resource content cannot be read.</span><br><span class="line">	 * <span class="doctag">@see</span> #getInputStream()</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isReadable</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return whether this resource represents a handle with an open</span><br><span class="line">	 * stream. If true, the InputStream cannot be read multiple times,</span><br><span class="line">	 * and must be read and closed to avoid resource leaks.</span><br><span class="line">	 * &lt;p&gt;Will be &#123;<span class="doctag">@code</span> false&#125; for typical resource descriptors.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isOpen</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return a URL handle for this resource.</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the resource cannot be resolved as URL,</span><br><span class="line">	 * i.e. if the resource is not available as descriptor</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">URL <span class="title">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return a URI handle for this resource.</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the resource cannot be resolved as URI,</span><br><span class="line">	 * i.e. if the resource is not available as descriptor</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">URI <span class="title">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return a File handle for this resource.</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the resource cannot be resolved as absolute</span><br><span class="line">	 * file path, i.e. if the resource is not available in a file system</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">File <span class="title">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Determine the content length for this resource.</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the resource cannot be resolved</span><br><span class="line">	 * (in the file system or as some other known physical resource type)</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">long</span> <span class="title">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Determine the last-modified timestamp for this resource.</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the resource cannot be resolved</span><br><span class="line">	 * (in the file system or as some other known physical resource type)</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">long</span> <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Create a resource relative to this resource.</span><br><span class="line">	 * <span class="doctag">@param</span> relativePath the relative path (relative to this resource)</span><br><span class="line">	 * <span class="doctag">@return</span> the resource handle for the relative resource</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException if the relative resource cannot be determined</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">Resource <span class="title">createRelative</span><span class="params">(String relativePath)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Determine a filename for this resource, i.e. typically the last</span><br><span class="line">	 * part of the path: for example, "myfile.txt".</span><br><span class="line">	 * &lt;p&gt;Returns &#123;<span class="doctag">@code</span> null&#125; if this type of resource does not</span><br><span class="line">	 * have a filename.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">String <span class="title">getFilename</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return a description for this resource,</span><br><span class="line">	 * to be used for error output when working with the resource.</span><br><span class="line">	 * &lt;p&gt;Implementations are also encouraged to return this value</span><br><span class="line">	 * from their &#123;<span class="doctag">@code</span> toString&#125; method.</span><br><span class="line">	 * <span class="doctag">@see</span> Object#toString()</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="继承体系">继承体系</h3><p><img src="resource.jpg" alt=""></p>
+<h3 id="继承体系">继承体系</h3><img src="/2016/11/20/spring-resource/resource.jpg" alt="resource.jpg" title="">
 <h2 id="ResourceLoader">ResourceLoader</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ResourceLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Pseudo URL prefix for loading from the class path: "classpath:" */</span></span><br><span class="line">	String CLASSPATH_URL_PREFIX = ResourceUtils.CLASSPATH_URL_PREFIX;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return a Resource handle for the specified resource.</span><br><span class="line">	 * The handle should always be a reusable resource descriptor,</span><br><span class="line">	 * allowing for multiple &#123;<span class="doctag">@link</span> Resource#getInputStream()&#125; calls.</span><br><span class="line">	 * &lt;p&gt;&lt;ul&gt;</span><br><span class="line">	 * &lt;li&gt;Must support fully qualified URLs, e.g. "file:C:/test.dat".</span><br><span class="line">	 * &lt;li&gt;Must support classpath pseudo-URLs, e.g. "classpath:test.dat".</span><br><span class="line">	 * &lt;li&gt;Should support relative file paths, e.g. "WEB-INF/test.dat".</span><br><span class="line">	 * (This will be implementation-specific, typically provided by an</span><br><span class="line">	 * ApplicationContext implementation.)</span><br><span class="line">	 * &lt;/ul&gt;</span><br><span class="line">	 * &lt;p&gt;Note that a Resource handle does not imply an existing resource;</span><br><span class="line">	 * you need to invoke &#123;<span class="doctag">@link</span> Resource#exists&#125; to check for existence.</span><br><span class="line">	 * <span class="doctag">@param</span> location the resource location</span><br><span class="line">	 * <span class="doctag">@return</span> a corresponding Resource handle</span><br><span class="line">	 * <span class="doctag">@see</span> #CLASSPATH_URL_PREFIX</span><br><span class="line">	 * <span class="doctag">@see</span> org.springframework.core.io.Resource#exists</span><br><span class="line">	 * <span class="doctag">@see</span> org.springframework.core.io.Resource#getInputStream</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">Resource <span class="title">getResource</span><span class="params">(String location)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Expose the ClassLoader used by this ResourceLoader.</span><br><span class="line">	 * &lt;p&gt;Clients which need to access the ClassLoader directly can do so</span><br><span class="line">	 * in a uniform manner with the ResourceLoader, rather than relying</span><br><span class="line">	 * on the thread context ClassLoader.</span><br><span class="line">	 * <span class="doctag">@return</span> the ClassLoader (only &#123;<span class="doctag">@code</span> null&#125; if even the system</span><br><span class="line">	 * ClassLoader isn't accessible)</span><br><span class="line">	 * <span class="doctag">@see</span> org.springframework.util.ClassUtils#getDefaultClassLoader()</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">ClassLoader <span class="title">getClassLoader</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ResourceLoader　负责加载Resource, 所有的application context都实现了这个接口。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Resource template = ctx.getResource(<span class="string">"some/resource/path/myTemplate.txt"</span>);</span><br></pre></td></tr></table></figure>
@@ -2079,7 +928,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/11/16/jackson-guava/"/>
     <id>http://qsli.github.io/2016/11/16/jackson-guava/</id>
     <published>2016-11-15T16:10:21.000Z</published>
-    <updated>2016-11-15T16:10:21.665Z</updated>
+    <updated>2016-12-24T21:27:50.676Z</updated>
     <content type="html"><![CDATA[<h2 id="问题">问题</h2><p>Guava中新增了不少好用的集合比如<code>MultiMap</code>、<code>MultiSet</code>、<code>Table</code>等，当使用jackson进行序列化的时候</p>
 <p>这些集合并不能正确的序列化，出现下面的情况：</p>
 <p>正常序列化应该为：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">fields</span>":<span class="value">&#123;</span><br><span class="line">    "<span class="attribute">Field1</span>":<span class="value">[</span><br><span class="line">      &#123;</span><br><span class="line">        "<span class="attribute">index</span>":<span class="value"><span class="number">0</span></span>,</span><br><span class="line">        "<span class="attribute">header</span>":<span class="value"><span class="string">"Field1"</span></span>,</span><br><span class="line">        "<span class="attribute">fieldType</span>":<span class="value"><span class="string">"fieldtype"</span></span>,</span><br><span class="line">        "<span class="attribute">description</span>":<span class="value"><span class="literal">null</span></span>,</span><br><span class="line">        "<span class="attribute">cleanHeader</span>":<span class="value"><span class="literal">null</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">    ]</span>,</span><br><span class="line">    "<span class="attribute">Field2</span>":<span class="value">[</span><br><span class="line">      &#123;</span><br><span class="line">        "<span class="attribute">index</span>":<span class="value"><span class="number">1</span></span>,</span><br><span class="line">        "<span class="attribute">header</span>":<span class="value"><span class="string">"Field2"</span></span>,</span><br><span class="line">        "<span class="attribute">fieldType</span>":<span class="value"><span class="string">"fieldtype"</span></span>,</span><br><span class="line">        "<span class="attribute">description</span>":<span class="value"><span class="literal">null</span></span>,</span><br><span class="line">        "<span class="attribute">cleanHeader</span>":<span class="value"><span class="literal">null</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">    ]</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
@@ -2090,7 +939,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <p>这个<code>GuavaModule</code>是jackson对Guava集合支持的包，它的maven依赖如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.datatype<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-datatype-guava<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.2.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>也可以使用基于xml配置的方式将这个Module导入<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JSON parser configuration--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"guavaObjectMapper"</span> <span class="attribute">class</span>=<span class="value">"com.fasterxml.jackson.databind.ObjectMapper"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.springframework.beans.factory.config.MethodInvokingFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"targetObject"</span>&gt;</span><span class="tag">&lt;<span class="title">ref</span> <span class="attribute">local</span>=<span class="value">"guavaObjectMapper"</span> /&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"targetMethod"</span>&gt;</span><span class="tag">&lt;<span class="title">value</span>&gt;</span>registerModule<span class="tag">&lt;/<span class="title">value</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"arguments"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"guavaModule"</span> <span class="attribute">class</span>=<span class="value">"com.fasterxml.jackson.datatype.guava.GuavaModule"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">mvc:annotation-driven</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">mvc:message-converters</span> <span class="attribute">register-defaults</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"objectMapper"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">ref</span>  <span class="attribute">local</span>=<span class="value">"guavaObjectMapper"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">mvc:message-converters</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">mvc:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="支持的类型">支持的类型</h2><p><img src="jar.png" alt=""></p>
+<h2 id="支持的类型">支持的类型</h2><img src="/2016/11/16/jackson-guava/jar.png" alt="jar.png" title="">
 <h2 id="参考">参考</h2><ol>
 <li><p><a href="http://stackoverflow.com/questions/26979120/spring-mvc-configuration-jackson-guava-multimap" target="_blank" rel="external">Spring MVC configuration + Jackson + Guava multimap</a></p>
 </li>
@@ -2114,9 +963,9 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/31/property-placeholder/"/>
     <id>http://qsli.github.io/2016/10/31/property-placeholder/</id>
     <published>2016-10-30T16:22:23.000Z</published>
-    <updated>2016-12-18T05:13:26.901Z</updated>
+    <updated>2016-12-24T21:27:49.795Z</updated>
     <content type="html"><![CDATA[<h2 id="&lt;context:property-placeholder_location=&#39;xxx&#39;_/&gt;的解析过程"><code>&lt;context:property-placeholder location=&#39;xxx&#39; /&gt;</code>的解析过程</h2><h3 id="schema">schema</h3><p>在idea中<code>ctrl</code> + <code>b</code>或者，<code>ctrl</code> + 鼠标左键点击即可打开schema具体的位置</p>
-<p><img src="location.jpg" alt=""></p>
+<img src="/2016/10/31/property-placeholder/location.jpg" alt="location.jpg" title="">
 <p><code>sping.handlers</code>中内容如下:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http\://www.springframework.org/schema/context=org.springframework.context.config.ContextNamespaceHandler</span><br><span class="line">http\://www.springframework.org/schema/jee=org.springframework.ejb.config.JeeNamespaceHandler</span><br><span class="line">http\://www.springframework.org/schema/lang=org.springframework.scripting.config.LangNamespaceHandler</span><br><span class="line">http\://www.springframework.org/schema/task=org.springframework.scheduling.config.TaskNamespaceHandler</span><br><span class="line">http\://www.springframework.org/schema/cache=org.springframework.cache.config.CacheNamespaceHandler</span><br></pre></td></tr></table></figure>
 <p><code>spring.schemas</code>中的内容如下：</p>
@@ -2125,7 +974,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextNamespaceHandler</span> <span class="keyword">extends</span> <span class="title">NamespaceHandlerSupport</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"property-placeholder"</span>, <span class="keyword">new</span> PropertyPlaceholderBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"property-override"</span>, <span class="keyword">new</span> PropertyOverrideBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"annotation-config"</span>, <span class="keyword">new</span> AnnotationConfigBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"component-scan"</span>, <span class="keyword">new</span> ComponentScanBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"load-time-weaver"</span>, <span class="keyword">new</span> LoadTimeWeaverBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"spring-configured"</span>, <span class="keyword">new</span> SpringConfiguredBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"mbean-export"</span>, <span class="keyword">new</span> MBeanExportBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(<span class="string">"mbean-server"</span>, <span class="keyword">new</span> MBeanServerBeanDefinitionParser());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>顺藤摸瓜就能找到<code>property-placeholder</code>的处理类是<code>PropertyPlaceholderBeanDefinitionParser</code></p>
 <h3 id="PropertyPlaceholderBeanDefinitionParser">PropertyPlaceholderBeanDefinitionParser</h3><p>继承关系：</p>
-<p><img src="hierarchy.jpg" alt=""></p>
+<img src="/2016/10/31/property-placeholder/hierarchy.jpg" alt="hierarchy.jpg" title="">
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PropertyPlaceholderBeanDefinitionParser</span> <span class="keyword">extends</span> <span class="title">AbstractPropertyLoadingBeanDefinitionParser</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SYSTEM_PROPERTIES_MODE_ATTRIBUTE = <span class="string">"system-properties-mode"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SYSTEM_PROPERTIES_MODE_DEFAULT = <span class="string">"ENVIRONMENT"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> Class&lt;?&gt; getBeanClass(Element element) &#123;</span><br><span class="line">		<span class="comment">// As of Spring 3.1, the default value of system-properties-mode has changed from</span></span><br><span class="line">		<span class="comment">// 'FALLBACK' to 'ENVIRONMENT'. This latter value indicates that resolution of</span></span><br><span class="line">		<span class="comment">// placeholders against system properties is a function of the Environment and</span></span><br><span class="line">		<span class="comment">// its current set of PropertySources.</span></span><br><span class="line">		<span class="keyword">if</span> (SYSTEM_PROPERTIES_MODE_DEFAULT.equals(element.getAttribute(SYSTEM_PROPERTIES_MODE_ATTRIBUTE))) &#123;</span><br><span class="line">			<span class="keyword">return</span> PropertySourcesPlaceholderConfigurer.class;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// The user has explicitly specified a value for system-properties-mode: revert to</span></span><br><span class="line">		<span class="comment">// PropertyPlaceholderConfigurer to ensure backward compatibility with 3.0 and earlier.</span></span><br><span class="line">		<span class="keyword">return</span> PropertyPlaceholderConfigurer.class;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doParse</span><span class="params">(Element element, BeanDefinitionBuilder builder)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.doParse(element, builder);</span><br><span class="line"></span><br><span class="line">		builder.addPropertyValue(<span class="string">"ignoreUnresolvablePlaceholders"</span>,</span><br><span class="line">				Boolean.valueOf(element.getAttribute(<span class="string">"ignore-unresolvable"</span>)));</span><br><span class="line"></span><br><span class="line">		String systemPropertiesModeName = element.getAttribute(SYSTEM_PROPERTIES_MODE_ATTRIBUTE);</span><br><span class="line">		<span class="keyword">if</span> (StringUtils.hasLength(systemPropertiesModeName) &amp;&amp;</span><br><span class="line">				!systemPropertiesModeName.equals(SYSTEM_PROPERTIES_MODE_DEFAULT)) &#123;</span><br><span class="line">			builder.addPropertyValue(<span class="string">"systemPropertiesModeName"</span>, <span class="string">"SYSTEM_PROPERTIES_MODE_"</span> + systemPropertiesModeName);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (element.hasAttribute(<span class="string">"value-separator"</span>)) &#123;    </span><br><span class="line">			builder.addPropertyValue(<span class="string">"valueSeparator"</span>, element.getAttribute(<span class="string">"value-separator"</span>));</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (element.hasAttribute(<span class="string">"null-value"</span>)) &#123;</span><br><span class="line">			builder.addPropertyValue(<span class="string">"nullValue"</span>, element.getAttribute(<span class="string">"null-value"</span>));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在<code>getBeanClass</code>中，根据标签中的<code>system-properties-mode</code>属性来返回不同的类，来指明要实例化的类。</p>
 <p>再来看上述的<code>parse</code>方法，首先就是调用父类的<code>doParse</code>方法，然后就是解析标签中的相应属性，放到<code>BeanDefinitionBuilder</code>中，剩下的工作就交给spring这个框架来完成了。</p>
@@ -2165,7 +1014,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">	 * Parses the supplied &#123;<span class="doctag">@link</span> Element&#125; by delegating to the &#123;<span class="doctag">@link</span> BeanDefinitionParser&#125; that is</span><br><span class="line">	 * registered for that &#123;<span class="doctag">@link</span> Element&#125;.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> BeanDefinition <span class="title">parse</span><span class="params">(Element element, ParserContext parserContext)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> findParserForElement(element, parserContext).parse(element, parserContext);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Locates the &#123;<span class="doctag">@link</span> BeanDefinitionParser&#125; from the register implementations using</span><br><span class="line">	 * the local name of the supplied &#123;<span class="doctag">@link</span> Element&#125;.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> BeanDefinitionParser <span class="title">findParserForElement</span><span class="params">(Element element, ParserContext parserContext)</span> </span>&#123;</span><br><span class="line">		String localName = parserContext.getDelegate().getLocalName(element);</span><br><span class="line">		BeanDefinitionParser parser = <span class="keyword">this</span>.parsers.get(localName);</span><br><span class="line">		<span class="keyword">if</span> (parser == <span class="keyword">null</span>) &#123;</span><br><span class="line">			parserContext.getReaderContext().fatal(</span><br><span class="line">					<span class="string">"Cannot locate BeanDefinitionParser for element ["</span> + localName + <span class="string">"]"</span>, element);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> parser;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>就是从在<code>init()</code>方法中注册的<code>Parser</code>,根据对应的标签前缀，获取到parser，对xml元素进行解析。</p>
 <h2 id="生效过程">生效过程</h2><p>生效过程是在<code>BeanFactoryPostProcessor</code>被调用的过程中生效的, 继承关系</p>
-<p><img src="post-processors.jpg" alt=""></p>
+<img src="/2016/10/31/property-placeholder/post-processors.jpg" alt="post-processors.jpg" title="">
 <p>可以看到里面有两个熟悉的类——<code>PropertySourcesPlaceholderConfigurer</code>和<code>PropertyPlaceholderConfigurer</code>，正是<code>PropertyPlaceholderBeanDefinitionParser.getBeanClass</code>返回的两种类型, 也就是说他们两个是<code>BeanFactoryPostProcessor</code>.</p>
 <h3 id="PropertySourcesPlaceholderConfigurer">PropertySourcesPlaceholderConfigurer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">	 * &#123;<span class="doctag">@inheritDoc</span>&#125;</span><br><span class="line">	 * &lt;p&gt;Processing occurs by replacing $&#123;...&#125; placeholders in bean definitions by resolving each</span><br><span class="line">	 * against this configurer's set of &#123;<span class="doctag">@link</span> PropertySources&#125;, which includes:</span><br><span class="line">	 * &lt;ul&gt;</span><br><span class="line">	 * &lt;li&gt;all &#123;<span class="doctag">@linkplain</span> org.springframework.core.env.ConfigurableEnvironment#getPropertySources</span><br><span class="line">	 * environment property sources&#125;, if an &#123;<span class="doctag">@code</span> Environment&#125; &#123;<span class="doctag">@linkplain</span> #setEnvironment is present&#125;</span><br><span class="line">	 * &lt;li&gt;&#123;<span class="doctag">@linkplain</span> #mergeProperties merged local properties&#125;, if &#123;<span class="doctag">@linkplain</span> #setLocation any&#125;</span><br><span class="line">	 * &#123;<span class="doctag">@linkplain</span> #setLocations have&#125; &#123;<span class="doctag">@linkplain</span> #setProperties been&#125;</span><br><span class="line">	 * &#123;<span class="doctag">@linkplain</span> #setPropertiesArray specified&#125;</span><br><span class="line">	 * &lt;li&gt;any property sources set by calling &#123;<span class="doctag">@link</span> #setPropertySources&#125;</span><br><span class="line">	 * &lt;/ul&gt;</span><br><span class="line">	 * &lt;p&gt;If &#123;<span class="doctag">@link</span> #setPropertySources&#125; is called, &lt;strong&gt;environment and local properties will be</span><br><span class="line">	 * ignored&lt;/strong&gt;. This method is designed to give the user fine-grained control over property</span><br><span class="line">	 * sources, and once set, the configurer makes no assumptions about adding additional sources.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postProcessBeanFactory</span><span class="params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.propertySources == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">this</span>.propertySources = <span class="keyword">new</span> MutablePropertySources();</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.environment != <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">this</span>.propertySources.addLast(</span><br><span class="line">					<span class="keyword">new</span> PropertySource&lt;Environment&gt;(ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME, <span class="keyword">this</span>.environment) &#123;</span><br><span class="line">						<span class="annotation">@Override</span></span><br><span class="line">						<span class="function"><span class="keyword">public</span> String <span class="title">getProperty</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">							<span class="keyword">return</span> <span class="keyword">this</span>.source.getProperty(key);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				PropertySource&lt;?&gt; localPropertySource =</span><br><span class="line">						<span class="keyword">new</span> PropertiesPropertySource(LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME, mergeProperties());</span><br><span class="line">				<span class="keyword">if</span> (<span class="keyword">this</span>.localOverride) &#123;</span><br><span class="line">					<span class="keyword">this</span>.propertySources.addFirst(localPropertySource);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">this</span>.propertySources.addLast(localPropertySource);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanInitializationException(<span class="string">"Could not load properties"</span>, ex);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		processProperties(beanFactory, <span class="keyword">new</span> PropertySourcesPropertyResolver(<span class="keyword">this</span>.propertySources));</span><br><span class="line">		<span class="keyword">this</span>.appliedPropertySources = <span class="keyword">this</span>.propertySources;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>注意上述的<code>localOverride</code>变量，它决定了是否用本地的替换系统的，主要是用加载的顺序呢控制的</p>
@@ -2224,7 +1073,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/23/custom-tag/"/>
     <id>http://qsli.github.io/2016/10/23/custom-tag/</id>
     <published>2016-10-23T11:43:57.000Z</published>
-    <updated>2016-12-18T05:09:43.901Z</updated>
+    <updated>2016-12-24T20:41:39.155Z</updated>
     <content type="html"><![CDATA[<h2 id="自定义标签">自定义标签</h2><p>Spring中的标签具有很强的扩展性，我们可以很方便的扩展出自己的标签，做出类似下面的标签<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dubbo:service</span> <span class="attribute">interface</span>=<span class="value">"com.foo.BarService"</span> <span class="attribute">ref</span>=<span class="value">"barService"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dubbo:reference</span> <span class="attribute">id</span>=<span class="value">"barService"</span> <span class="attribute">interface</span>=<span class="value">"com.foo.BarService"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="1-_Authoring_the_schema">1. Authoring the schema</h3><p>定义标签的xml描述：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">xsd:schema</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.mycompany.com/schema/myns"</span></span><br><span class="line">        <span class="attribute">xmlns:xsd</span>=<span class="value">"http://www.w3.org/2001/XMLSchema"</span></span><br><span class="line">        <span class="attribute">xmlns:beans</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">        <span class="attribute">targetNamespace</span>=<span class="value">"http://www.mycompany.com/schema/myns"</span></span><br><span class="line">        <span class="attribute">elementFormDefault</span>=<span class="value">"qualified"</span></span><br><span class="line">        <span class="attribute">attributeFormDefault</span>=<span class="value">"unqualified"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">xsd:import</span> <span class="attribute">namespace</span>=<span class="value">"http://www.springframework.org/schema/beans"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">xsd:element</span> <span class="attribute">name</span>=<span class="value">"dateformat"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">xsd:complexType</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">xsd:complexContent</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">xsd:extension</span> <span class="attribute">base</span>=<span class="value">"beans:identifiedType"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">xsd:attribute</span> <span class="attribute">name</span>=<span class="value">"lenient"</span> <span class="attribute">type</span>=<span class="value">"xsd:boolean"</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">xsd:attribute</span> <span class="attribute">name</span>=<span class="value">"pattern"</span> <span class="attribute">type</span>=<span class="value">"xsd:string"</span> <span class="attribute">use</span>=<span class="value">"required"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">xsd:extension</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">xsd:complexContent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">xsd:complexType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">xsd:element</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">xsd:schema</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -2267,7 +1116,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/16/plantuml/"/>
     <id>http://qsli.github.io/2016/10/16/plantuml/</id>
     <published>2016-10-15T16:56:07.000Z</published>
-    <updated>2016-12-18T05:12:28.189Z</updated>
+    <updated>2016-12-24T20:41:30.746Z</updated>
     <content type="html"><![CDATA[<h2 id="是什么？">是什么？</h2><blockquote>
 <p>PlantUML is a component that allows to quickly write :</p>
 <ul>
@@ -2326,7 +1175,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/05/javadoc/"/>
     <id>http://qsli.github.io/2016/10/05/javadoc/</id>
     <published>2016-10-04T16:06:29.000Z</published>
-    <updated>2016-10-04T16:13:44.837Z</updated>
+    <updated>2016-12-24T20:41:34.661Z</updated>
     <content type="html"><![CDATA[<p><code>Tools | Generate JavaDoc</code>, 写上输出路径即可。</p>
 <h2 id="注意事项">注意事项</h2><ol>
 <li><p>locale</p>
@@ -2366,15 +1215,16 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/02/spring-mvc/"/>
     <id>http://qsli.github.io/2016/10/02/spring-mvc/</id>
     <published>2016-10-02T14:14:25.000Z</published>
-    <updated>2016-12-18T05:07:45.301Z</updated>
-    <content type="html"><![CDATA[<h2 id="架构">架构</h2><p><img src="arch.jpg" alt=""></p>
+    <updated>2016-12-24T21:27:48.974Z</updated>
+    <content type="html"><![CDATA[<h2 id="架构">架构</h2><img src="/2016/10/02/spring-mvc/arch.jpg" alt="arch.jpg" title="">
 <p>SpringMVC的核心是 <code>DispatcherServlet</code></p>
 <h2 id="本质">本质</h2><p>我们通过在<code>web.xml</code>中配置如下的语句，引入SpringMVC</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>mvc-dispatcher<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>classpath:/spring/mvc/mvc-dispatcher-servlet.xml<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="title">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>上述代码段指定了servlet的class是spring的<code>DispatcherServlet</code>，初始化配置文件是<code>mvc-dispatcher-servlet.xml</code>,以及servlet的加载顺序。</p>
-<p>既然<code>DispatcherServlet</code>也是一个<code>Servlet</code>，那他肯定也遵从servlet的规范。<br>我们知道Servlet定义了如下的接口：<br><img src="servlet-interface.jpg" alt=""><br>其中比较重要的是<code>init</code>和<code>service</code>接口<br><code>init</code>方法在servlet的一生中只初始化一次，<code>service</code>接口是Servlet对外提供服务的接口<br>Servlet的生命周期如下:<br><img src="Servlet_LifeCycle.jpg" alt=""></p>
+<p>既然<code>DispatcherServlet</code>也是一个<code>Servlet</code>，那他肯定也遵从servlet的规范。<br>我们知道Servlet定义了如下的接口：<br><img src="/2016/10/02/spring-mvc/servlet-interface.jpg" alt="servlet-interface.jpg" title=""></p>
+<p>其中比较重要的是<code>init</code>和<code>service</code>接口<br><code>init</code>方法在servlet的一生中只初始化一次，<code>service</code>接口是Servlet对外提供服务的接口<br>Servlet的生命周期如下:<br><img src="/2016/10/02/spring-mvc/Servlet_LifeCycle.jpg" alt="Servlet_LifeCycle.jpg" title=""></p>
 <p>我们来看下<code>DispatcherServlet</code>的继承结构：</p>
-<p><img src="hierachy.jpg" alt=""></p>
+<img src="/2016/10/02/spring-mvc/hierachy.jpg" alt="hierachy.jpg" title="">
 <h3 id="init方法">init方法</h3><p>直接去看<code>DispatcherServlet</code>的源码是没有发现<code>init</code>方法的， 它的<code>init</code>方法继承自<code>HttpServletBean</code>，源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span><br><span class="line"> * Map config parameters onto bean properties of this servlet, and</span><br><span class="line"> * invoke subclass initialization.</span><br><span class="line"> * <span class="doctag">@throws</span> ServletException if bean properties are invalid (or required</span><br><span class="line"> * properties are missing), or if subclass initialization fails.</span><br><span class="line"> */</span></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">		logger.debug(<span class="string">"Initializing servlet '"</span> + getServletName() + <span class="string">"'"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set bean properties from init parameters.</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		PropertyValues pvs = <span class="keyword">new</span> ServletConfigPropertyValues(getServletConfig(), <span class="keyword">this</span>.requiredProperties);</span><br><span class="line">		BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(<span class="keyword">this</span>);</span><br><span class="line">		ResourceLoader resourceLoader = <span class="keyword">new</span> ServletContextResourceLoader(getServletContext());</span><br><span class="line">		bw.registerCustomEditor(Resource.class, <span class="keyword">new</span> ResourceEditor(resourceLoader, getEnvironment()));</span><br><span class="line">		initBeanWrapper(bw);</span><br><span class="line">		bw.setPropertyValues(pvs, <span class="keyword">true</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (BeansException ex) &#123;</span><br><span class="line">		logger.error(<span class="string">"Failed to set bean properties on servlet '"</span> + getServletName() + <span class="string">"'"</span>, ex);</span><br><span class="line">		<span class="keyword">throw</span> ex;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Let subclasses do whatever initialization they like.</span></span><br><span class="line">	initServletBean();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">		logger.debug(<span class="string">"Servlet '"</span> + getServletName() + <span class="string">"' configured successfully"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在这个方法中，主要完成了bean属性的配置，并且给子类留下了相应的hook</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Let subclasses do whatever initialization they like.</span></span><br><span class="line">initServletBean();</span><br></pre></td></tr></table></figure>
@@ -2427,9 +1277,9 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">	 * Render the view given the specified model.</span><br><span class="line">	 * &lt;p&gt;The first step will be preparing the request: In the JSP case,</span><br><span class="line">	 * this would mean setting model objects as request attributes.</span><br><span class="line">	 * The second step will be the actual rendering of the view,</span><br><span class="line">	 * for example including the JSP via a RequestDispatcher.</span><br><span class="line">	 * <span class="doctag">@param</span> model Map with name Strings as keys and corresponding model</span><br><span class="line">	 * objects as values (Map can also be &#123;<span class="doctag">@code</span> null&#125; in case of empty model)</span><br><span class="line">	 * <span class="doctag">@param</span> request current HTTP request</span><br><span class="line">	 * <span class="doctag">@param</span> response HTTP response we are building</span><br><span class="line">	 * <span class="doctag">@throws</span> Exception if rendering failed</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&lt;String, ?&gt; model, HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception</span>;</span><br></pre></td></tr></table></figure>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="架构">架构</h2><p><img src="arch.jpg" alt=""></p>
+    <![CDATA[<h2 id="架构">架构</h2><img src="/2016/10/02/spring-mvc/arch.jpg" alt="arch.jpg" title="">
 <p>SpringMVC的核心是 <code>DispatcherServlet</code></p>
-<h2 id="本质">本质</h2><p>我们通过在<code>w]]>
+<]]>
     </summary>
     
       <category term="spring mvc" scheme="http://qsli.github.io/tags/spring-mvc/"/>
@@ -2443,7 +1293,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/10/02/jsonp/"/>
     <id>http://qsli.github.io/2016/10/02/jsonp/</id>
     <published>2016-10-02T03:42:13.000Z</published>
-    <updated>2016-10-02T03:42:13.143Z</updated>
+    <updated>2016-12-24T21:27:50.410Z</updated>
     <content type="html"><![CDATA[<h2 id="同源策略">同源策略</h2><blockquote>
 <p>同源策略限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
 </blockquote>
@@ -2511,7 +1361,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
 <blockquote>
 <p>浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。</p>
 </blockquote>
-<p>请求的流程图如下：<br><img src="cors.png" alt=""></p>
+<p>请求的流程图如下：<br><img src="/2016/10/02/jsonp/cors.png" alt="cors.png" title=""></p>
 <p>详细原理参考阮一峰老师的<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="external">跨域资源共享 CORS 详解</a></p>
 <h3 id="Websocket">Websocket</h3><blockquote>
 <p>WebSocket是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。</p>
@@ -2548,7 +1398,7 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/09/30/pagination/"/>
     <id>http://qsli.github.io/2016/09/30/pagination/</id>
     <published>2016-09-29T16:19:07.000Z</published>
-    <updated>2016-09-29T16:51:48.544Z</updated>
+    <updated>2016-12-24T20:41:31.251Z</updated>
     <content type="html"><![CDATA[<h2 id="逻辑分页">逻辑分页</h2><p>就是将所有的结果集拿出来，然后在程序中进行截取，由于所有的数据都是在内存中的，占用内存比较大</p>
 <h2 id="物理分页">物理分页</h2><p>物理分页是指基于数据库提供的类似 <code>limit offset,rows</code>这样的语法。</p>
 <p>但是，比如<code>limit 10000,20</code>,  就会读取10020条数据，但是只会返回后面20条数据。</p>

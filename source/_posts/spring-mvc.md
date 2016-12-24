@@ -1,11 +1,16 @@
 title: Spring Mvc源码剖析
 tags: spring mvc
 category: spring
+toc: true
+
 date: 2016-10-02 22:14:25
 ---
 
 ## 架构
-![](arch.jpg)
+{%  asset_img   arch.jpg  %}
+
+
+
 
 SpringMVC的核心是 `DispatcherServlet`
 
@@ -29,15 +34,24 @@ SpringMVC的核心是 `DispatcherServlet`
 
 既然`DispatcherServlet`也是一个`Servlet`，那他肯定也遵从servlet的规范。
 我们知道Servlet定义了如下的接口：
-![](servlet-interface.jpg)
+{%  asset_img   servlet-interface.jpg  %}
+
+
+
 其中比较重要的是`init`和`service`接口
 `init`方法在servlet的一生中只初始化一次，`service`接口是Servlet对外提供服务的接口
 Servlet的生命周期如下:
-![](Servlet_LifeCycle.jpg)
+{%  asset_img   Servlet_LifeCycle.jpg  %}
+
+
+
 
 我们来看下`DispatcherServlet`的继承结构：
 
-![](hierachy.jpg)
+{%  asset_img   hierachy.jpg  %}
+
+
+
 
 ### init方法
 

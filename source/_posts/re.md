@@ -1,6 +1,8 @@
 title: 正则总结
 tags: re
 category: base
+toc: true
+
 date: 2016-12-14 23:48:12
 ---
 
@@ -9,11 +11,19 @@ date: 2016-12-14 23:48:12
 
 推荐使用`RegexBudy`
 
-![RegexBuddy](https://www.regexbuddy.com/img/icon.png)
+
+![](https://www.regexbuddy.com/img/icon.png)
+
+
+
 
 界面如下:
 
-![regexbuddy](https://www.regexbuddy.com/screens/regexbuddy.png)
+
+![](https://www.regexbuddy.com/screens/regexbuddy.png)
+
+
+
 
 推荐python的 `VerbalExpressions` [PythonVerbalExpressions ](https://github.com/VerbalExpressions/PythonVerbalExpressions)
 

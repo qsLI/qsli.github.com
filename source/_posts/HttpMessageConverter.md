@@ -1,15 +1,25 @@
 title: HttpMessageConverter 原理和源码
 tags: spring
 category: web
+toc: true
+
 date: 2016-11-29 02:48:45
 ---
 
 ## 架构
-![](arch.jpg)
+{%  asset_img   arch.jpg  %}
+
+
+
 
 ## HttpMessageConverter接口
 
-![](http-message-converter.jpg)
+
+
+![](http-message-converter.jpg    )
+
+
+
 
 >`HttpMessageConverter` used to
 marshal objects into the HTTP request body and to unmarshal any response back into an object.
@@ -128,7 +138,10 @@ public interface HttpMessageConverter<T> {
 
 ### spring 提供的实现类
 
-![](inherit.jpg)
+{%  asset_img   inherit.jpg  %}
+
+
+
 
 |名称|
 |---|
@@ -161,7 +174,10 @@ public interface HttpMessageConverter<T> {
 > The default implementation uses the "DispatcherServlet.properties" file (in the same
   package as the DispatcherServlet class) to determine the class names. 
 
-  ![](DispatcherServlet-properties.jpg)
+  {%  asset_img   DispatcherServlet-properties.jpg  %}
+
+
+
 
 Spring 4.3.2 中有一个实现了`HandlerAdapter`接口的类会被扫描到，这个类叫做`RequestMappingHandlerAdapter`
 

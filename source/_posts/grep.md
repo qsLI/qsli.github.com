@@ -1,6 +1,8 @@
 title: grep 总结
 tags: shell
 category: linux
+toc: true
+
 date: 2016-12-07 00:12:54
 ---
 
@@ -111,7 +113,10 @@ test.txt:watcher on the walls. I am the shield that guards the realms of
 
 `grep -H --color 'watch' test.txt`
 
-![](color.jpg)
+{%  asset_img   color.jpg  %}
+
+
+
 
 ### 设置环境变量
 
@@ -135,7 +140,10 @@ export GREP_OPTIONS='--color=auto'
 
 `grep --color -E  'am | to' test.txt`
 
-![](egrep.jpg)
+{%  asset_img   egrep.jpg  %}
+
+
+
 
 ## zgrep
 

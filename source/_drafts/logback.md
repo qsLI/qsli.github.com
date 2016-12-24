@@ -1,6 +1,8 @@
 title: logback 使用
 tags: logback
 category: java
+toc: true
+
 ---
 
 # Logback总结
@@ -20,7 +22,10 @@ highlight 关键字
 ```
 效果:
 
-![](colored.jpg)
+{%  asset_img   colored.jpg  %}
+
+
+
 
 # 参考
 1. [COLORED LOGS IN A CONSOLE (ANSI STYLING)](http://blog.codeleak.pl/2014/02/colored-logs-in-console-ansi-styling.html)

@@ -2,6 +2,8 @@ title: plantuml——用编码的方式画UML
 date: 2016-10-16 00:56:07
 tags: uml
 category: hexo
+toc: true
+
 ---
 ## 是什么？
 

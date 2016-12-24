@@ -1,6 +1,8 @@
 title: Spring占位符（property-placeholder），源码阅读
 tags: placeholder
 category: spring
+toc: true
+
 date: 2016-10-31 00:22:23
 ---
 
@@ -11,7 +13,10 @@ date: 2016-10-31 00:22:23
 
 在idea中`ctrl` + `b`或者，`ctrl` + 鼠标左键点击即可打开schema具体的位置
 
-![](location.jpg)
+{%  asset_img   location.jpg  %}
+
+
+
 
 `sping.handlers`中内容如下:
 
@@ -91,7 +96,10 @@ public class ContextNamespaceHandler extends NamespaceHandlerSupport {
 
 继承关系：
 
-![](hierarchy.jpg)
+{%  asset_img   hierarchy.jpg  %}
+
+
+
 
 ```java
 class PropertyPlaceholderBeanDefinitionParser extends AbstractPropertyLoadingBeanDefinitionParser {
@@ -338,7 +346,10 @@ public BeanDefinition parseCustomElement(Element ele) {
 
 生效过程是在`BeanFactoryPostProcessor`被调用的过程中生效的, 继承关系
 
-![](post-processors.jpg)
+{%  asset_img   post-processors.jpg  %}
+
+
+
 
 可以看到里面有两个熟悉的类——`PropertySourcesPlaceholderConfigurer`和`PropertyPlaceholderConfigurer`，正是`PropertyPlaceholderBeanDefinitionParser.getBeanClass`返回的两种类型, 也就是说他们两个是`BeanFactoryPostProcessor`.
 

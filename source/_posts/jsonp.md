@@ -1,6 +1,8 @@
 title: JS跨域原理
 tags: ajax
 category: fe
+toc: true
+
 date: 2016-10-02 11:42:13
 ---
 
@@ -61,7 +63,10 @@ CORS是一个W3C标准, 不仅支持GET方式还支持POST方式的跨域请求
 > 浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。
 
 请求的流程图如下：
-![](cors.png)
+{%  asset_img   cors.png  %}
+
+
+
 
 详细原理参考阮一峰老师的[跨域资源共享 CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors.html)
 

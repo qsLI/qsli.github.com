@@ -1,6 +1,8 @@
 title: jackson对guava新增集合的支持
 tags: jackson
 category: spring
+toc: true
+
 date: 2016-11-16 00:10:21
 ---
 
@@ -102,7 +104,10 @@ String tableString = mapper.writeValueAsString(table);
 
 ## 支持的类型
 
-![](jar.png)
+{%  asset_img   jar.png  %}
+
+
+
 
 ## 参考
 

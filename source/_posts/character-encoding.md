@@ -2,6 +2,8 @@ title: Unicode历史
 date: 2016-09-26 16:56:08
 tags: 编码
 category: base
+toc: true
+
 ---
 # 字符编码
 
@@ -20,7 +22,10 @@ category: base
 
 ## Unicode编码
 
-![](Unicode_logo.jpg)
+{%  asset_img   Unicode_logo.jpg  %}
+
+
+
 
 >Unicode provides a unique number for every character,
 
@@ -39,7 +44,10 @@ The number assigned to a character is called a **code point**. A code point is d
 hexadecimal number from 4 to 8 digits long. Most of the code points in use are 4 digits long. For example,
 `U+03C6` is the code point for the Greek character f.
 
-![](unicode-layout.jpg)
+{%  asset_img   unicode-layout.jpg  %}
+
+
+
 
 >在文字处理方面，统一码为每一个字符而非字形定义唯一的代码（即一个整数）。换句话说，统一码以一种抽象的方式（即数字）来处理字符，并将视觉上的演绎工作（例如字体大小、外观形状、字体形态、文体等）留给其他软件来处理，例如网页浏览器或是文字处理器。
 
@@ -179,7 +187,10 @@ Little Endian
 
 ## emoji
 
-![](emoji.jpg)
+{%  asset_img   emoji.jpg  %}
+
+
+
 
 emoji表情采用的是 Unicode编码，Emoji就是一种在Unicode位于`\u1F601-\u1F64F`区段的字符。这个显然超过了目前常用的UTF-8字符集的编码范围`\u0000-\uFFFF`。
 

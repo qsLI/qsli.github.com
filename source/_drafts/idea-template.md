@@ -1,6 +1,8 @@
 title: idea文件模板
 tags: template
 category: idea
+toc: true
+
 ---
 
 # 版权信息
@@ -39,7 +41,10 @@ package com.google.common.collect;
 
 `$today.year`代表当前的年
 
-![](profiles.jpg)
+{%  asset_img   profiles.jpg  %}
+
+
+
 
 新建java文件时就自动生成了版权信息：
 

@@ -2,6 +2,8 @@ title: spring-resource源码剖析
 date: 2016-11-20 20:12:14
 tags: resource
 category: spring
+toc: true
+
 ---
 
 
@@ -135,7 +137,10 @@ public interface Resource extends InputStreamSource {
 ```
 ### 继承体系
 
-![](resource.jpg)
+{%  asset_img   resource.jpg  %}
+
+
+
 
 ## ResourceLoader
 

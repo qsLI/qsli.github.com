@@ -2,6 +2,8 @@ title: linux 下使用 shadowsocks
 date: 2015-10-09 19:44:14
 tags: shadowsocks
 category: linux
+toc: true
+
 ---
 ## 安装shadowsocks
 shadowsocks 是使用 python 编写的，用 python 的包管理软件 pip 安装即可

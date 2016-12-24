@@ -1,6 +1,8 @@
 title: Java SPI 总结
 tags: spi
 category: java
+toc: true
+
 date: 2016-12-17 21:39:32
 ---
 
@@ -11,7 +13,10 @@ SPI 代表`Service Provider Interfaces`, 是一种服务提供发现的机制。
 
 ## 使用约定
 
-![使用约定](usage.jpg)
+{%  asset_img  usage.jpg  使用约定  %}
+
+
+
 
 ```
 

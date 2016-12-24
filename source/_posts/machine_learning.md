@@ -2,6 +2,8 @@ title: 机器学习框架调研
 date: 2015-11-03 23:55:34
 tags: 机器学习  
 category: 机器学习
+toc: true
+
 ---
 
 # 机器学习框架调研
@@ -33,7 +35,10 @@ category: 机器学习
 
 ## TensorFlow
 
-![](http://tensorflow.org/images/tensors_flowing.gif)
+
+
+![](http://tensorflow.org/images/tensors_flowing.gif   )
+
 文档地址: [http://tensorflow.org/get_started/index.html](http://tensorflow.org/get_started/index.html)
 项目地址： [http://tensorflow.org/](http://tensorflow.org/)
 语言: Python
@@ -49,7 +54,12 @@ category: 机器学习
 [http://www.leiphone.com/news/201511/Voza1pFNQB4bzKdR.html](http://www.leiphone.com/news/201511/Voza1pFNQB4bzKdR.html)
 
 ## Torch
-![](http://torch.ch/static/flow-hero-logo.png)
+
+
+![](http://torch.ch/static/flow-hero-logo.png    )
+
+
+
 项目地址: [https://github.com/torch/torch7](https://github.com/torch/torch7)
 项目博客: [http://torch.ch/blog/](http://torch.ch/blog/)
 Slides: [https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf](https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf)
@@ -82,7 +92,12 @@ Slides: [https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf](https:/
 > GraphLab是一个流行的图谱分析（Graph Analysis）和机器学习的开源项目，2013年该项目剥离出一个独立运作的商业公司GraphLab Inc
 > - HDFS。GraphLab 内置对HDFS 的支持，GraphLab 能够直接从HDFS中读数据或者将计算结果数据直接写入到HDFS 中。
 
-![http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png](http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png)
+
+
+![](http://www.ctocio.com/wp-content/uploads/2014/10/graphlab-deeplearning-_thumb.png    )
+
+
+
 
 ### 参考链接
 [GraphLab Create使深度学习更easy](http://planckscale.info/?p=226)
@@ -98,7 +113,12 @@ Slides: [https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf](https:/
 >    - GPU integration
 >    - Scalable on Hadoop, Spark and Akka + AWS et al
 
-![](http://deeplearning4j.org/img/schematic_overview.png)
+
+
+![](http://deeplearning4j.org/img/schematic_overview.png    )
+
+
+
 
 ### 参考链接
 [DL4J vs. Torch vs. Theano vs. Caffe](http://deeplearning4j.org/compare-dl4j-torch7-pylearn.html)
@@ -113,8 +133,18 @@ Slides: [https://docs.google.com/presentation/d/1UeKXVgRvvxg9OUdh_UiC5G71UMscNPl
 >The Caffe framework from UC Berkeley is designed to let researchers create and explore CNNs and other Deep Neural Networks (DNNs) easily, while delivering high speed needed for both experiments and industrial deployment [5]. Caffe provides state-of-the-art modeling for advancing and deploying deep learning in research and industry with support for a wide variety of architectures and efficient implementations of prediction and learning.
 
 
-![](http://d.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=520e49ddb51bb0519b29bb7a5713b1d1/5882b2b7d0a20cf4cad4bb2070094b36adaf998d.jpg)
-![](http://img.ptcms.csdn.net/article/201507/08/559cebc9330f2_middle.jpg)
+
+
+![](http://d.hiphotos.baidu.com/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=520e49ddb51bb0519b29bb7a5713b1d1/5882b2b7d0a20cf4cad4bb2070094b36adaf998d.jpg    )
+
+
+
+
+
+![](http://img.ptcms.csdn.net/article/201507/08/559cebc9330f2_middle.jpg    )
+
+
+
 ### 参考链接
 [Caffe: Convolutional Architecture for Fast Feature Embedding](http://ucb-icsi-vision-group.github.io/caffe-paper/caffe.pdf)
 

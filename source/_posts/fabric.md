@@ -1,7 +1,9 @@
 title: fabric 分布式部署
 date: 2015-11-03 23:55:34
-tags: fabric  运维
-category: python linux
+tags: fabric
+category: python
+toc: true
+
 ---
 
 ## 前言
@@ -32,7 +34,12 @@ category: python linux
 
 可以通过指定ssh 参数 `-o StrictHostKeyChecking=no` 来省去下面的交互过程 
  
-![](http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg)
+
+
+![](http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg    )
+
+
+
 
 **但是上面的方法执行 sudo 命令的时候会出错**
 此时需要加上 ssh 的 `-t` 参数

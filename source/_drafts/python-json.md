@@ -1,6 +1,8 @@
 title: python-json
 tags:
 category:
+toc: true
+
 ---
 
 https://blog.nicky-zs.com/blog/17/

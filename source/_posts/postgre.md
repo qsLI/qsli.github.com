@@ -2,9 +2,15 @@ title: Postgre数据库简介
 date: 2016-09-27 13:15:07
 tags: postgresql
 category: base
+toc: true
+
 ---
 
-![](https://www.postgresql.org/media/img/layout/hdr_left.png)
+
+![](https://www.postgresql.org/media/img/layout/hdr_left.png   )
+
+
+
 
 ## 简介
 
@@ -15,7 +21,10 @@ category: base
 
 发展流程:
 
-![](history.jpg)
+{%  asset_img   history.jpg  %}
+
+
+
 
 > PostgreSQL 的前身是 BSD 的始于 1977 年的 Ingres 项目，82年，项目领导人Michael Stonebraker 将其商业化。85年正式更名为Postgres。
 
@@ -29,7 +38,10 @@ PG支持的语言非常多，各种脚本语言，例如：Lua、Perl、Python�
 
 架构图：
 
-![](arch.jpg)
+{%  asset_img   arch.jpg  %}
+
+
+
 > 图片来自
 > <https://wiki.postgresql.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E6%AF%94>
 

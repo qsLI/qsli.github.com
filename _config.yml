@@ -65,7 +65,10 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 # theme: yilia
 # theme: next
-theme: jacman
+#theme: jacman
+theme: maupassant
+# theme: freemind
+# theme: nova
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html

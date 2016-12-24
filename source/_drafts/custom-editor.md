@@ -1,6 +1,8 @@
 title: Spring中的bean属性编辑器——BeanWrapper
 tags: PropertyEditor
 category: spring
+toc: true
+
 ---
 
 ## 源起

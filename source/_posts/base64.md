@@ -2,6 +2,8 @@ title: Base64编码原理
 date: 2016-09-26 14:37:33
 tags: 编码
 category: base
+toc: true
+
 ---
 
 ## 是什么？
@@ -19,7 +21,10 @@ category: base
 > 来自 [Base64笔记-阮一峰](http://www.ruanyifeng.com/blog/2008/06/base64.html)
 
 ## 原理
-![](encoding.jpg)
+{%  asset_img   encoding.jpg  %}
+
+
+
 
 >转换的时候，将三个byte的数据，先后放入一个24bit的缓冲区中，先来的byte占高位。数据不足3byte的话，于缓冲器中剩下的bit用0补足。然后，每次取出6（因为26=64）个bit，按照其值选择ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/中的字符作为编码后的输出。不断进行，直到全部输入数据转换完成。
 
@@ -31,7 +36,10 @@ category: base
   2. 进行base64的编码
   3. 在编码后的base64文本后加上一个或两个'='号，代表补足的字节数
 
-  ![](encoding2.jpg)
+  {%  asset_img   encoding2.jpg  %}
+
+
+
 
   Base64字符串只可能最后出现一个或两个"="，中间是不可能出现"="的
 
