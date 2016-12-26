@@ -4,7 +4,7 @@
   <subtitle><![CDATA[越积极，越幸运]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://qsli.github.io/"/>
-  <updated>2016-12-24T22:07:21.534Z</updated>
+  <updated>2016-12-26T12:56:05.511Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -15,63 +15,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="http://qsli.github.io/2016/12/25/java-permission-control/"/>
-    <id>http://qsli.github.io/2016/12/25/java-permission-control/</id>
-    <published>2016-12-24T22:07:21.534Z</published>
-    <updated>2016-12-24T22:07:21.534Z</updated>
-    <content type="html"><![CDATA[<p>title: java 访问权限区别<br>date: 2015-10-20 09:57:22<br>tags: 访问权限<br>category: java<br>toc: true</p>
-<h2 id="类成员的访问权限">类成员的访问权限</h2><table>
-<thead>
-<tr>
-<th>Modifier</th>
-<th>Class</th>
-<th>Package</th>
-<th>Subclass</th>
-<th>World</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>public</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>protect</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>x</td>
-</tr>
-<tr>
-<td>no modifier</td>
-<td>√</td>
-<td>√</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr>
-<td>private</td>
-<td>√</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-</tbody>
-</table>
-<p>没有修饰符的话就相当于package可见，如果子类不在同一个package则也不能访问相应的方法。</p>
-<blockquote>
-<p><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" target="_blank" rel="external">Controlling Access to Members of a Class</a><br><a href="http://blog.csdn.net/johnstrive/article/details/5880357" target="_blank" rel="external">JAVA修饰符类型</a></p>
+    <title><![CDATA[web.xml]]></title>
+    <link href="http://qsli.github.io/2016/12/26/web-xml/"/>
+    <id>http://qsli.github.io/2016/12/26/web-xml/</id>
+    <published>2016-12-26T12:56:05.511Z</published>
+    <updated>2016-12-26T12:56:05.511Z</updated>
+    <content type="html"><![CDATA[<h2 id="load-on-startup标签">load-on-startup标签</h2><blockquote>
+<p>Servlets are initialized either lazily at request processing time or eagerly during<br>deployment. In the latter case, they are initialized in the order indicated by<br>their load-on-startup elements.</p>
 </blockquote>
+<p>在web容器启动的时候，可以采用<code>lazily</code>加载的方式和<code>eagerly</code>的方式。</p>
+<p><code>load-on-startup</code>中的值决定了进行哪种方式。</p>
+<blockquote>
+<p>If the value is a negative integer, or the element is not present, the<br>container is free to load the servlet whenever it chooses. If the value is a positive<br>integer or 0, the container must load and initialize the servlet as the application is<br>deployed.</p>
+</blockquote>
+<p>如果<load-on-startup>这个元素没有出现，或者出现了但是里面的值是负的，容器可以按照自己的需要选择加载Servlet的时机。</load-on-startup></p>
+<p>如果里面的值是正数或者0，容器必须保证在容器启动的时候加载和初始化这个servlet</p>
+<blockquote>
+<p> The container must guarantee that servlets marked with lower integers<br>are loaded before servlets marked with higher integers.</p>
+</blockquote>
+<p>这个值越小，优先级越高，容器优先加载。</p>
+<blockquote>
+<p>The container may choose<br>the order of loading of servlets with the same load-on-startup value.</p>
+</blockquote>
+<p>如果里面的值是一样的，那么加载的顺序由容器来决定（不同实现可能不同）</p>
+<h1 id="参考">参考</h1><ol>
+<li>Java Servlet Specification 3.0</li>
+</ol>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>title: java 访问权限区别<br>date: 2015-10-20 09:57:22<br>tags: 访问权限<br>category: java<br>toc: true</p>
-<h2 id="类成员的访问权限">类成员的访问权限</h2><table>
-<]]>
+    <![CDATA[<h2 id="load-on-startup标签">load-on-startup标签</h2><blockquote>
+<p>Servlets are initialized either lazily at request processing time or eagerl]]>
     </summary>
+    
+      <category term="servlet" scheme="http://qsli.github.io/tags/servlet/"/>
+    
+      <category term="web" scheme="http://qsli.github.io/categories/web/"/>
     
   </entry>
   
@@ -744,19 +722,59 @@ be placed <span class="keyword">into</span> <span class="operator">the</span> so
     <link href="http://qsli.github.io/2016/11/29/HttpMessageConverter/"/>
     <id>http://qsli.github.io/2016/11/29/HttpMessageConverter/</id>
     <published>2016-11-28T18:48:45.000Z</published>
-    <updated>2016-12-24T22:01:01.603Z</updated>
+    <updated>2016-12-24T22:23:23.248Z</updated>
     <content type="html"><![CDATA[<h2 id="架构">架构</h2><img src="/2016/11/29/HttpMessageConverter/arch.jpg" alt="arch.jpg" title="">
-<h2 id="HttpMessageConverter接口">HttpMessageConverter接口</h2><p><img src="http-message-converter.jpg" alt=""></p>
-<blockquote>
-<p><code>HttpMessageConverter</code> used to<br>marshal objects into the HTTP request body and to unmarshal any response back into an object.</p>
-</blockquote>
-<p>提供将Java中的对象和http请求、响应相互转换的功能</p>
-<h3 id="spring_中的配置">spring 中的配置</h3><p>xml配置示例：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">mvc:annotation-driven</span> <span class="attribute">conversion-service</span>=<span class="value">"conversionService"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">mvc:message-converters</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.springframework.http.converter.StringHttpMessageConverter"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"objectMapper"</span> <span class="attribute">ref</span>=<span class="value">"jsonObjectMapper"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">mvc:message-converters</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">mvc:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>java配置示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">extends</span> <span class="title">DelegatingWebMvcConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="annotation">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RequestMappingHandlerAdapter <span class="title">requestMappingHandlerAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Create or let "super" create the adapter</span></span><br><span class="line">    <span class="comment">// Then customize one of its properties</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="接口描述">接口描述</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.http.converter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpInputMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpOutputMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Strategy interface that specifies a converter that can convert from and to HTTP requests and responses.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@author</span> Arjen Poutsma</span><br><span class="line"> * <span class="doctag">@author</span> Juergen Hoeller</span><br><span class="line"> * <span class="doctag">@since</span> 3.0</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HttpMessageConverter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Indicates whether the given class can be read by this converter.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the class to test for readability</span><br><span class="line">	 * <span class="doctag">@param</span> mediaType the media type to read, can be &#123;<span class="doctag">@code</span> null&#125; if not specified.</span><br><span class="line">	 * Typically the value of a &#123;<span class="doctag">@code</span> Content-Type&#125; header.</span><br><span class="line">	 * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if readable; &#123;<span class="doctag">@code</span> false&#125; otherwise</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">canRead</span><span class="params">(Class&lt;?&gt; clazz, MediaType mediaType)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Indicates whether the given class can be written by this converter.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the class to test for writability</span><br><span class="line">	 * <span class="doctag">@param</span> mediaType the media type to write, can be &#123;<span class="doctag">@code</span> null&#125; if not specified.</span><br><span class="line">	 * Typically the value of an &#123;<span class="doctag">@code</span> Accept&#125; header.</span><br><span class="line">	 * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if writable; &#123;<span class="doctag">@code</span> false&#125; otherwise</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">canWrite</span><span class="params">(Class&lt;?&gt; clazz, MediaType mediaType)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Return the list of &#123;<span class="doctag">@link</span> MediaType&#125; objects supported by this converter.</span><br><span class="line">	 * <span class="doctag">@return</span> the list of supported media types</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">List&lt;MediaType&gt; <span class="title">getSupportedMediaTypes</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Read an object of the given type form the given input message, and returns it.</span><br><span class="line">	 * <span class="doctag">@param</span> clazz the type of object to return. This type must have previously been passed to the</span><br><span class="line">	 * &#123;<span class="doctag">@link</span> #canRead canRead&#125; method of this interface, which must have returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> inputMessage the HTTP input message to read from</span><br><span class="line">	 * <span class="doctag">@return</span> the converted object</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException in case of I/O errors</span><br><span class="line">	 * <span class="doctag">@throws</span> HttpMessageNotReadableException in case of conversion errors</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function">T <span class="title">read</span><span class="params">(Class&lt;? extends T&gt; clazz, HttpInputMessage inputMessage)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, HttpMessageNotReadableException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Write an given object to the given output message.</span><br><span class="line">	 * <span class="doctag">@param</span> t the object to write to the output message. The type of this object must have previously been</span><br><span class="line">	 * passed to the &#123;<span class="doctag">@link</span> #canWrite canWrite&#125; method of this interface, which must have returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> contentType the content type to use when writing. May be &#123;<span class="doctag">@code</span> null&#125; to indicate that the</span><br><span class="line">	 * default content type of the converter must be used. If not &#123;<span class="doctag">@code</span> null&#125;, this media type must have</span><br><span class="line">	 * previously been passed to the &#123;<span class="doctag">@link</span> #canWrite canWrite&#125; method of this interface, which must have</span><br><span class="line">	 * returned &#123;<span class="doctag">@code</span> true&#125;.</span><br><span class="line">	 * <span class="doctag">@param</span> outputMessage the message to write to</span><br><span class="line">	 * <span class="doctag">@throws</span> IOException in case of I/O errors</span><br><span class="line">	 * <span class="doctag">@throws</span> HttpMessageNotWritableException in case of conversion errors</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(T t, MediaType contentType, HttpOutputMessage outputMessage)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, HttpMessageNotWritableException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="spring_提供的实现类">spring 提供的实现类</h3><img src="/2016/11/29/HttpMessageConverter/inherit.jpg" alt="inherit.jpg" title="">
+<h2 id="HttpMessageConverter接口">HttpMessageConverter接口</h2><img src="/2016/11/29/HttpMessageConverter/http-message-converter.jpg" alt="   )
+
+
+
+
+>`HttpMessageConverter` used to
+marshal objects into the HTTP request body and to unmarshal any response back into an object.
+
+提供将Java中的对象和http请求、响应相互转换的功能
+
+### spring 中的配置
+
+xml配置示例：
+
+<!--￼0-->
+
+java配置示例：
+
+<!--￼1-->
+
+### 接口描述
+<!--￼2-->
+
+### spring 提供的实现类
+
+{%  asset_img   inherit.jpg" title="   )
+
+
+
+
+>`HttpMessageConverter` used to
+marshal objects into the HTTP request body and to unmarshal any response back into an object.
+
+提供将Java中的对象和http请求、响应相互转换的功能
+
+### spring 中的配置
+
+xml配置示例：
+
+<!--￼0-->
+
+java配置示例：
+
+<!--￼1-->
+
+### 接口描述
+<!--￼2-->
+
+### spring 提供的实现类
+
+{%  asset_img   inherit.jpg">
 <table>
 <thead>
 <tr>

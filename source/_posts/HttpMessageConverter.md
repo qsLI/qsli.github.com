@@ -16,7 +16,7 @@ date: 2016-11-29 02:48:45
 
 
 
-![](http-message-converter.jpg    )
+{%  asset_img http-message-converter.jpg    )
 
 
 

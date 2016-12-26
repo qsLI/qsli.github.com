@@ -1,5 +1,5 @@
 title: {{ title }}
-tags:
-category:
+tags: 
+category: 
 toc: true
 ---
