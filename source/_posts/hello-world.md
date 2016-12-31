@@ -97,3 +97,16 @@ post_asset_folder: true
  {% gist 1f10fa5b8b76f3b5efaf74ad3d6da413  %}
  ```
  其中一长串是gist生成的id
+
+
+## 使用markdown来画mindmap
+
+{% pullquote mindmap %}
+#主题
+##一级分支
+###二级分支
+##一级分支
+##一级分支
+###二级分支
+####三级分支
+{% endpullquote %}

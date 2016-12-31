@@ -406,7 +406,18 @@ public class SingleValueCalendarConverter implements Converter {
 ```java
 xStream.autodetectAnnotations(true);
 ```
-## 参考
+
+## xml转对象
+
+ ```java
+        RendezvousMessage deserializedMessage = (RendezvousMessage) xStream.fromXML("<message type=\"12\">\n" +
+                "  <part>first content</part>\n" +
+                "  <part>second content</part>\n" +
+                "  <created>1482859234272</created>\n" +
+                "</message>");
+ ```
+ 
+# 参考
 
 1. [About XStream](http://x-stream.github.io/index.html)
 
