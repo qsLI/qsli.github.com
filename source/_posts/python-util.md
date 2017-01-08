@@ -13,7 +13,7 @@ date: 2016-12-18 11:57:35
 
 `python -m SimpleHTTPServer port`
 
-`-m` 是指后面跟的是python的一个Module
+`-m` 是指后面跟的是python的一个Modlue
 
 `port` 默认是`8080`，可以自行指定。
 
