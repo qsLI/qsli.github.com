@@ -1,12 +1,33 @@
+---
 title: jackson_custom
 tags: jackson
 category: jackson
 toc: true
-
 ---
 
-默认解析公有的字段，和带有getter和setter的字段
+## 使用
 
+### maven 依赖
+
+
+默认解析公有的字段，和带有getter和setter的字段
+@JsonAutoDetect
+
+Changing property auto-detection
+
+The default Jackson property detection rules will find:
+
+All ''public'' fields
+All ''public'' getters ('getXxx()' methods)
+All setters ('setXxx(value)' methods), ''regardless of visibility'')
+
+```java
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
+public class POJOWithNoFields {
+  // will NOT be included, unless there is access 'getValue()'
+  public int value;
+}
+```
 
 ## jackson-annotations
 
@@ -54,7 +75,27 @@ jackson-annotations  定义一些注解
 
 定义解析
 
-多态支持m
+多态支持
+
+@JsonTypeInfo
+
+```java
+// Include Java class name ("com.myempl.ImplClass") as JSON property "class"
+@JsonTypeInfo(use=Id.CLASS, include=As.PROPERTY, property="class")
+public abstract class BaseClass {
+}
+
+public class Impl1 extends BaseClass {
+  public int x;
+}
+public class Impl2 extends BaseClass {
+  public String name;
+}
+
+public class PojoWithTypedObjects {
+  public List<BaseClass> items;
+}
+```
 
 空字段
 
@@ -66,4 +107,10 @@ Map的Key Deserializer 构造函数
 
 com.fasterxml.jackson.databind.JsonMappingException: Can not find a (Map) Key deserializer for type [simple type, class com.qunar.hotel.price.root.beans.time.ShortDate]
 
-https://github.com/FasterXML/jackson
+## 参考
+
+1. [FasterXML/jackson-annotations: Core annotations (annotations that only depend on jackson-core) for Jackson data processor](https://github.com/FasterXML/jackson-annotations)
+
+
+
+注入的message-converters优先级高于默认注入的json转换器

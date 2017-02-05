@@ -1,8 +1,8 @@
+---
 title: Spring中factorybean的使用
 tags: beanfactory
 category: spring
 toc: true
-
 ---
 
 ```Java

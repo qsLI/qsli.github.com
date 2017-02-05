@@ -1,8 +1,9 @@
+---
 title: windows命令操作剪贴板——CLIP
 toc: true
-date: 2017-01-07 20:00:09
 tags: 剪贴板
 category: shell
+date: 2017-01-07 20:00:09
 ---
 
 ## 使用说明

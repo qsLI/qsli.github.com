@@ -1,3 +1,4 @@
+---
 title: Hexo中使用markdown来绘制脑图（mind map）
 tags: mindmap
 category: hexo

@@ -1,8 +1,8 @@
+---
 title: java-introspector
+toc: true
 tags:
 category:
-toc: true
-
 ---
 
 http://www.slideshare.net/kim.mens/basics-of-reflection-in-java

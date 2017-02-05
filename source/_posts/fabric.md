@@ -1,9 +1,9 @@
+---
 title: fabric 分布式部署
-date: 2015-11-03 23:55:34
 tags: fabric
 category: python
 toc: true
-
+date: 2015-11-03 23:55:34
 ---
 
 ## 前言

@@ -1,9 +1,9 @@
+---
 title: 在Intellij Idea中生成Javadoc
-date: 2016-10-05 00:06:29
 tags: Javadoc
 category: idea
 toc: true
-
+date: 2016-10-05 00:06:29
 ---
 
 `Tools | Generate JavaDoc`, 写上输出路径即可。

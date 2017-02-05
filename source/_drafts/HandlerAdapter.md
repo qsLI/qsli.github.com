@@ -1,6 +1,6 @@
+---
 title: HandlerAdapter
+toc: true
 tags:
 category:
-toc: true
-
 ---

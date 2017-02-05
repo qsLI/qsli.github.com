@@ -1,8 +1,9 @@
+---
 title: java 访问权限区别
-date: 2015-10-20 09:57:22
 tags: 访问权限
 category: java
 toc: true
+date: 2015-10-20 09:57:22
 ---
 
 ## 类成员的访问权限

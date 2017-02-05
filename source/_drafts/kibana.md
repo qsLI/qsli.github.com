@@ -1,8 +1,8 @@
+---
 title: kibana
+toc: true
 tags:
 category:
-toc: true
-
 ---
 
 

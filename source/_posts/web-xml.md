@@ -2,7 +2,7 @@ toc: true
 title: web.xml
 toc: true
 tags: servlet
-category: web
+category: tomcat
 ---
 
 ## load-on-startup标签

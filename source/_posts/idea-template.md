@@ -1,8 +1,8 @@
+---
 title: idea文件模板
 tags: template
 category: idea
 toc: true
-
 date: 2016-12-23 01:10:59
 ---
 

@@ -1,9 +1,9 @@
+---
 title: mysql中时间相关的问题
-date: 2016-09-25 00:27:52
 tags: mysql
 category: base
 toc: true
-
+date: 2016-09-25 00:27:52
 ---
 
 ## 自动更新时间戳

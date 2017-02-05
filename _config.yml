@@ -86,6 +86,11 @@ sitemap:
 baidusitemap: 
   path: baidusitemap.xml
 
+nofollow:
+    enable: true
+    exclude: # 例外的链接，可将友情链接放置此处
+    - https://chenyuzuoo.github.io/
+
 # robots.txt
 robotstxt:
   useragent: "*"

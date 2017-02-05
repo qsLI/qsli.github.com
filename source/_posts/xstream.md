@@ -1,8 +1,9 @@
+---
 title: xstream教程
 toc: true
-date: 2016-12-27 23:26:55
-tags: xstream
+tags: xml
 category: java
+date: 2016-12-27 23:26:55
 ---
 
 # 使用

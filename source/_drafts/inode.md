@@ -1,6 +1,6 @@
+---
 title: inode
+toc: true
 tags:
 category:
-toc: true
-
 ---

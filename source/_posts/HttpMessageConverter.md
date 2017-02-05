@@ -1,8 +1,9 @@
+---
 title: HttpMessageConverter 原理和源码
-tags: spring
-category: web
+tags: messageConverter
+category: spring
 toc: true
-
+abbrlink: '55451865'
 date: 2016-11-29 02:48:45
 ---
 

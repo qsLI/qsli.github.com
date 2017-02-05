@@ -1,6 +1,6 @@
+---
 title: idea-plugins
+toc: true
 tags:
 category:
-toc: true
-
 ---

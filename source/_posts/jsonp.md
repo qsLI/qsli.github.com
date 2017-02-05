@@ -1,8 +1,8 @@
+---
 title: JS跨域原理
 tags: ajax
 category: fe
 toc: true
-
 date: 2016-10-02 11:42:13
 ---
 

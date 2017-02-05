@@ -1,8 +1,8 @@
+---
 title: Spring占位符（property-placeholder），源码阅读
 tags: placeholder
 category: spring
 toc: true
-
 date: 2016-10-31 00:22:23
 ---
 

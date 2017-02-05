@@ -14,6 +14,14 @@ date: 2017-01-02 00:03:57
 
 ![](me.jpg)
 
+## 技术栈
+
+- Java
+- Mybatis
+- Spring
+- Dubbo
+- Python
+
 ## 联系方式
 
 - 邮箱：liqisheng <span class="fa fa-at"></span> whu.edu.cn
