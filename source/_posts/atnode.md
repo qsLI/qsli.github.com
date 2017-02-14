@@ -1,7 +1,7 @@
 ---
 title: atnode——在集群上批量执行命令
-tags: shell
-category: linux
+tags: 
+category: shell
 toc: true
 date: 2016-12-13 00:07:02
 ---

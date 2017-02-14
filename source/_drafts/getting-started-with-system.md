@@ -2,7 +2,7 @@
 title: 快速了解一个系统
 toc: true
 tags: beginner
-category: 内功
+category: thinking
 ---
 
 

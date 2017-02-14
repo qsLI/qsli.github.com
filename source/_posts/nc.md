@@ -1,7 +1,7 @@
 ---
 title: netcat(nc) —— 使用小结
 tags: netcat
-category: linux
+category: shell
 toc: true
 date: 2016-12-18 11:29:28
 ---
