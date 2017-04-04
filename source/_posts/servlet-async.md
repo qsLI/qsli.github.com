@@ -119,7 +119,7 @@ java.util.concurrent.RejectedExecutionException: Task com.air.async.AsyncRequest
 
 有47个失败的case，是队列满了，然后丢掉了请求。
 
-#### sync ab测试
+### sync ab测试
 
 ```
 $ ab -n 10000 -c 200 http://localhost:8080/hello

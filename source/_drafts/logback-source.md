@@ -1,5 +1,13 @@
-title: logback-source
+title: logback源码分析
 toc: true
-tags:
-category:
+tags: logback
+category: java
 ---
+
+
+
+
+```java
+private static Logger logger = LoggerFactory.getLogger(LogBackTest.class);
+```
+
