@@ -1,7 +1,9 @@
+---
 title: Spring中的factory-bean和FactoryBean
 tags: beanfactory
 category: spring
 toc: true
+abbrlink: 2286
 date: 2017-02-14 00:50:40
 ---
 

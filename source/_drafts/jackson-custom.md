@@ -3,6 +3,7 @@ title: jackson_custom
 tags: jackson
 category: jackson
 toc: true
+abbrlink: 18103
 ---
 
 ## 使用

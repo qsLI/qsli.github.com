@@ -3,6 +3,7 @@ title: guava-eventbus
 tags: event-bus
 category: guava
 toc: true
+abbrlink: 1379
 date: 2017-01-17 01:30:26
 ---
 

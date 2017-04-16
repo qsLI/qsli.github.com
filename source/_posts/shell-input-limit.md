@@ -1,7 +1,9 @@
+---
 title: shell命令长度限制
 tags: limit
 category: shell
 toc: true
+abbrlink: 52389
 date: 2017-02-06 01:08:23
 ---
 

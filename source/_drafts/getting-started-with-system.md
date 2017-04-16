@@ -3,6 +3,7 @@ title: 快速了解一个系统
 toc: true
 tags: beginner
 category: thinking
+abbrlink: 6924
 ---
 
 

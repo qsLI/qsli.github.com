@@ -1,7 +1,9 @@
+---
 title: CMS （ Concurrent Mark Sweep）垃圾收集器
 toc: true
-tags:
 category: gc
+abbrlink: 11417
+tags:
 ---
 
 hotspot g1 收集器

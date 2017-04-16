@@ -40,7 +40,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: true
+  auto_detect: false
   tab_replace:
 
 # Category & Tag
@@ -77,8 +77,11 @@ deploy:
   repository: git@github.com:qsLI/qsli.github.com.git
   branch: master
 
-plugins:
-- hexo-generator-robotstxt
+github:
+  debug: true
+  cache_dir: gh_cache
+  user: qsLI
+  repos: 
 
 # hexo sitemap网站地图 
 sitemap: 

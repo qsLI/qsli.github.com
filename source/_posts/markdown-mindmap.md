@@ -3,6 +3,7 @@ title: Hexo中使用markdown来绘制脑图（mind map）
 tags: mindmap
 category: hexo
 toc: true
+abbrlink: 40574
 date: 2017-01-01 22:45:33
 ---
 

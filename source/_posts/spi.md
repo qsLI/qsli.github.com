@@ -3,6 +3,7 @@ title: Java SPI 总结
 tags: spi
 category: java
 toc: true
+abbrlink: 41105
 date: 2016-12-17 21:39:32
 ---
 

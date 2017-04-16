@@ -1,7 +1,9 @@
+---
 title: curl用法
 toc: true
-tags:
 category: shell
+abbrlink: 6865
+tags:
 ---
 
 

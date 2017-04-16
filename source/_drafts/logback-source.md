@@ -1,7 +1,9 @@
+---
 title: logback源码分析
 toc: true
 tags: logback
 category: java
+abbrlink: 55827
 ---
 
 

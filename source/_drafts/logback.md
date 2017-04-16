@@ -3,6 +3,7 @@ title: logback 使用
 tags: logback
 category: java
 toc: true
+abbrlink: 33648
 ---
 
 # Logback总结

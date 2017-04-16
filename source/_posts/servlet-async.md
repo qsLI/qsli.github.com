@@ -1,7 +1,9 @@
+---
 title: 异步Servlet及Spring对其的支持
 tags: servlet
 category: spring
 toc: true
+abbrlink: 58929
 date: 2017-02-28 01:47:22
 ---
 

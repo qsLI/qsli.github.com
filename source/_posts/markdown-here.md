@@ -3,6 +3,7 @@ title: ThunderBird使用Markdown写邮件
 tags: markdown-here
 category: markdown
 toc: true
+abbrlink: 16380
 date: 2017-01-02 16:10:15
 ---
 

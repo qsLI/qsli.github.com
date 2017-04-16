@@ -1,6 +1,7 @@
 ---
 title: java-object-diff
 toc: true
+abbrlink: 39546
 tags:
 category:
 ---

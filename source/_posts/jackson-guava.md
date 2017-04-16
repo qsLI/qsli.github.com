@@ -3,6 +3,7 @@ title: jackson对guava新增集合的支持
 tags: jackson
 category: spring
 toc: true
+abbrlink: 45407
 date: 2016-11-16 00:10:21
 ---
 

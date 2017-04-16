@@ -1,6 +1,7 @@
 ---
 title: protobuf
 toc: true
+abbrlink: 2038
 tags:
 category:
 ---

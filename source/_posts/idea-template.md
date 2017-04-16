@@ -3,6 +3,7 @@ title: idea文件模板
 tags: template
 category: idea
 toc: true
+abbrlink: 41545
 date: 2016-12-23 01:10:59
 ---
 

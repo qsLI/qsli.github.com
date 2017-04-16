@@ -3,6 +3,7 @@ title: java 访问权限区别
 tags: 访问权限
 category: java
 toc: true
+abbrlink: 50465
 date: 2015-10-20 09:57:22
 ---
 

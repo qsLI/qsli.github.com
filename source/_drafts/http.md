@@ -3,6 +3,7 @@ title: http协议详解
 toc: true
 tags: http
 category: web
+abbrlink: 13962
 ---
 
 

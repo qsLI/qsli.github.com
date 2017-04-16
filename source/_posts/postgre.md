@@ -3,6 +3,7 @@ title: Postgre数据库简介
 tags: postgresql
 category: base
 toc: true
+abbrlink: 49390
 date: 2016-09-27 13:15:07
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: kibana
 toc: true
+abbrlink: 15607
 tags:
 category:
 ---

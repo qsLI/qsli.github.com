@@ -3,6 +3,7 @@ title: spring 采用Mock的方式进行单元测试
 tags: spring mvc
 category: spring
 toc: true
+abbrlink: 15023
 date: 2016-09-25 23:44:53
 ---
 

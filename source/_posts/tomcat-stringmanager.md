@@ -1,7 +1,9 @@
+---
 title: tomcat中的StringManager
 tags: string-manager
 category: tomcat
 toc: true
+abbrlink: 27008
 date: 2017-02-06 00:45:02
 ---
 

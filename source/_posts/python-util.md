@@ -3,6 +3,7 @@ title: python 小技巧
 tags: python-util
 category: python
 toc: true
+abbrlink: 49451
 date: 2016-12-18 11:57:35
 ---
 

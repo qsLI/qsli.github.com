@@ -3,6 +3,7 @@ title: fabric 分布式部署
 tags: fabric
 category: python
 toc: true
+abbrlink: 42953
 date: 2015-11-03 23:55:34
 ---
 

@@ -1,7 +1,9 @@
+---
 title: cygwin执行命令非常慢
 tags: cygwin
 category: linux
 toc: true
+abbrlink: 50965
 date: 2017-02-20 00:30:03
 ---
 

@@ -3,6 +3,7 @@ title: tomcat中文编码设置
 tags: encoding
 category: tomcat
 toc: true
+abbrlink: 53678
 date: 2016-12-23 00:43:20
 ---
 

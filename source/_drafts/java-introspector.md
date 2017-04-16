@@ -1,6 +1,7 @@
 ---
 title: java-introspector
 toc: true
+abbrlink: 39876
 tags:
 category:
 ---

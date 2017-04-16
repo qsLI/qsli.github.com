@@ -1,7 +1,9 @@
+---
 title: tomcat连接数相关的配置
 tags: connections
 category: tomcat
 toc: true
+abbrlink: 44911
 date: 2017-04-05 01:22:17
 ---
 

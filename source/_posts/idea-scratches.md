@@ -1,6 +1,8 @@
+---
 title: Intellij Idea中临时文件功能
 category: idea
 toc: true
+abbrlink: 15997
 date: 2017-02-15 01:10:09
 tags:
 ---

@@ -1,7 +1,9 @@
+---
 title: java GC基础知识
 toc: true
-tags:
 category: gc
+abbrlink: 38885
+tags:
 ---
 
 

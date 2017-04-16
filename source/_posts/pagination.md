@@ -3,6 +3,7 @@ title: 数据库分页
 tags: mysql
 category: base
 toc: true
+abbrlink: 9818
 date: 2016-09-30 00:19:07
 ---
 

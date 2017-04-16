@@ -3,6 +3,7 @@ title: ssh免密码登录设置
 tags: ssh
 category: linux
 toc: true
+abbrlink: 14062
 date: 2015-10-08 16:00:08
 ---
 

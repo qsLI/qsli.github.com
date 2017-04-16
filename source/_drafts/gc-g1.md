@@ -1,7 +1,9 @@
+---
 title: g1（ Garbage-First ）垃圾收集器
 toc: true
-tags:
 category: gc
+abbrlink: 20071
+tags:
 ---
 
 

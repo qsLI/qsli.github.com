@@ -2,6 +2,7 @@
 title: Hexo搭建博客
 categories: hexo
 tags: hexo install
+abbrlink: 705
 date: 2015-10-08 10:30:14
 ---
 Welcome to [Hexo](http://hexo.io/)! This is your very first post. Check [documentation](http://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](http://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).

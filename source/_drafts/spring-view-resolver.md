@@ -1,7 +1,9 @@
+---
 title: Spring视图的那些事儿
 toc: true
 tags: view-resolver
 category: spring
+abbrlink: 60542
 ---
 
 ## Internal

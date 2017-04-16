@@ -3,6 +3,7 @@ title: linux 下使用 shadowsocks
 tags: shadowsocks
 category: linux
 toc: true
+abbrlink: 43024
 date: 2015-10-09 19:44:14
 ---
 ## 安装shadowsocks

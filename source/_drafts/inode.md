@@ -3,6 +3,7 @@ title: inode
 toc: true
 tags: inode
 category: linux
+abbrlink: 6042
 ---
 
 

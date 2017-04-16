@@ -3,6 +3,7 @@ title: classloader
 tags: classloader
 category: java
 toc: true
+abbrlink: 37818
 ---
 
 ### URLClassLoader

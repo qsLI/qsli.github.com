@@ -3,6 +3,7 @@ title: spring-resource源码剖析
 tags: resource
 category: spring
 toc: true
+abbrlink: 27459
 date: 2016-11-20 20:12:14
 ---
 

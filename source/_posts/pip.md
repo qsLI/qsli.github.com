@@ -3,6 +3,7 @@ title: pip使用
 tags: pip
 category: python
 toc: true
+abbrlink: 9555
 date: 2017-01-08 18:30:03
 ---
 

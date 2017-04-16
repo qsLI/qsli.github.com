@@ -1,7 +1,9 @@
+---
 title: java垃圾回收（GC）总结
 toc: true
-tags: 
 category: gc
+abbrlink: 18158
+tags:
 ---
 
 
