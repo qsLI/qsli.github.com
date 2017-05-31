@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-04-18T16:08:15.397Z</updated>
+  <updated>2017-05-31T16:42:54.077Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>maven-scope</title>
+    <link href="http://qsli.github.io/2017/06/01/maven-scope/"/>
+    <id>http://qsli.github.io/2017/06/01/maven-scope/</id>
+    <published>2017-05-31T16:42:54.000Z</published>
+    <updated>2017-05-31T16:42:54.077Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="scope-作用"><a href="#scope-作用" class="headerlink" title="scope 作用"></a>scope 作用</h2><blockquote>
+<p>Dependency scope is used to limit the transitivity of a dependency, and also to affect the classpath used for various build tasks.</p>
+</blockquote>
+<p>主要是限制依赖的传递性，比如有些jar包只会在测试的时候才会有效，部署的时候不会生效。</p>
+<p>scope的分类：</p>
+<table>
+<thead>
+<tr>
+<th>scope</th>
+<th>生效时机</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>compiled</td>
+<td>编译/测试/运行</td>
+<td>默认</td>
+</tr>
+<tr>
+<td>provided</td>
+<td>编译/测试</td>
+<td>servlet-api 由tomcat等容器提供</td>
+</tr>
+<tr>
+<td>runtime</td>
+<td>运行</td>
+<td>编译的时候只需要，JDBC API， 运行的时候必须要有JDBC驱动实现</td>
+</tr>
+<tr>
+<td>test</td>
+<td>测试的时候才引入</td>
+<td>junit 只在测试的时候生效</td>
+</tr>
+<tr>
+<td>system</td>
+<td>编译/测试</td>
+<td>必须显式的提供jar的本地文件系统路径</td>
+</tr>
+<tr>
+<td>import</td>
+<td>只支持<code>dependencyManagement</code>元素下的type是pom的节点</td>
+<td>only available in Maven 2.0.9 or later</td>
+</tr>
+</tbody>
+</table>
+<h3 id="import-scope"><a href="#import-scope" class="headerlink" title="import scope"></a>import scope</h3><p>使用方</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.air<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>haha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;com.air.haha.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></div><div class="line">             <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">         <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>com.air.haha的声明</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">project</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.air<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>haha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">name</span>&gt;</span>haha<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>test<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>a<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>test<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>b<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>使用方在使用的时候就可以不用指定，haha中包含的依赖的版本，默认就会使用haha中声明的版本。这样在升级的时候，可以保证依赖一同的升级。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html" rel="external nofollow noopener noreferrer" target="_blank">Maven – Introduction to the Dependency Mechanism</a></p>
+</li>
+<li><p>《Maven权威指南》—— 9.4 （项目依赖）</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;scope-作用&quot;&gt;&lt;a href=&quot;#scope-作用&quot; class=&quot;headerlink&quot; title=&quot;scope 作用&quot;&gt;&lt;/a&gt;scope 作用&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Dependency scope is used to limit
+    
+    </summary>
+    
+      <category term="java" scheme="http://qsli.github.io/categories/java/"/>
+    
+    
+      <category term="maven" scheme="http://qsli.github.io/tags/maven/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo迁移到ubuntu</title>
@@ -1094,40 +1174,6 @@
     
     
       <category term="template" scheme="http://qsli.github.io/tags/template/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tomcat中文编码设置</title>
-    <link href="http://qsli.github.io/2016/12/23/tomcat-encoding/"/>
-    <id>http://qsli.github.io/2016/12/23/tomcat-encoding/</id>
-    <published>2016-12-22T16:43:20.000Z</published>
-    <updated>2017-04-16T12:03:23.409Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="tomcat中文乱码"><a href="#tomcat中文乱码" class="headerlink" title="tomcat中文乱码"></a>tomcat中文乱码</h2><p>tomcat 默认的编<code>ISO-8859-1</code>编码，部分中文会出现乱码</p>
-<blockquote>
-<p><em>URIEncoding</em><br>This specifies the character encoding used to decode the URI bytes, after %xx decoding the URL. If not specified, ISO-8859-1 will be used.</p>
-</blockquote>
-<h2 id="编码设置"><a href="#编码设置" class="headerlink" title="编码设置"></a>编码设置</h2><p><code>conf/server.xml</code></p>
-<p>修改前：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span>/&gt;</span></div></pre></td></tr></table></figure>
-<p>修改后：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span> </span></div><div class="line"><span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span>               </div><div class="line"><span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span>/&gt;</div></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="https://tomcat.apache.org/tomcat-7.0-doc/config/http.html" rel="external nofollow noopener noreferrer" target="_blank">The HTTP Connector</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;tomcat中文乱码&quot;&gt;&lt;a href=&quot;#tomcat中文乱码&quot; class=&quot;headerlink&quot; title=&quot;tomcat中文乱码&quot;&gt;&lt;/a&gt;tomcat中文乱码&lt;/h2&gt;&lt;p&gt;tomcat 默认的编&lt;code&gt;ISO-8859-1&lt;/code&gt;编码，部
-    
-    </summary>
-    
-      <category term="tomcat" scheme="http://qsli.github.io/categories/tomcat/"/>
-    
-    
-      <category term="encoding" scheme="http://qsli.github.io/tags/encoding/"/>
     
   </entry>
   
