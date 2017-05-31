@@ -20,3 +20,22 @@ toc: true
 - [Jupyter](http://jupyter.org/)
 
 - [Anaconda](https://www.continuum.io/downloads)
+
+## maven 
+
+- aliyun maven
+
+{% gist 47a98f1cbde1179f1fc6227734e4e2e8 %}
+
+## shell
+
+- [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
+- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+- [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt)
+
+![](https://github.com/olivierverdier/zsh-git-prompt/raw/master/screenshot.png)
+
+## editor
+
+- [visual source code](https://code.visualstudio.com/)
+

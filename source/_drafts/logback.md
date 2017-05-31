@@ -29,8 +29,53 @@ highlight 关键字
 
 {%  asset_img   colored.jpg  %}
 
+## 日志级别
 
-## 按照包名设置日志级别
+logback定义了以下日志级别：
+
+```java
+  /**
+   * The <code>OFF</code> is used to turn off logging.
+   */
+  public static final Level OFF = new Level(OFF_INT, "OFF");
+
+  /**
+   * The <code>ERROR</code> level designates error events which may or not
+   * be fatal to the application.
+   */
+  public static final Level ERROR = new Level(ERROR_INT, "ERROR");
+
+  /**
+   * The <code>WARN</code> level designates potentially harmful situations.
+   */
+  public static final Level WARN = new Level(WARN_INT, "WARN");
+
+  /**
+   * The <code>INFO</code> level designates informational messages
+   * highlighting overall progress of the application.
+   */
+  public static final Level INFO = new Level(INFO_INT, "INFO");
+
+  /**
+   * The <code>DEBUG</code> level designates informational events of lower
+   * importance.
+   */
+  public static final Level DEBUG = new Level(DEBUG_INT, "DEBUG");
+
+  /**
+   * The <code>TRACE</code> level designates informational events of very low
+   * importance.
+   */
+  public static final Level TRACE = new Level(TRACE_INT, "TRACE");
+
+  /**
+   * The <code>ALL</code> is used to turn on all logging.
+   */
+  public static final Level ALL = new Level(ALL_INT, "ALL");
+
+```
+
+### 按照包名设置日志级别
 
 ```xml
     <logger name="com.air.nio" level="error">
@@ -39,6 +84,33 @@ highlight 关键字
 ```
 
 通过上面的配置，`com.air.nio`包下打印的日志级别必须在`error`才能打印出来。
+
+## 打了好几遍日志？？？ —— additivity
+
+>The output of a log statement of logger L will go to all the appenders in L and its ancestors. This is the meaning of the term "appender additivity"
+
+
+
+|| Logger  Name	|| Attached  Appenders	|| Additivity Flag ||	Output Targets || Comment ||
+|root |	A1 |	not applicable |	A1	| Since the root logger stands at the top of the logger hierarchy, the additivity flag does not apply to it.|
+|x |	A-x1, A-x2	| true |	A1, A-x1, A-x2	| Appenders of "x" and of root.|
+|x.y	none	true	A1, A-x1, A-x2	Appenders of "x" and of root.
+|x.y.z	A-xyz1	true	A1, A-x1, A-x2, A-xyz1	Appenders of "x.y.z", "x" and of root.
+|security	A-sec	false	A-sec	No appender accumulation since the additivity flag is set to false. Only appender A-sec will be used.
+|security.access	none	true	A-sec	Only appenders of "security" because the additivity flag in "security" is set to false.
+
+
+
+## logger 的层级关系
+
+>A logger is said to be an ancestor of another logger if its name followed by a dot is a prefix of the descendant logger name. A logger is said to be a parent of a child logger if there are no ancestors between itself and the descendant logger.
+
+```java
+Logger x = LoggerFactory.getLogger("wombat"); 
+Logger y = LoggerFactory.getLogger("wombat");
+```
+
+x and y refer to exactly the same logger object.
 
 
 ## Filter
@@ -51,4 +123,6 @@ highlight 关键字
 1. [COLORED LOGS IN A CONSOLE (ANSI STYLING)](http://blog.codeleak.pl/2014/02/colored-logs-in-console-ansi-styling.html)
 
 2. [Chapter 7: Filters](https://logback.qos.ch/manual/filters.html)
+
+3. [Chapter 2: Architecture](https://logback.qos.ch/manual/architecture.html)
 
