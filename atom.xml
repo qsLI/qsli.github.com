@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-05-31T16:42:54.077Z</updated>
+  <updated>2017-08-13T14:17:13.142Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jvm-flag</title>
+    <link href="http://qsli.github.io/2017/06/03/jvm-flag/"/>
+    <id>http://qsli.github.io/2017/06/03/jvm-flag/</id>
+    <published>2017-06-02T17:29:51.000Z</published>
+    <updated>2017-08-13T14:17:13.142Z</updated>
+    
+    <content type="html"><![CDATA[<p>jinfo</p>
+<p>-Xss</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;jinfo&lt;/p&gt;
+&lt;p&gt;-Xss&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="java" scheme="http://qsli.github.io/categories/java/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>maven-scope</title>
@@ -1140,40 +1164,6 @@
     
     
       <category term="xml" scheme="http://qsli.github.io/tags/xml/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>idea文件模板</title>
-    <link href="http://qsli.github.io/2016/12/23/idea-template/"/>
-    <id>http://qsli.github.io/2016/12/23/idea-template/</id>
-    <published>2016-12-22T17:10:59.000Z</published>
-    <updated>2017-04-16T12:03:23.393Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="版权信息"><a href="#版权信息" class="headerlink" title="版权信息"></a>版权信息</h1><p>代码前面一般都会有相应的版权信息，拿guava的代码为例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * Copyright (C) 2007 The Guava Authors</div><div class="line"> *</div><div class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</div><div class="line"> * you may not use this file except in compliance with the License.</div><div class="line"> * You may obtain a copy of the License at</div><div class="line"> *</div><div class="line"> * http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"> *</div><div class="line"> * Unless required by applicable law or agreed to in writing, software</div><div class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</div><div class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line"> * See the License for the specific language governing permissions and</div><div class="line"> * limitations under the License.</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.google.common.collect;</div></pre></td></tr></table></figure>
-<h2 id="idea自动生成版权信息"><a href="#idea自动生成版权信息" class="headerlink" title="idea自动生成版权信息"></a>idea自动生成版权信息</h2><p><code>File</code> &gt; <code>Settings</code> &gt; <code>Copyright</code> &gt; <code>Copyright Profiles</code></p>
-<p>新建一个profile，填入如下的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/* * Copyright (c) $today.year xx.com. All Rights Reserved. */</div></pre></td></tr></table></figure></p>
-<p><code>$today.year</code>代表当前的年</p>
-<img src="/2016/12/23/idea-template/profiles.jpg" alt="profiles.jpg" title="">
-<p>新建java文件时就自动生成了版权信息：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> *  * Copyright (c) 2016 Qunar.com. All Rights Reserved. </div><div class="line"> */</div><div class="line"></div><div class="line"><span class="keyword">package</span> com.xxx.handler;</div></pre></td></tr></table></figure>
-<h1 id="作者、日期、邮箱等"><a href="#作者、日期、邮箱等" class="headerlink" title="作者、日期、邮箱等"></a>作者、日期、邮箱等</h1><p><code>File</code> &gt; <code>Settings</code> &gt; <code>File and Ocde Templates</code> &gt; <code>Includes</code> &gt; <code>File Header</code></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#set( $email = "xx@xx.com")</div><div class="line">#set( $author = "xxx")</div><div class="line"></div><div class="line">/**</div><div class="line"> * @author $&#123;author&#125;</div><div class="line"> * @email $&#123;email&#125;</div><div class="line"> * @date $&#123;DATE&#125; $&#123;TIME&#125;</div><div class="line"> */</div></pre></td></tr></table></figure>
-<p>这个使用的<code>velocity</code>渲染的，可以参考<code>velocity</code>的语法</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;版权信息&quot;&gt;&lt;a href=&quot;#版权信息&quot; class=&quot;headerlink&quot; title=&quot;版权信息&quot;&gt;&lt;/a&gt;版权信息&lt;/h1&gt;&lt;p&gt;代码前面一般都会有相应的版权信息，拿guava的代码为例&lt;/p&gt;
-&lt;figure class=&quot;highlight java
-    
-    </summary>
-    
-      <category term="idea" scheme="http://qsli.github.io/categories/idea/"/>
-    
-    
-      <category term="template" scheme="http://qsli.github.io/tags/template/"/>
     
   </entry>
   
