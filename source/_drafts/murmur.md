@@ -1,5 +1,6 @@
 ---
-abbrlink: '0'
+abbrlink: 1
+---
 ---
 title: murmur哈希算法
 toc: true
