@@ -4,6 +4,137 @@
   
     
     <entry>
+      <title><![CDATA[top用法]]></title>
+      <url>http://qsli.github.io/2017/09/09/top/</url>
+      <content type="html"><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>top是了解系统状况最常用的命令，从top的输出我们可以很好的掌握系统的CPU, 内存，swap，进程的相关信息。</p>
+<p>下面说下top的基本用法：</p>
+<p><br><br></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ sudo top</div><div class="line"></div><div class="line">top - 15:19:54 up 200 days,  4:06,  1 user,  load average: 5.91, 6.14, 5.57</div><div class="line">Tasks: 499 total,   1 running, 498 sleeping,   0 stopped,   0 zombie</div><div class="line">Cpu(s): 20.1%us,  1.2%sy,  0.0%ni, 78.4%id,  0.0%wa,  0.0%hi,  0.4%si,  0.0%st</div><div class="line">Mem:  65979844k total, 65004736k used,   975108k free,     8108k buffers</div><div class="line">Swap: 50331644k total,    29364k used, 50302280k free,  5530672k cached</div><div class="line"></div><div class="line">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                            </div><div class="line"> 8468 tomcat    20   0 71.2g  55g 6484 S 492.3 87.8  32033:12 java                                                                              </div><div class="line"> 1256 tomcat    20   0 6055m 251m 2504 S 24.9  0.4  41886:22 java                                                                               </div><div class="line"> 2446 root      20   0 15304 1568  928 R  0.7  0.0   0:00.11 top                                                                                </div><div class="line">30593 root      20   0  526m  31m 3208 S  0.3  0.0   0:15.41 salt-minion                                                                        </div><div class="line">    1 root      20   0 19232  632  384 S  0.0  0.0  11:49.23 init                                                                               </div><div class="line">    2 root      20   0     0    0    0 S  0.0  0.0   0:00.32 kthreadd                                                                           </div><div class="line">    3 root      RT   0     0    0    0 S  0.0  0.0   2:55.22 migration/0                                                                        </div><div class="line">    4 root      20   0     0    0    0 S  0.0  0.0   5:49.74 ksoftirqd/0                                                                        </div><div class="line">    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/0</div></pre></td></tr></table></figure>
+<h3 id="系统概况"><a href="#系统概况" class="headerlink" title="系统概况"></a>系统概况</h3><p> 从输出的第一行来看， 首先是系统的uptime信息(使用<code>uptime</code>也可以查看)， 可以看到系统已经运行了200天了，是在<code>15：19：54</code>这个时间点启动起来的， <code>4：06</code> 是当前的时间， 当前只有一个用户登录(使用<code>w</code>也可以查看当前的登录用户)。 还有就是系统的负载——load average，这个有三个值，分别是1分钟的平均负载， 5分钟的， 15分钟的（<code>uptime</code>的输出信息中也有这个）。</p>
+<p> 第二行包含了系统进程的一些统计信息，Tasks是运行队列中的任务个数（Linux run-queue）， 还有一些其他状态的进程的个数信息</p>
+<blockquote>
+<ul>
+<li><p><strong>running</strong>:  CPU 上运行的和将要被调度运行的；</p>
+</li>
+<li><p><strong>sleeping</strong>: 通常是等待事件(比如 IO 操作)完成的任务，细分可以包括 interruptible 和 uninterruptible 的类型；</p>
+</li>
+<li><p><strong>stopped</strong>: 是一些被暂停的任务，通常发送 SIGSTOP 或者对一个前台任务操作 Ctrl-Z 可以将其暂停；</p>
+</li>
+<li><p><strong>zombie</strong>: 僵尸任务，虽然进程终止资源会被自动回收，但是含有退出任务的 task descriptor 需要父进程访问后才能释放，这种进程显示为 <code>defunct</code> 状态，无论是因为父进程提前退出还是未 wait 调用，出现这种进程都应该格外注意程序是否设计有误。</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p> 第三行是CPU的一些信息，各个部分的占用都很明确。</p>
+<blockquote>
+<ul>
+<li><p>(us) user：CPU 在低 nice 值(高优先级)用户态所占用的时间(nice&lt;=0)。正常情况下只要服务器不是很闲，那么大部分的 CPU 时间应该都在此执行这类程序</p>
+</li>
+<li><p>(sy) system：CPU 处于内核态所占用的时间，操作系统通过系统调用(system call)从用户态陷入内核态，以执行特定的服务；通常情况下该值会比较小，但是当服务器执行的 IO 比较密集的时候，该值会比较大</p>
+</li>
+<li><p>(ni) nice：CPU 在高 nice 值(低优先级)用户态以低优先级运行占用的时间(nice&gt;0)。默认新启动的进程 nice=0，是不会计入这里的，除非手动通过 renice 或者 setpriority() 的方式修改程序的nice值</p>
+</li>
+<li><p>(id) idle：CPU 在空闲状态(执行 kernel idle handler )所占用的时间</p>
+</li>
+<li><p>(wa) iowait：等待 IO 完成做占用的时间</p>
+</li>
+<li><p>(hi) irq：系统处理硬件中断所消耗的时间</p>
+</li>
+<li><p>(si) softirq：系统处理软中断所消耗的时间，记住软中断分为 softirqs、tasklets (其实是前者的特例)、work queues，不知道这里是统计的是哪些的时间，毕竟 work queues 的执行已经不是中断上下文了</p>
+</li>
+<li><p>(st) steal：在虚拟机情况下才有意义，因为虚拟机下 CPU 也是共享物理 CPU 的，所以这段时间表明虚拟机等待 hypervisor 调度 CPU 的时间，也意味着这段时间 hypervisor 将 CPU 调度给别的 CPU 执行，这个时段的 CPU 资源被“stolen”了。这个值在我 KVM 的 VPS 机器上是不为 0 的，但也只有 0.1 这个数量级，是不是可以用来判断 VPS 超售的情况？</p>
+</li>
+</ul>
+</blockquote>
+<p>iowait所包含的信息其实是非常少的，具体的解释可以看<strong>参考3</strong>中的文章，讲的非常好.</p>
+<blockquote>
+<p>%iowait 表示在一个采样周期内有百分之几的时间属于以下情况：CPU空闲、并且有仍未完成的I/O请求</p>
+</blockquote>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>第四行主要是内存使用的相关信息， 系统的内存总共有<code>65979844k</code>， 已经使用<code>65004736k</code>, <code>975108k</code>可用， <code>8108k</code>缓存, </p>
+<p>65979844k = 65004736k + 975108k</p>
+<p>可见缓存的也包含在可用的内存中。</p>
+<p>这些信息也可以通过<code>free -k</code> （还可以-m, -g 表示展示的单位），<code>free</code>的输出如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ free -k</div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:      65979844   64863960    1115884        112       8824    5331160</div><div class="line">-/+ buffers/cache:   59523976    6455868 </div><div class="line">Swap:     50331644      29364   50302280</div></pre></td></tr></table></figure>
+<p><code>vmstat</code> 也可以看到系统的内存状况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ vmstat 1 3 | column -t</div><div class="line">procs  -----------memory----------  ---swap--  -----io----  --system--  -----cpu-----</div><div class="line">r      b                            swpd       free         buff        cache          si  so  bi   bo   <span class="keyword">in</span>     cs     us  sy  id  wa  st</div><div class="line">5      1                            29364      2231704      8808        4214104        0   0   124  230  0      0      15  1   84  0   0</div><div class="line">6      0                            29364      2219016      8908        4225260        0   0   668  132  47040  68271  25  2   72  0   0</div><div class="line">5      0                            29364      2209552      8916        4234020        0   0   512  12   37178  52578  20  2   78  0   0</div></pre></td></tr></table></figure>
+<p>第五行和第四行类似，输出的是swap的使用情况。</p>
+<h3 id="进程的详细信息"><a href="#进程的详细信息" class="headerlink" title="进程的详细信息"></a>进程的详细信息</h3><blockquote>
+<p>PID：进程的ID<br>USER：进程所有者<br>PR：进程的优先级别，越小越优先被执行<br>NI：nice值<br>VIRT：进程占用的虚拟内存<br>RES：进程占用的物理内存<br>SHR：进程使用的共享内存<br>S：进程的状态。S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数<br>%CPU：进程占用CPU的使用率<br>%MEM：进程使用的物理内存和总内存的百分比<br>TIME+：该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值。<br>COMMAND：进程启动命令名称</p>
+</blockquote>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="交互命令"><a href="#交互命令" class="headerlink" title="交互命令"></a>交互命令</h3><ul>
+<li><p>按照CPU占用排序： 交互模式下输入： <code>P</code></p>
+</li>
+<li><p>按照内存排序： 交互模式下输入： <code>M</code></p>
+</li>
+<li><p>杀死进程： 交互模式下输入: <code>k</code>, 然后根据提示输入相应的<code>pid</code></p>
+</li>
+<li><p>更改刷新时间： 交互模式下输入: <code>d</code>或者<code>s</code>, 然后输入相应的刷新值</p>
+</li>
+<li><p>显示CPU的每个核的使用情况： 交互模式下输入： 键盘上的<code>1</code></p>
+</li>
+</ul>
+<p>top的显示界面会展开：</p>
+<img src="/2017/09/09/top/cpu.png" alt="cpu.png" title="">
+<ul>
+<li>高亮模式： 交互模式下输入: ‘z’</li>
+</ul>
+<img src="/2017/09/09/top/highlight.png" alt="highlight.png" title="">
+<ul>
+<li>高亮当前的排序列(需要在z模式下)： 交互模式下输入: ‘x’</li>
+</ul>
+<img src="/2017/09/09/top/highlight-sort.png" alt="highlight-sort.png" title="">
+<ul>
+<li><p>改变排序列： 交互模式下按<code>shift</code> + <code>&lt;</code>或<code>&gt;</code></p>
+</li>
+<li><p>增加显示的Field： 交互模式下按<code>f</code>, 然后选择想要展示的列</p>
+</li>
+</ul>
+<img src="/2017/09/09/top/fields.png" alt="fields.png" title="">
+<ul>
+<li><p>显示到线程级别： 交互模式下按<code>H</code></p>
+</li>
+<li><p>显示完整的命令名称: 交互模式下按<code>c</code></p>
+</li>
+<li><p>分类显示各种系统资源高的进程： 交互模式下按<code>A</code></p>
+</li>
+</ul>
+<img src="/2017/09/09/top/top-a.png" alt="top-a.png" title="">
+<h3 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h3><ul>
+<li>显示某个进程的线程信息</li>
+</ul>
+<p><code>top -p &lt;PID&gt; -H</code></p>
+<p>其中 <code>-H</code>是指显示线程的信息，可以看到每个线程的CPU占用情况</p>
+
+<ul>
+<li>显示完整的命令： <code>-c</code></li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="http://kumu-linux.github.io/blog/2013/06/07/top-hacks/" rel="external nofollow noopener noreferrer" target="_blank">top实践小技巧 - OPS Notes By 枯木</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzAxMzQ3NzQ3Nw==&amp;mid=2654249787&amp;idx=2&amp;sn=7aa8e765fda84d5fa26580c210585c53&amp;chksm=8061f031b716792776833370019a9fc4c79fa40ea7db5b4ccb165b90919056acaffd3d971d94&amp;mpshare=1&amp;scene=1&amp;srcid=0801QspCI2Xo04BsZlP6pCVb##" rel="external nofollow noopener noreferrer" target="_blank">Linux服务器的那些性能参数指标</a></p>
+</li>
+<li><p><a href="http://linuxperf.com/?p=33" rel="external nofollow noopener noreferrer" target="_blank">理解 %iowait (%wio) | Linux Performance</a></p>
+</li>
+<li><p><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/top.html" rel="external nofollow noopener noreferrer" target="_blank">8. top linux下的任务管理器 — Linux Tools Quick Tutorial</a></p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> top </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[jvm-flag]]></title>
       <url>http://qsli.github.io/2017/06/03/jvm-flag/</url>
       <content type="html"><![CDATA[<p>jinfo</p>
@@ -2907,6 +3038,64 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
+      <title><![CDATA[fabric 分布式部署]]></title>
+      <url>http://qsli.github.io/2015/11/03/fabric/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
+<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
+<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
+<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
+<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
+<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
+<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
+<blockquote>
+<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
+</blockquote>
+<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
+<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
+<blockquote>
+<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
+</blockquote>
+<p>下面是参考的一些文章</p>
+<blockquote>
+<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
+</blockquote>
+<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
+<blockquote>
+<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
+</blockquote>
+<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
+<ul>
+<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
+<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
+<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
+<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
+<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
+<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> fabric </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[机器学习框架调研]]></title>
       <url>http://qsli.github.io/2015/11/03/machine_learning/</url>
       <content type="html"><![CDATA[<h1 id="机器学习框架调研"><a href="#机器学习框架调研" class="headerlink" title="机器学习框架调研"></a>机器学习框架调研</h1><h2 id="DMTK"><a href="#DMTK" class="headerlink" title="DMTK"></a>DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
@@ -3010,64 +3199,6 @@ or (using formats recognized by popular editors)
         <tags>
             
             <tag> 机器学习 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[fabric 分布式部署]]></title>
-      <url>http://qsli.github.io/2015/11/03/fabric/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
-<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
-<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
-<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
-<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
-<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
-<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
-<blockquote>
-<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
-</blockquote>
-<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
-<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
-<blockquote>
-<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
-</blockquote>
-<p>下面是参考的一些文章</p>
-<blockquote>
-<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
-</blockquote>
-<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
-<blockquote>
-<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
-</blockquote>
-<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
-<ul>
-<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
-<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
-<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
-<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
-<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
-<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> fabric </tag>
             
         </tags>
         

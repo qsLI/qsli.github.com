@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="python | C++ | C plus plus | java"><title>top用法 | KL's blog</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="stylesheet" type="text/css" href="/css/donate.css"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">top用法</h1><a id="logo" href="/.">KL's blog</a><p class="description">越积极，越幸运</p></div><div id="nav-menu"><a href="/"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/recommendation/"><i class="fa fa-leaf"> 推荐</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">top用法</h1><div class="post-meta">Sep 9, 2017<span> | </span><span class="category"><a href="/categories/top/">top</a></span><script type="text/javascript" src="/js/busuanzi.pure.mini.js?v=0.0.0" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2017/09/09/top/" href="/2017/09/09/top/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本用法"><span class="toc-number">1.1.</span> <span class="toc-text">基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统概况"><span class="toc-number">1.1.1.</span> <span class="toc-text">系统概况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU"><span class="toc-number">1.1.2.</span> <span class="toc-text">CPU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存"><span class="toc-number">1.1.3.</span> <span class="toc-text">内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的详细信息"><span class="toc-number">1.1.4.</span> <span class="toc-text">进程的详细信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级用法"><span class="toc-number">1.2.</span> <span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#交互命令"><span class="toc-number">1.2.1.</span> <span class="toc-text">交互命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行参数"><span class="toc-number">1.2.2.</span> <span class="toc-text">命令行参数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="post-content"><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>top是了解系统状况最常用的命令，从top的输出我们可以很好的掌握系统的CPU, 内存，swap，进程的相关信息。</p>
+<p>下面说下top的基本用法：</p>
+<p><br><br></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ sudo top</div><div class="line"></div><div class="line">top - 15:19:54 up 200 days,  4:06,  1 user,  load average: 5.91, 6.14, 5.57</div><div class="line">Tasks: 499 total,   1 running, 498 sleeping,   0 stopped,   0 zombie</div><div class="line">Cpu(s): 20.1%us,  1.2%sy,  0.0%ni, 78.4%id,  0.0%wa,  0.0%hi,  0.4%si,  0.0%st</div><div class="line">Mem:  65979844k total, 65004736k used,   975108k free,     8108k buffers</div><div class="line">Swap: 50331644k total,    29364k used, 50302280k free,  5530672k cached</div><div class="line"></div><div class="line">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                            </div><div class="line"> 8468 tomcat    20   0 71.2g  55g 6484 S 492.3 87.8  32033:12 java                                                                              </div><div class="line"> 1256 tomcat    20   0 6055m 251m 2504 S 24.9  0.4  41886:22 java                                                                               </div><div class="line"> 2446 root      20   0 15304 1568  928 R  0.7  0.0   0:00.11 top                                                                                </div><div class="line">30593 root      20   0  526m  31m 3208 S  0.3  0.0   0:15.41 salt-minion                                                                        </div><div class="line">    1 root      20   0 19232  632  384 S  0.0  0.0  11:49.23 init                                                                               </div><div class="line">    2 root      20   0     0    0    0 S  0.0  0.0   0:00.32 kthreadd                                                                           </div><div class="line">    3 root      RT   0     0    0    0 S  0.0  0.0   2:55.22 migration/0                                                                        </div><div class="line">    4 root      20   0     0    0    0 S  0.0  0.0   5:49.74 ksoftirqd/0                                                                        </div><div class="line">    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/0</div></pre></td></tr></table></figure>
+<h3 id="系统概况"><a href="#系统概况" class="headerlink" title="系统概况"></a>系统概况</h3><p> 从输出的第一行来看， 首先是系统的uptime信息(使用<code>uptime</code>也可以查看)， 可以看到系统已经运行了200天了，是在<code>15：19：54</code>这个时间点启动起来的， <code>4：06</code> 是当前的时间， 当前只有一个用户登录(使用<code>w</code>也可以查看当前的登录用户)。 还有就是系统的负载——load average，这个有三个值，分别是1分钟的平均负载， 5分钟的， 15分钟的（<code>uptime</code>的输出信息中也有这个）。</p>
+<p> 第二行包含了系统进程的一些统计信息，Tasks是运行队列中的任务个数（Linux run-queue）， 还有一些其他状态的进程的个数信息</p>
+<blockquote>
+<ul>
+<li><p><strong>running</strong>:  CPU 上运行的和将要被调度运行的；</p>
+</li>
+<li><p><strong>sleeping</strong>: 通常是等待事件(比如 IO 操作)完成的任务，细分可以包括 interruptible 和 uninterruptible 的类型；</p>
+</li>
+<li><p><strong>stopped</strong>: 是一些被暂停的任务，通常发送 SIGSTOP 或者对一个前台任务操作 Ctrl-Z 可以将其暂停；</p>
+</li>
+<li><p><strong>zombie</strong>: 僵尸任务，虽然进程终止资源会被自动回收，但是含有退出任务的 task descriptor 需要父进程访问后才能释放，这种进程显示为 <code>defunct</code> 状态，无论是因为父进程提前退出还是未 wait 调用，出现这种进程都应该格外注意程序是否设计有误。</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p> 第三行是CPU的一些信息，各个部分的占用都很明确。</p>
+<blockquote>
+<ul>
+<li><p>(us) user：CPU 在低 nice 值(高优先级)用户态所占用的时间(nice&lt;=0)。正常情况下只要服务器不是很闲，那么大部分的 CPU 时间应该都在此执行这类程序</p>
+</li>
+<li><p>(sy) system：CPU 处于内核态所占用的时间，操作系统通过系统调用(system call)从用户态陷入内核态，以执行特定的服务；通常情况下该值会比较小，但是当服务器执行的 IO 比较密集的时候，该值会比较大</p>
+</li>
+<li><p>(ni) nice：CPU 在高 nice 值(低优先级)用户态以低优先级运行占用的时间(nice&gt;0)。默认新启动的进程 nice=0，是不会计入这里的，除非手动通过 renice 或者 setpriority() 的方式修改程序的nice值</p>
+</li>
+<li><p>(id) idle：CPU 在空闲状态(执行 kernel idle handler )所占用的时间</p>
+</li>
+<li><p>(wa) iowait：等待 IO 完成做占用的时间</p>
+</li>
+<li><p>(hi) irq：系统处理硬件中断所消耗的时间</p>
+</li>
+<li><p>(si) softirq：系统处理软中断所消耗的时间，记住软中断分为 softirqs、tasklets (其实是前者的特例)、work queues，不知道这里是统计的是哪些的时间，毕竟 work queues 的执行已经不是中断上下文了</p>
+</li>
+<li><p>(st) steal：在虚拟机情况下才有意义，因为虚拟机下 CPU 也是共享物理 CPU 的，所以这段时间表明虚拟机等待 hypervisor 调度 CPU 的时间，也意味着这段时间 hypervisor 将 CPU 调度给别的 CPU 执行，这个时段的 CPU 资源被“stolen”了。这个值在我 KVM 的 VPS 机器上是不为 0 的，但也只有 0.1 这个数量级，是不是可以用来判断 VPS 超售的情况？</p>
+</li>
+</ul>
+</blockquote>
+<p>iowait所包含的信息其实是非常少的，具体的解释可以看<strong>参考3</strong>中的文章，讲的非常好.</p>
+<blockquote>
+<p>%iowait 表示在一个采样周期内有百分之几的时间属于以下情况：CPU空闲、并且有仍未完成的I/O请求</p>
+</blockquote>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>第四行主要是内存使用的相关信息， 系统的内存总共有<code>65979844k</code>， 已经使用<code>65004736k</code>, <code>975108k</code>可用， <code>8108k</code>缓存, </p>
+<p>65979844k = 65004736k + 975108k</p>
+<p>可见缓存的也包含在可用的内存中。</p>
+<p>这些信息也可以通过<code>free -k</code> （还可以-m, -g 表示展示的单位），<code>free</code>的输出如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ free -k</div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:      65979844   64863960    1115884        112       8824    5331160</div><div class="line">-/+ buffers/cache:   59523976    6455868 </div><div class="line">Swap:     50331644      29364   50302280</div></pre></td></tr></table></figure>
+<p><code>vmstat</code> 也可以看到系统的内存状况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[qisheng.li@xxx /home/www/xxx]$ vmstat 1 3 | column -t</div><div class="line">procs  -----------memory----------  ---swap--  -----io----  --system--  -----cpu-----</div><div class="line">r      b                            swpd       free         buff        cache          si  so  bi   bo   <span class="keyword">in</span>     cs     us  sy  id  wa  st</div><div class="line">5      1                            29364      2231704      8808        4214104        0   0   124  230  0      0      15  1   84  0   0</div><div class="line">6      0                            29364      2219016      8908        4225260        0   0   668  132  47040  68271  25  2   72  0   0</div><div class="line">5      0                            29364      2209552      8916        4234020        0   0   512  12   37178  52578  20  2   78  0   0</div></pre></td></tr></table></figure>
+<p>第五行和第四行类似，输出的是swap的使用情况。</p>
+<h3 id="进程的详细信息"><a href="#进程的详细信息" class="headerlink" title="进程的详细信息"></a>进程的详细信息</h3><blockquote>
+<p>PID：进程的ID<br>USER：进程所有者<br>PR：进程的优先级别，越小越优先被执行<br>NI：nice值<br>VIRT：进程占用的虚拟内存<br>RES：进程占用的物理内存<br>SHR：进程使用的共享内存<br>S：进程的状态。S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数<br>%CPU：进程占用CPU的使用率<br>%MEM：进程使用的物理内存和总内存的百分比<br>TIME+：该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值。<br>COMMAND：进程启动命令名称</p>
+</blockquote>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="交互命令"><a href="#交互命令" class="headerlink" title="交互命令"></a>交互命令</h3><ul>
+<li><p>按照CPU占用排序： 交互模式下输入： <code>P</code></p>
+</li>
+<li><p>按照内存排序： 交互模式下输入： <code>M</code></p>
+</li>
+<li><p>杀死进程： 交互模式下输入: <code>k</code>, 然后根据提示输入相应的<code>pid</code></p>
+</li>
+<li><p>更改刷新时间： 交互模式下输入: <code>d</code>或者<code>s</code>, 然后输入相应的刷新值</p>
+</li>
+<li><p>显示CPU的每个核的使用情况： 交互模式下输入： 键盘上的<code>1</code></p>
+</li>
+</ul>
+<p>top的显示界面会展开：</p>
+<img src="/2017/09/09/top/cpu.png" alt="cpu.png" title="">
+<ul>
+<li>高亮模式： 交互模式下输入: ‘z’</li>
+</ul>
+<img src="/2017/09/09/top/highlight.png" alt="highlight.png" title="">
+<ul>
+<li>高亮当前的排序列(需要在z模式下)： 交互模式下输入: ‘x’</li>
+</ul>
+<img src="/2017/09/09/top/highlight-sort.png" alt="highlight-sort.png" title="">
+<ul>
+<li><p>改变排序列： 交互模式下按<code>shift</code> + <code>&lt;</code>或<code>&gt;</code></p>
+</li>
+<li><p>增加显示的Field： 交互模式下按<code>f</code>, 然后选择想要展示的列</p>
+</li>
+</ul>
+<img src="/2017/09/09/top/fields.png" alt="fields.png" title="">
+<ul>
+<li><p>显示到线程级别： 交互模式下按<code>H</code></p>
+</li>
+<li><p>显示完整的命令名称: 交互模式下按<code>c</code></p>
+</li>
+<li><p>分类显示各种系统资源高的进程： 交互模式下按<code>A</code></p>
+</li>
+</ul>
+<img src="/2017/09/09/top/top-a.png" alt="top-a.png" title="">
+<h3 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h3><ul>
+<li>显示某个进程的线程信息</li>
+</ul>
+<p><code>top -p &lt;PID&gt; -H</code></p>
+<p>其中 <code>-H</code>是指显示线程的信息，可以看到每个线程的CPU占用情况</p>
+
+<ul>
+<li>显示完整的命令： <code>-c</code></li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="http://kumu-linux.github.io/blog/2013/06/07/top-hacks/" rel="external nofollow noopener noreferrer" target="_blank">top实践小技巧 - OPS Notes By 枯木</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzAxMzQ3NzQ3Nw==&amp;mid=2654249787&amp;idx=2&amp;sn=7aa8e765fda84d5fa26580c210585c53&amp;chksm=8061f031b716792776833370019a9fc4c79fa40ea7db5b4ccb165b90919056acaffd3d971d94&amp;mpshare=1&amp;scene=1&amp;srcid=0801QspCI2Xo04BsZlP6pCVb##" rel="external nofollow noopener noreferrer" target="_blank">Linux服务器的那些性能参数指标</a></p>
+</li>
+<li><p><a href="http://linuxperf.com/?p=33" rel="external nofollow noopener noreferrer" target="_blank">理解 %iowait (%wio) | Linux Performance</a></p>
+</li>
+<li><p><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/top.html" rel="external nofollow noopener noreferrer" target="_blank">8. top linux下的任务管理器 — Linux Tools Quick Tutorial</a></p>
+</li>
+</ol>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://qsli.github.io/2017/09/09/top/" data-id="cj7d42sgn003th04kakcae6jb" class="article-share-link">分享到</a><div class="tags"><a href="/tags/linux/">linux</a></div><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><div class="donate_txt"> &uarr;<br>此文有用? Buy me a coffee<br></div></div><div id="donate_guide" class="donate_bar center hidden"><img src="http://oj3xkjbu4.bkt.clouddn.com/mm_facetoface_collect_qrcode_1483284143051.png" title="微信打赏"></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
+    $('#donate_board').addClass('hidden');
+    $('#donate_guide').removeClass('hidden');
+}</script></div><div class="post-nav"><a href="/2017/06/03/jvm-flag/" class="pre">jvm-flag</a></div><div id="disqus_thread"><script>var disqus_shortname = 'blog-huytwsybye';
+var disqus_identifier = '2017/09/09/top/';
+var disqus_title = 'top用法';
+var disqus_url = 'http://qsli.github.io/2017/09/09/top/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//blog-huytwsybye.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://qsli.github.io"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/base/">base</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/fe/">fe</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/guava/">guava</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/idea/">idea</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tomcat/">tomcat</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/top/">top</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/placeholder/" style="font-size: 15px;">placeholder</a> <a href="/tags/剪贴板/" style="font-size: 15px;">剪贴板</a> <a href="/tags/exception/" style="font-size: 15px;">exception</a> <a href="/tags/编码/" style="font-size: 15px;">编码</a> <a href="/tags/自定义标签/" style="font-size: 15px;">自定义标签</a> <a href="/tags/cygwin/" style="font-size: 15px;">cygwin</a> <a href="/tags/fabric/" style="font-size: 15px;">fabric</a> <a href="/tags/beanfactory/" style="font-size: 15px;">beanfactory</a> <a href="/tags/event-bus/" style="font-size: 15px;">event-bus</a> <a href="/tags/hexo-install/" style="font-size: 15px;">hexo install</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/template/" style="font-size: 15px;">template</a> <a href="/tags/jackson/" style="font-size: 15px;">jackson</a> <a href="/tags/jar/" style="font-size: 15px;">jar</a> <a href="/tags/Javadoc/" style="font-size: 15px;">Javadoc</a> <a href="/tags/访问权限/" style="font-size: 15px;">访问权限</a> <a href="/tags/ajax/" style="font-size: 15px;">ajax</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/markdown-here/" style="font-size: 15px;">markdown-here</a> <a href="/tags/mindmap/" style="font-size: 15px;">mindmap</a> <a href="/tags/maven/" style="font-size: 15px;">maven</a> <a href="/tags/netcat/" style="font-size: 15px;">netcat</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/uml/" style="font-size: 15px;">uml</a> <a href="/tags/pip/" style="font-size: 15px;">pip</a> <a href="/tags/postgresql/" style="font-size: 15px;">postgresql</a> <a href="/tags/python-util/" style="font-size: 15px;">python-util</a> <a href="/tags/messageConverter/" style="font-size: 15px;">messageConverter</a> <a href="/tags/re/" style="font-size: 15px;">re</a> <a href="/tags/limit/" style="font-size: 15px;">limit</a> <a href="/tags/servlet/" style="font-size: 15px;">servlet</a> <a href="/tags/shadowsocks/" style="font-size: 15px;">shadowsocks</a> <a href="/tags/spi/" style="font-size: 15px;">spi</a> <a href="/tags/spring-mvc/" style="font-size: 15px;">spring mvc</a> <a href="/tags/resource/" style="font-size: 15px;">resource</a> <a href="/tags/ssh/" style="font-size: 15px;">ssh</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/access-log/" style="font-size: 15px;">access-log</a> <a href="/tags/connections/" style="font-size: 15px;">connections</a> <a href="/tags/xml/" style="font-size: 15px;">xml</a> <a href="/tags/string-manager/" style="font-size: 15px;">string-manager</a> <a href="/tags/encoding/" style="font-size: 15px;">encoding</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/top/">top用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/jvm-flag/">jvm-flag</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/01/maven-scope/">maven-scope</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/19/hexo-ubuntu/">hexo迁移到ubuntu</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/web-xml/">web.xml</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/tomcat-connection/">tomcat连接数相关的配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/28/servlet-async/">异步Servlet及Spring对其的支持</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/cygwin-360/">cygwin执行命令非常慢</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/idea-scratches/">Intellij Idea中临时文件功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/factorybean/">Spring中的factory-bean和FactoryBean</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//blog-huytwsybye.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://chenyuzuoo.github.io/" title="Chenyu's Script" target="_blank" rel="external nofollow noopener noreferrer">Chenyu's Script</a></div><div class="widget"><div class="widget-title"><i class="fa fa-eye"> 本站访问量</i></div><div><script type="text/javascript" src="/js/busuanzi.pure.mini.js?v=0.0.0" async="async"></script><p> 访问量:<span id="busuanzi_value_site_pv"> </span></p><p> 访客数:<span id="busuanzi_value_site_uv"></span></p></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer"><p><a href="/." rel="nofollow">KL's blog </a><span>© 2015 - 2017.</span></p><p> Powered by<a rel="external nofollow noopener noreferrer" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="external nofollow noopener noreferrer" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="external nofollow noopener noreferrer" target="_blank" href="https://github.com/pagecho"> Cho.</a></p></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="/js/kity.min.js?v=0.0.0" sync=""></script><script type="text/javascript" src="/js/kityminder.core.js?v=0.0.0" sync=""></script><script type="text/javascript" src="/js/mindmap.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b86170f998d4ba7d7e834894b1f02595";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
