@@ -174,8 +174,7 @@ div {
   border-left-style: solid; }
 
 .post-short {
-  border: 1px dashed;
-  border-color: lightblue; }
+  border-bottom: 4px dotted lightblue; }
 
 .post {
   margin-bottom: 20px;
