@@ -112,7 +112,7 @@ FD is followed by one of these characters, describing the mode under which the f
     <link href="http://qsli.github.io/2017/09/09/top/"/>
     <id>http://qsli.github.io/2017/09/09/top/</id>
     <published>2017-09-09T09:31:18.000Z</published>
-    <updated>2017-09-09T09:31:18.953Z</updated>
+    <updated>2017-09-10T04:22:07.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>top是了解系统状况最常用的命令，从top的输出我们可以很好的掌握系统的CPU, 内存，swap，进程的相关信息。</p>
 <p>下面说下top的基本用法：</p>
@@ -233,10 +233,10 @@ FD is followed by one of these characters, describing the mode under which the f
     
     </summary>
     
-      <category term="top" scheme="http://qsli.github.io/categories/top/"/>
+      <category term="linux" scheme="http://qsli.github.io/categories/linux/"/>
     
     
-      <category term="linux" scheme="http://qsli.github.io/tags/linux/"/>
+      <category term="top" scheme="http://qsli.github.io/tags/top/"/>
     
   </entry>
   
