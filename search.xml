@@ -4,6 +4,96 @@
   
     
     <entry>
+      <title><![CDATA[Linux下删除文件]]></title>
+      <url>http://qsli.github.io/2017/09/10/how-to-delete-file-correctly/</url>
+      <content type="html"><![CDATA[<h1 id="文件存储"><a href="#文件存储" class="headerlink" title="文件存储"></a>文件存储</h1><img src="/2017/09/10/how-to-delete-file-correctly/inode.png" alt="linux文件的存储" title="linux文件的存储">
+<h2 id="软链接和硬链接"><a href="#软链接和硬链接" class="headerlink" title="软链接和硬链接"></a>软链接和硬链接</h2><p>软链接(Symbolic Link):</p>
+<p>硬链接(Hard Link):</p>
+<blockquote>
+<p>硬链接就是在Directory中加入一条filename和Inode的对应关系，所以如果你删除了原来的文件，是不对硬链接文件有任何影响的，因为删除文件就是将link count 减少，当发现指向Inode为filename数量0的时候，系统会回收相应的Inode和Block空间。但是软链接就不同了，在Linux下所有的都是文件，所以软链接也有自己的Inode和block ，但是创建软链接不会在增加原文件Inode-Index，当删除原文件的时候，相应的Index不再能找到，所以导致软链接不能用。但是软链接有自身的优势，可以跨分区，这样就可以解决当前Inode数据区不足够写入，可以使用软链接指向空间充足的空间。</p>
+</blockquote>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>软链接  硬链接 区别</p>
+<img src="/2017/09/10/how-to-delete-file-correctly/links.png" alt="软链接和硬链接的区别" title="软链接和硬链接的区别">
+<h2 id="文件是否被占用"><a href="#文件是否被占用" class="headerlink" title="文件是否被占用"></a>文件是否被占用</h2><p>一切皆文件，所以lsof（list open file）就很重要</p>
+<p>lsof -i ：8080 查看端口占用</p>
+<p>socket 也是文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo lsof  catalina.out</div><div class="line"></div><div class="line">COMMAND   PID   USER   FD   TYPE DEVICE SIZE/OFF     NODE NAME</div><div class="line">java    40916 tomcat    1w   REG    8,7   933679 27656540 catalina.out</div><div class="line">java    40916 tomcat    2w   REG    8,7   933679 27656540 catalina.out</div></pre></td></tr></table></figure>
+<blockquote>
+<p>‘‘REG’’ for a regular file<br>FD         is the File Descriptor number of the file or:</p>
+</blockquote>
+<pre><code>     cwd  current working directory;
+     Lnn  library references (AIX);
+     err  FD information error (see NAME column);
+     jld  jail directory (FreeBSD);
+     ltx  shared library text (code and data);
+     Mxx  hex memory-mapped type number xx.
+     m86  DOS Merge mapped file;
+     mem  memory-mapped file;
+     mmap memory-mapped device;
+     pd   parent directory;
+     rtd  root directory;
+     tr   kernel trace file (OpenBSD);
+     txt  program text (code and data);
+     v86  VP/ix mapped file;
+
+FD is followed by one of these characters, describing the mode under which the file is open:
+
+     r for read access;
+     w for write access;
+     u for read and write access;
+     space if mode unknown and no lock
+          character follows;
+     ‘-’ if mode unknown and lock
+          character follows.
+</code></pre><p>可以看出上面的文件的fd是1, w权限</p>
+<p>系统，每个进程，文件描述符。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ls /proc/40916/fd</div></pre></td></tr></table></figure>
+<p>下面的两个命令是等价的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo cat /proc/40916/fd/2</div><div class="line"></div><div class="line">sudo cat catalina.out</div></pre></td></tr></table></figure>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>删除文件之前应该先看下文件的占用情况，<code>lsof</code>可以查看到文件被哪个进程占用。</p>
+<p>如果被占用，直接使用<code>rm</code>删除相当于只是删除了文件名和inode的关联, 但是文件占用的空间还在(block), 应该使用下面的命令进行删除：</p>
+<blockquote>
+<p>You misunderstand: deletion will be complete only after all processes using the file at the time of deletion have reached completion: only then the deleted inode will be returned to the pool of available inodes, and the content of the file may begin to be corrupted by over-writing. Until then, the inode is alive and well, and is pointing to the area of the disk containing the file in question. As soon as less completes, the soft link will disappear, and so will the file testing.txt.</p>
+<pre><code>当我们使用rm命令的时候，系统并不会真正删除这个资料。除非有档案非要将资料存储在原来档案的这些block中。这样原来的block就会被新档案给覆盖掉。 
+</code></pre></blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cat /dev/null &gt; filename</div><div class="line">或者</div><div class="line">truncate <span class="_">-s</span> 0 filename</div></pre></td></tr></table></figure>
+<h3 id="stat-命令"><a href="#stat-命令" class="headerlink" title="stat 命令"></a>stat 命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">sudo <span class="built_in">stat</span> /proc/40916/fd/2</div><div class="line"></div><div class="line">File: `/proc/40916/fd/2<span class="string">' -&gt; `/home/q/www/qta.open.coupon.provider/logs/catalina.out'</span></div><div class="line">  Size: 64        	Blocks: 0          IO Block: 1024   symbolic link</div><div class="line">Device: 3h/3d	Inode: 3017464897  Links: 1</div><div class="line">Access: (0300/l-wx------)  Uid: (40001/  tomcat)   Gid: (40001/  tomcat)</div><div class="line">Access: 2017-07-05 05:05:06.318550652 +0800</div><div class="line">Modify: 2017-06-15 12:35:24.590599522 +0800</div><div class="line">Change: 2017-06-15 12:35:24.590599522 +0800</div><div class="line"></div><div class="line"></div><div class="line">sudo <span class="built_in">stat</span> catalina.out</div><div class="line"></div><div class="line">File: `catalina.out<span class="string">'</span></div><div class="line">  Size: 962851    	Blocks: 1896       IO Block: 4096   regular file</div><div class="line">Device: 807h/2055d	Inode: 27656540    Links: 1</div><div class="line">Access: (0644/-rw-r--r--)  Uid: (40001/  tomcat)   Gid: (40001/  tomcat)</div><div class="line">Access: 2017-07-06 00:51:44.243427414 +0800</div><div class="line">Modify: 2017-07-06 00:52:27.096557541 +0800</div><div class="line">Change: 2017-07-06 00:52:27.096557541 +0800</div><div class="line"></div><div class="line">sudo ls -i /proc/40916/fd/2</div><div class="line"></div><div class="line">3017464897 /proc/40916/fd/2</div></pre></td></tr></table></figure>
+<p>可以看出, 文件描述符是一个软链接.</p>
+<h3 id="目录下的文件占用空间很小-但是目录占用空间很大"><a href="#目录下的文件占用空间很小-但是目录占用空间很大" class="headerlink" title="目录下的文件占用空间很小, 但是目录占用空间很大"></a>目录下的文件占用空间很小, 但是目录占用空间很大</h3><p>这种情况, 最常见的就是文件被删除了, 但是还有进程占用它. 于是这个文件占用的block就没有释放掉.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo lsof | grep deleted</div></pre></td></tr></table></figure>
+<p>使用上面的命令就可以看到,那些文件被删除了, 但是还在被占用.  kill掉相应的进程, 空间就自己回来了.</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/lsof.html" rel="external nofollow noopener noreferrer" target="_blank">3. lsof 一切皆文件 — Linux Tools Quick Tutorial</a></p>
+</li>
+<li><p><a href="https://unix.stackexchange.com/questions/92384/how-to-clean-log-file" rel="external nofollow noopener noreferrer" target="_blank">How to clean log file? - Unix &amp; Linux Stack Exchange</a></p>
+</li>
+<li><p><a href="https://unix.stackexchange.com/questions/88808/empty-the-contents-of-a-file" rel="external nofollow noopener noreferrer" target="_blank">shell script - Empty the contents of a file - Unix &amp; Linux Stack Exchange</a></p>
+</li>
+<li><p><a href="http://himichaelchu.iteye.com/blog/2116023" rel="external nofollow noopener noreferrer" target="_blank">通过Inode原理分析Linux中ln命令 - Michael Chu - ITeye技术网站</a></p>
+</li>
+<li><p><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/index.html" rel="external nofollow noopener noreferrer" target="_blank">理解 Linux 的硬链接与软链接</a></p>
+</li>
+<li><p><a href="https://superuser.com/questions/1112781/why-do-symbolic-links-in-prox-pid-fd-act-as-hard-links" rel="external nofollow noopener noreferrer" target="_blank">linux - why do symbolic links in /prox/$PID/fd/ act as hard links? - Super User</a></p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> lsof </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[top用法]]></title>
       <url>http://qsli.github.io/2017/09/09/top/</url>
       <content type="html"><![CDATA[<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>top是了解系统状况最常用的命令，从top的输出我们可以很好的掌握系统的CPU, 内存，swap，进程的相关信息。</p>

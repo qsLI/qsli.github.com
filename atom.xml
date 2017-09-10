@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-09-09T09:31:18.953Z</updated>
+  <updated>2017-09-10T04:20:09.253Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,98 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux下删除文件</title>
+    <link href="http://qsli.github.io/2017/09/10/how-to-delete-file-correctly/"/>
+    <id>http://qsli.github.io/2017/09/10/how-to-delete-file-correctly/</id>
+    <published>2017-09-10T04:20:09.000Z</published>
+    <updated>2017-09-10T04:20:09.253Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="文件存储"><a href="#文件存储" class="headerlink" title="文件存储"></a>文件存储</h1><img src="/2017/09/10/how-to-delete-file-correctly/inode.png" alt="linux文件的存储" title="linux文件的存储">
+<h2 id="软链接和硬链接"><a href="#软链接和硬链接" class="headerlink" title="软链接和硬链接"></a>软链接和硬链接</h2><p>软链接(Symbolic Link):</p>
+<p>硬链接(Hard Link):</p>
+<blockquote>
+<p>硬链接就是在Directory中加入一条filename和Inode的对应关系，所以如果你删除了原来的文件，是不对硬链接文件有任何影响的，因为删除文件就是将link count 减少，当发现指向Inode为filename数量0的时候，系统会回收相应的Inode和Block空间。但是软链接就不同了，在Linux下所有的都是文件，所以软链接也有自己的Inode和block ，但是创建软链接不会在增加原文件Inode-Index，当删除原文件的时候，相应的Index不再能找到，所以导致软链接不能用。但是软链接有自身的优势，可以跨分区，这样就可以解决当前Inode数据区不足够写入，可以使用软链接指向空间充足的空间。</p>
+</blockquote>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>软链接  硬链接 区别</p>
+<img src="/2017/09/10/how-to-delete-file-correctly/links.png" alt="软链接和硬链接的区别" title="软链接和硬链接的区别">
+<h2 id="文件是否被占用"><a href="#文件是否被占用" class="headerlink" title="文件是否被占用"></a>文件是否被占用</h2><p>一切皆文件，所以lsof（list open file）就很重要</p>
+<p>lsof -i ：8080 查看端口占用</p>
+<p>socket 也是文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo lsof  catalina.out</div><div class="line"></div><div class="line">COMMAND   PID   USER   FD   TYPE DEVICE SIZE/OFF     NODE NAME</div><div class="line">java    40916 tomcat    1w   REG    8,7   933679 27656540 catalina.out</div><div class="line">java    40916 tomcat    2w   REG    8,7   933679 27656540 catalina.out</div></pre></td></tr></table></figure>
+<blockquote>
+<p>‘‘REG’’ for a regular file<br>FD         is the File Descriptor number of the file or:</p>
+</blockquote>
+<pre><code>     cwd  current working directory;
+     Lnn  library references (AIX);
+     err  FD information error (see NAME column);
+     jld  jail directory (FreeBSD);
+     ltx  shared library text (code and data);
+     Mxx  hex memory-mapped type number xx.
+     m86  DOS Merge mapped file;
+     mem  memory-mapped file;
+     mmap memory-mapped device;
+     pd   parent directory;
+     rtd  root directory;
+     tr   kernel trace file (OpenBSD);
+     txt  program text (code and data);
+     v86  VP/ix mapped file;
+
+FD is followed by one of these characters, describing the mode under which the file is open:
+
+     r for read access;
+     w for write access;
+     u for read and write access;
+     space if mode unknown and no lock
+          character follows;
+     ‘-’ if mode unknown and lock
+          character follows.
+</code></pre><p>可以看出上面的文件的fd是1, w权限</p>
+<p>系统，每个进程，文件描述符。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ls /proc/40916/fd</div></pre></td></tr></table></figure>
+<p>下面的两个命令是等价的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo cat /proc/40916/fd/2</div><div class="line"></div><div class="line">sudo cat catalina.out</div></pre></td></tr></table></figure>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>删除文件之前应该先看下文件的占用情况，<code>lsof</code>可以查看到文件被哪个进程占用。</p>
+<p>如果被占用，直接使用<code>rm</code>删除相当于只是删除了文件名和inode的关联, 但是文件占用的空间还在(block), 应该使用下面的命令进行删除：</p>
+<blockquote>
+<p>You misunderstand: deletion will be complete only after all processes using the file at the time of deletion have reached completion: only then the deleted inode will be returned to the pool of available inodes, and the content of the file may begin to be corrupted by over-writing. Until then, the inode is alive and well, and is pointing to the area of the disk containing the file in question. As soon as less completes, the soft link will disappear, and so will the file testing.txt.</p>
+<pre><code>当我们使用rm命令的时候，系统并不会真正删除这个资料。除非有档案非要将资料存储在原来档案的这些block中。这样原来的block就会被新档案给覆盖掉。 
+</code></pre></blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cat /dev/null &gt; filename</div><div class="line">或者</div><div class="line">truncate <span class="_">-s</span> 0 filename</div></pre></td></tr></table></figure>
+<h3 id="stat-命令"><a href="#stat-命令" class="headerlink" title="stat 命令"></a>stat 命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">sudo <span class="built_in">stat</span> /proc/40916/fd/2</div><div class="line"></div><div class="line">File: `/proc/40916/fd/2<span class="string">' -&gt; `/home/q/www/qta.open.coupon.provider/logs/catalina.out'</span></div><div class="line">  Size: 64        	Blocks: 0          IO Block: 1024   symbolic link</div><div class="line">Device: 3h/3d	Inode: 3017464897  Links: 1</div><div class="line">Access: (0300/l-wx------)  Uid: (40001/  tomcat)   Gid: (40001/  tomcat)</div><div class="line">Access: 2017-07-05 05:05:06.318550652 +0800</div><div class="line">Modify: 2017-06-15 12:35:24.590599522 +0800</div><div class="line">Change: 2017-06-15 12:35:24.590599522 +0800</div><div class="line"></div><div class="line"></div><div class="line">sudo <span class="built_in">stat</span> catalina.out</div><div class="line"></div><div class="line">File: `catalina.out<span class="string">'</span></div><div class="line">  Size: 962851    	Blocks: 1896       IO Block: 4096   regular file</div><div class="line">Device: 807h/2055d	Inode: 27656540    Links: 1</div><div class="line">Access: (0644/-rw-r--r--)  Uid: (40001/  tomcat)   Gid: (40001/  tomcat)</div><div class="line">Access: 2017-07-06 00:51:44.243427414 +0800</div><div class="line">Modify: 2017-07-06 00:52:27.096557541 +0800</div><div class="line">Change: 2017-07-06 00:52:27.096557541 +0800</div><div class="line"></div><div class="line">sudo ls -i /proc/40916/fd/2</div><div class="line"></div><div class="line">3017464897 /proc/40916/fd/2</div></pre></td></tr></table></figure>
+<p>可以看出, 文件描述符是一个软链接.</p>
+<h3 id="目录下的文件占用空间很小-但是目录占用空间很大"><a href="#目录下的文件占用空间很小-但是目录占用空间很大" class="headerlink" title="目录下的文件占用空间很小, 但是目录占用空间很大"></a>目录下的文件占用空间很小, 但是目录占用空间很大</h3><p>这种情况, 最常见的就是文件被删除了, 但是还有进程占用它. 于是这个文件占用的block就没有释放掉.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo lsof | grep deleted</div></pre></td></tr></table></figure>
+<p>使用上面的命令就可以看到,那些文件被删除了, 但是还在被占用.  kill掉相应的进程, 空间就自己回来了.</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/lsof.html" rel="external nofollow noopener noreferrer" target="_blank">3. lsof 一切皆文件 — Linux Tools Quick Tutorial</a></p>
+</li>
+<li><p><a href="https://unix.stackexchange.com/questions/92384/how-to-clean-log-file" rel="external nofollow noopener noreferrer" target="_blank">How to clean log file? - Unix &amp; Linux Stack Exchange</a></p>
+</li>
+<li><p><a href="https://unix.stackexchange.com/questions/88808/empty-the-contents-of-a-file" rel="external nofollow noopener noreferrer" target="_blank">shell script - Empty the contents of a file - Unix &amp; Linux Stack Exchange</a></p>
+</li>
+<li><p><a href="http://himichaelchu.iteye.com/blog/2116023" rel="external nofollow noopener noreferrer" target="_blank">通过Inode原理分析Linux中ln命令 - Michael Chu - ITeye技术网站</a></p>
+</li>
+<li><p><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/index.html" rel="external nofollow noopener noreferrer" target="_blank">理解 Linux 的硬链接与软链接</a></p>
+</li>
+<li><p><a href="https://superuser.com/questions/1112781/why-do-symbolic-links-in-prox-pid-fd-act-as-hard-links" rel="external nofollow noopener noreferrer" target="_blank">linux - why do symbolic links in /prox/$PID/fd/ act as hard links? - Super User</a></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;文件存储&quot;&gt;&lt;a href=&quot;#文件存储&quot; class=&quot;headerlink&quot; title=&quot;文件存储&quot;&gt;&lt;/a&gt;文件存储&lt;/h1&gt;&lt;img src=&quot;/2017/09/10/how-to-delete-file-correctly/inode.png&quot; alt
+    
+    </summary>
+    
+      <category term="linux" scheme="http://qsli.github.io/categories/linux/"/>
+    
+    
+      <category term="lsof" scheme="http://qsli.github.io/tags/lsof/"/>
+    
+  </entry>
   
   <entry>
     <title>top用法</title>
@@ -1117,77 +1209,6 @@
     
     
       <category term="markdown-here" scheme="http://qsli.github.io/tags/markdown-here/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo中使用markdown来绘制脑图（mind map）</title>
-    <link href="http://qsli.github.io/2017/01/01/markdown-mindmap/"/>
-    <id>http://qsli.github.io/2017/01/01/markdown-mindmap/</id>
-    <published>2017-01-01T14:45:33.000Z</published>
-    <updated>2017-04-16T12:03:23.393Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="脑图是什么？"><a href="#脑图是什么？" class="headerlink" title="脑图是什么？"></a>脑图是什么？</h1><p>脑图英文叫做<code>mind map</code>, 是一种帮助发散思维的工具。将读过的书、看过的源码等总结成脑图，等下次需要复习的时候</p>
-<p>顺着脑图去看，效率非常高。</p>
-<img src="/2017/01/01/markdown-mindmap/sample.jpg" alt="sample.jpg" title="">
-<h2 id="用makrdown来画脑图"><a href="#用makrdown来画脑图" class="headerlink" title="用makrdown来画脑图"></a>用makrdown来画脑图</h2><p><code>markdown</code>是一种非常方便的标记性语言，使用<code>markdown</code>记录可以忽略格式带来的困扰，让我们更加的专注于内容。</p>
-<p>脑图的结构也不复杂，就是一级一级的分支。使用markdown完全可以表达出来，关键是怎么渲染出来。</p>
-<h2 id="kityminder"><a href="#kityminder" class="headerlink" title="kityminder"></a>kityminder</h2><p>经多番查找，最终锁定了百度前端团队开源的——<code>kityminder</code>, <a href="http://naotu.baidu.com/" rel="external nofollow noopener noreferrer" target="_blank">百度脑图</a>也是使用这个构建的。</p>
-<p><code>kityminder</code>分成了两部分，一部分是<a href="https://github.com/fex-team/kityminder-core" rel="external nofollow noopener noreferrer" target="_blank">kityminder-core</a>,一个是<a href="https://github.com/fex-team/kityminder-editor" rel="external nofollow noopener noreferrer" target="_blank">kityminder-editor</a>.</p>
-<img src="/2017/01/01/markdown-mindmap/relations.png" alt="relations.png" title="">
-<h3 id="kityminder-core"><a href="#kityminder-core" class="headerlink" title="kityminder-core"></a>kityminder-core</h3><p>kityminder-core是百度脑图最核心部分的实现，主要包括了:</p>
-<ul>
-<li><p>包括脑图数据的可视化展示（Json 格式）</p>
-</li>
-<li><p>包括简单的编辑功能（节点创建、编辑、删除）。更加强大编辑功能的 KityMinder 编辑器请移步 kityminder-editor</p>
-</li>
-<li><p>不包含第三方格式（FreeMind、XMind、MindManager）的支持，可以加载 kityminder-protocol 来扩展第三方格式支持。</p>
-</li>
-<li><p>不包含文件存储的支持，需要自行实现存储。可参照百度脑图中的开源的 fio + 百度网盘方案进行实现。</p>
-</li>
-</ul>
-<h3 id="kityminder-editor"><a href="#kityminder-editor" class="headerlink" title="kityminder-editor"></a>kityminder-editor</h3><blockquote>
-<p>KityMinder Editor 是一款强大、简洁、体验优秀的脑图编辑工具，适合用于编辑树/图/网等结构的数据。</p>
-<p>编辑器由百度 FEX 基于 kityminder-core 搭建，并且在百度脑图中使用。</p>
-</blockquote>
-<h2 id="让hexo支持kityminder"><a href="#让hexo支持kityminder" class="headerlink" title="让hexo支持kityminder"></a>让hexo支持kityminder</h2><p>这个主要是客户端渲染的。</p>
-<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><p>引入<code>kityminder-core</code>的js和css，以及<code>kityminder-core</code>的依赖kity到相应的主题下面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//core压缩后的</div><div class="line">kityminder.core.min.js</div><div class="line">//kity的cdn地址</div><div class="line">https://cdn.rawgit.com/fex-team/kity/dev/dist/kity.min.js</div></pre></td></tr></table></figure>
-<h3 id="为mind-map找到一个标签"><a href="#为mind-map找到一个标签" class="headerlink" title="为mind map找到一个标签"></a>为<code>mind map</code>找到一个标签</h3><p>渲染需要<em>数据</em>和<em>容器</em>节点。数据的标记应该越简单越好。</p>
-<p>查阅hexo的官方文档，发现了几个支持设置class属性的标签，以及raw标签。</p>
-<p>先来看看<code>raw</code>标签：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% raw %&#125;</div><div class="line">content</div><div class="line">&#123;% endraw %&#125;</div></pre></td></tr></table></figure>
-<p><code>raw</code>标签里面是可以写html的，渲染的时候不会加以改变，但是写起了比较麻烦，失去了标记性语言简单的特性。</p>
-<p><code>pull quote</code>标签：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% pullquote [class] %&#125;</div><div class="line">content</div><div class="line">&#123;% endpullquote %&#125;</div></pre></td></tr></table></figure>
-<p><code>pull quote</code> 标签支持设置class属性，使用这个标签，然后设置一个我们自己的class，比如<code>mindmap</code></p>
-<h3 id="渲染数据"><a href="#渲染数据" class="headerlink" title="渲染数据"></a>渲染数据</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> minder = <span class="keyword">new</span> kityminder.Minder(&#123;</div><div class="line">            <span class="attr">renderTo</span>: <span class="string">'.mindmap'</span></div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">var</span> markdownText = $(<span class="string">'.mindmap'</span>).text().trim();</div><div class="line">        $(<span class="string">'.mindmap p'</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">index, element</span>) </span>&#123;</div><div class="line">            element.style.display = <span class="string">'none'</span>;</div><div class="line">        &#125;);</div><div class="line">        minder.importData(<span class="string">'markdown'</span>, markdownText);</div><div class="line">        minder.disable();</div><div class="line">        minder.execCommand(<span class="string">'hand'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="number">3000</span></div><div class="line">)</div></pre></td></tr></table></figure>
-<p>使用markdown写mind map示例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;% pullquote mindmap %&#125;</div><div class="line">#主题</div><div class="line">##一级分支</div><div class="line">###二级分支</div><div class="line">##一级分支</div><div class="line">##一级分支</div><div class="line">###二级分支</div><div class="line">####三级分支</div><div class="line">&#123;% endpullquote %&#125;</div></pre></td></tr></table></figure>
-<p>渲染的效果</p>
-<blockquote class="pullquote mindmap"><p>#主题</p>
-<p>##一级分支</p>
-<p>###二级分支</p>
-<p>##一级分支</p>
-<p>##一级分支</p>
-<p>###二级分支</p>
-<p>####三级分支</p>
-</blockquote>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://hexo.io/zh-cn/docs/tag-plugins.html" rel="external nofollow noopener noreferrer" target="_blank">标签插件（Tag Plugins） | Hexo</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;脑图是什么？&quot;&gt;&lt;a href=&quot;#脑图是什么？&quot; class=&quot;headerlink&quot; title=&quot;脑图是什么？&quot;&gt;&lt;/a&gt;脑图是什么？&lt;/h1&gt;&lt;p&gt;脑图英文叫做&lt;code&gt;mind map&lt;/code&gt;, 是一种帮助发散思维的工具。将读过的书、看过的源码等
-    
-    </summary>
-    
-      <category term="hexo" scheme="http://qsli.github.io/categories/hexo/"/>
-    
-    
-      <category term="mindmap" scheme="http://qsli.github.io/tags/mindmap/"/>
     
   </entry>
   
