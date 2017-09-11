@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title><![CDATA[git-checkout 常用命令]]></title>
+      <url>http://qsli.github.io/2017/09/12/git-checkout/</url>
+      <content type="html"><![CDATA[<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ul>
+<li>从另外一个分支检出文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout source_branch &lt;paths&gt;...</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://jasonrudolph.com/blog/2009/02/25/git-tip-how-to-merge-specific-files-from-another-branch/" rel="external nofollow noopener noreferrer" target="_blank">Git tip: How to “merge” specific files from another branch - jasonrudolph.com</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> git </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[git查看已合并分支的fork点]]></title>
       <url>http://qsli.github.io/2017/09/12/git-branch-log/</url>
       <content type="html"><![CDATA[<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>有些需求有好几期，做后面几期的可能完全不了解前几期做了什么，拿到分支号后，就需要找到最初的commit点。由于这个分支已经merge到了master上，所以找最近的ancestor就不对了。</p>

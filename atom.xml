@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-09-11T16:25:40.547Z</updated>
+  <updated>2017-09-11T16:38:12.136Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git-checkout 常用命令</title>
+    <link href="http://qsli.github.io/2017/09/12/git-checkout/"/>
+    <id>http://qsli.github.io/2017/09/12/git-checkout/</id>
+    <published>2017-09-11T16:38:12.000Z</published>
+    <updated>2017-09-11T16:38:12.136Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ul>
+<li>从另外一个分支检出文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout source_branch &lt;paths&gt;...</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://jasonrudolph.com/blog/2009/02/25/git-tip-how-to-merge-specific-files-from-another-branch/" rel="external nofollow noopener noreferrer" target="_blank">Git tip: How to “merge” specific files from another branch - jasonrudolph.com</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;tips&quot;&gt;&lt;a href=&quot;#tips&quot; class=&quot;headerlink&quot; title=&quot;tips&quot;&gt;&lt;/a&gt;tips&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;从另外一个分支检出文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;t
+    
+    </summary>
+    
+      <category term="git" scheme="http://qsli.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://qsli.github.io/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>git查看已合并分支的fork点</title>
@@ -1211,45 +1243,6 @@ FD is followed by one of these characters, describing the mode under which the f
     
     
       <category term="exception" scheme="http://qsli.github.io/tags/exception/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pip使用</title>
-    <link href="http://qsli.github.io/2017/01/08/pip/"/>
-    <id>http://qsli.github.io/2017/01/08/pip/</id>
-    <published>2017-01-08T10:30:03.000Z</published>
-    <updated>2017-04-16T12:03:23.397Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载安装文件, <a href="https://bootstrap.pypa.io/get-pip.py" rel="external nofollow noopener noreferrer" target="_blank"></a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python get-pip.py</div></pre></td></tr></table></figure>
-<h3 id="从列表文件安装"><a href="#从列表文件安装" class="headerlink" title="从列表文件安装"></a>从列表文件安装</h3><p>导出文件列表(一般配合virtualenv适应)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ pip freeze                               </div><div class="line">backports-abc==0.4                         </div><div class="line">backports.shutil-get-terminal-size==1.0.0  </div><div class="line">backports.ssl-match-hostname==3.5.0.1      </div><div class="line">beautifulsoup4==4.5.1                      </div><div class="line">bs4==0.0.1                                 </div><div class="line">...</div></pre></td></tr></table></figure>
-<p>可以重定向到一个文件中，一般叫做requirements.txt</p>
-<p>然后安装的时候，可以使用下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure>
-<h3 id="安装VCS上的软件"><a href="#安装VCS上的软件" class="headerlink" title="安装VCS上的软件"></a>安装VCS上的软件</h3><blockquote>
-<p>pip currently supports cloning over git, git+http, git+https, git+ssh, git+git and git+file:</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[-e] git://git.myproject.org/MyProject#egg=MyProject</div><div class="line">[-e] git+http://git.myproject.org/MyProject#egg=MyProject</div><div class="line">[-e] git+https://git.myproject.org/MyProject#egg=MyProject</div><div class="line">[-e] git+ssh://git.myproject.org/MyProject#egg=MyProject</div><div class="line">[-e] git+git://git.myproject.org/MyProject#egg=MyProject</div><div class="line">[-e] git+file://git.myproject.org/MyProject#egg=MyProject</div><div class="line">-e git+git@git.myproject.org:MyProject#egg=MyProject</div></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><p><a href="https://pip.pypa.io/en/stable/reference/pip_install/#vcs-support" rel="external nofollow noopener noreferrer" target="_blank">pip install — pip 9.0.1 documentation</a></p>
-</li>
-<li><p><a href="https://segmentfault.com/a/1190000003050954" rel="external nofollow noopener noreferrer" target="_blank">Django | requirement.txt 生成 - 黑月亮 - SegmentFault</a></p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h3&gt;&lt;p&gt;下载安
-    
-    </summary>
-    
-      <category term="python" scheme="http://qsli.github.io/categories/python/"/>
-    
-    
-      <category term="pip" scheme="http://qsli.github.io/tags/pip/"/>
     
   </entry>
   
