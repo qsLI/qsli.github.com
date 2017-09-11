@@ -93,6 +93,7 @@ nofollow:
     enable: true
     exclude: # 例外的链接，可将友情链接放置此处
     - https://chenyuzuoo.github.io/
+    - https://zhangpengdeshu.github.io/
 
 # robots.txt
 robotstxt:

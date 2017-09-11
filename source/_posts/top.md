@@ -1,6 +1,6 @@
 title: top用法
-tags: linux
-category: top
+tags: top
+category: linux
 toc: true
 date: 2017-09-09 17:31:18
 ---
