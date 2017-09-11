@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-09-10T08:27:56.000Z</updated>
+  <updated>2017-09-11T16:25:40.547Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git查看已合并分支的fork点</title>
+    <link href="http://qsli.github.io/2017/09/12/git-branch-log/"/>
+    <id>http://qsli.github.io/2017/09/12/git-branch-log/</id>
+    <published>2017-09-11T16:25:40.000Z</published>
+    <updated>2017-09-11T16:25:40.547Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>有些需求有好几期，做后面几期的可能完全不了解前几期做了什么，拿到分支号后，就需要找到最初的commit点。由于这个分支已经merge到了master上，所以找最近的ancestor就不对了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge-base branch1 branch2 //只能找到最近的祖先</div></pre></td></tr></table></figure>
+<p>那么如何找到这个分支最初的fork点呢，下面给出两种方案，亲测有效。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="git-别名"><a href="#git-别名" class="headerlink" title="git 别名"></a>git 别名</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git config --global alias.oldest-ancestor <span class="string">'!zsh -c '</span>\<span class="string">''</span>diff -u &lt;(git rev-list --first-parent <span class="string">"<span class="variable">$&#123;1:-master&#125;</span>"</span>) &lt;(git rev-list --first-parent <span class="string">"<span class="variable">$&#123;2:-HEAD&#125;</span>"</span>) | sed <span class="_">-ne</span> <span class="string">"s/^ //p"</span> | head -1<span class="string">'\'</span><span class="string">' -'</span></div><div class="line">git config --global alias.branchdiff <span class="string">'!sh -c "git diff `git oldest-ancestor`.."'</span></div><div class="line">git config --global alias.branchlog <span class="string">'!sh -c "git log `git oldest-ancestor`.."'</span></div></pre></td></tr></table></figure>
+<p>上述三个命令就可以找到最初的commit点，以及这个分支做了什么。参见<code>stackoverflow</code>上的回答:  <a href="https://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git" rel="external nofollow noopener noreferrer" target="_blank">Finding a branch point with Git? - Stack Overflow</a></p>
+<h3 id="git分支图"><a href="#git分支图" class="headerlink" title="git分支图"></a>git分支图</h3><p>如果你使用<code>zsh</code>, 内置的有两个相关的命令<code>glgg</code>,<code>glgga</code>.</p>
+<ul>
+<li><code>glgg</code>： 显示当前分支的分支图</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  ~  <span class="built_in">alias</span> glgg</div><div class="line">glgg=<span class="string">'git log --graph'</span></div></pre></td></tr></table></figure>
+<img src="/2017/09/12/git-branch-log/glgg.png" alt="glgg.png" title="">
+<ul>
+<li><code>glgga</code>: 显示所有分支的分支图 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  ~  <span class="built_in">alias</span> glgga</div><div class="line">glgga=<span class="string">'git log --graph --decorate --all'</span></div></pre></td></tr></table></figure>
+<img src="/2017/09/12/git-branch-log/glgga.png" alt="glgga.png" title="">
+<p>从分支图中可以快速的看出当前分支是在哪里fork出来的</p>
+<h4 id="分支图的显示方式"><a href="#分支图的显示方式" class="headerlink" title="分支图的显示方式"></a>分支图的显示方式</h4><ul>
+<li><p>reverse chronological： 默认显示方式，会按照commit的时间，逆序显示</p>
+</li>
+<li><p>topo order： 按照commit的拓扑顺序显示，子提交在父提交之前显示</p>
+</li>
+</ul>
+<p>查看fork点的时候，最好是按照拓扑排序显示，这样分支图不会很乱，便于找到。</p>
+<h3 id="可视化工具"><a href="#可视化工具" class="headerlink" title="可视化工具"></a>可视化工具</h3><p>可视化工具和git log的用法是一样的，顺着查找即可。这里我用<code>idea</code>为例：</p>
+<img src="/2017/09/12/git-branch-log/idea.png" alt="idea.png" title="">
+<p>开启InteliSort后，注意红框勾上。</p>
+<img src="/2017/09/12/git-branch-log/idea-sorted.png" alt="idea-sorted.png" title="">
+<p>开启后是按照提交排序的，并没有按照插入的时间，这样可以清楚的顺着提交找到最初的fork点。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="https://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git" rel="external nofollow noopener noreferrer" target="_blank">Finding a branch point with Git? - Stack Overflow</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/chucklu/p/4748394.html" rel="external nofollow noopener noreferrer" target="_blank">git图示所有分支的历史 - ChuckLu - 博客园</a></p>
+</li>
+<li><p><a href="http://gitbook.liuhui998.com/3_4.html" rel="external nofollow noopener noreferrer" target="_blank">Git Book 中文版 - 查看历史 －Git日志</a></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一个问题&quot;&gt;&lt;a href=&quot;#一个问题&quot; class=&quot;headerlink&quot; title=&quot;一个问题&quot;&gt;&lt;/a&gt;一个问题&lt;/h2&gt;&lt;p&gt;有些需求有好几期，做后面几期的可能完全不了解前几期做了什么，拿到分支号后，就需要找到最初的commit点。由于这个分支已经m
+    
+    </summary>
+    
+      <category term="git" scheme="http://qsli.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://qsli.github.io/tags/git/"/>
+    
+      <category term="idea" scheme="http://qsli.github.io/tags/idea/"/>
+    
+  </entry>
   
   <entry>
     <title>用electron开发自己的工具</title>
@@ -1189,42 +1250,6 @@ FD is followed by one of these characters, describing the mode under which the f
     
     
       <category term="pip" scheme="http://qsli.github.io/tags/pip/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>windows命令操作剪贴板——CLIP</title>
-    <link href="http://qsli.github.io/2017/01/07/CLIP/"/>
-    <id>http://qsli.github.io/2017/01/07/CLIP/</id>
-    <published>2017-01-07T12:00:09.000Z</published>
-    <updated>2017-04-16T12:03:23.381Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><blockquote>
-<p>CLIP</p>
-<p>Description:<br>    Redirects output of command line tools to the Windows clipboard.<br>    This text output can then be pasted into other programs.</p>
-<p>Parameter List:<br>    /?                  Displays this help message.</p>
-<p>Examples:<br>    DIR | CLIP          Places a copy of the current directory<br>                        listing into the Windows clipboard.</p>
-<p>   CLIP &lt; README.TXT   Places a copy of the text from readme.txt<br>                        on to the Windows clipboard.</p>
-</blockquote>
-<h2 id="简单应用"><a href="#简单应用" class="headerlink" title="简单应用"></a>简单应用</h2><h3 id="将ip地址拷贝到剪贴板"><a href="#将ip地址拷贝到剪贴板" class="headerlink" title="将ip地址拷贝到剪贴板"></a>将ip地址拷贝到剪贴板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ipconfig | find <span class="string">"IPv4"</span> | find /V <span class="string">"自动"</span>  | find /V <span class="string">"Auto"</span> | awk <span class="string">"&#123; print <span class="variable">$(NF)</span>;&#125;"</span> | CLIP</div></pre></td></tr></table></figure>
-<p>也可以添加一个alias，这样就不用每次敲<code>ipconfig</code>, 然后复制ip了</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="http://superuser.com/questions/382265/fastest-method-to-determine-my-pcs-ip-address-windows" rel="external nofollow noopener noreferrer" target="_blank">Fastest method to determine my PC’s IP address (Windows) - Super User</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;使用说明&quot;&gt;&lt;a href=&quot;#使用说明&quot; class=&quot;headerlink&quot; title=&quot;使用说明&quot;&gt;&lt;/a&gt;使用说明&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;CLIP&lt;/p&gt;
-&lt;p&gt;Description:&lt;br&gt;    Redirects output 
-    
-    </summary>
-    
-      <category term="shell" scheme="http://qsli.github.io/categories/shell/"/>
-    
-    
-      <category term="剪贴板" scheme="http://qsli.github.io/tags/%E5%89%AA%E8%B4%B4%E6%9D%BF/"/>
     
   </entry>
   

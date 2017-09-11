@@ -4,6 +4,65 @@
   
     
     <entry>
+      <title><![CDATA[git查看已合并分支的fork点]]></title>
+      <url>http://qsli.github.io/2017/09/12/git-branch-log/</url>
+      <content type="html"><![CDATA[<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>有些需求有好几期，做后面几期的可能完全不了解前几期做了什么，拿到分支号后，就需要找到最初的commit点。由于这个分支已经merge到了master上，所以找最近的ancestor就不对了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge-base branch1 branch2 //只能找到最近的祖先</div></pre></td></tr></table></figure>
+<p>那么如何找到这个分支最初的fork点呢，下面给出两种方案，亲测有效。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="git-别名"><a href="#git-别名" class="headerlink" title="git 别名"></a>git 别名</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git config --global alias.oldest-ancestor <span class="string">'!zsh -c '</span>\<span class="string">''</span>diff -u &lt;(git rev-list --first-parent <span class="string">"<span class="variable">$&#123;1:-master&#125;</span>"</span>) &lt;(git rev-list --first-parent <span class="string">"<span class="variable">$&#123;2:-HEAD&#125;</span>"</span>) | sed <span class="_">-ne</span> <span class="string">"s/^ //p"</span> | head -1<span class="string">'\'</span><span class="string">' -'</span></div><div class="line">git config --global alias.branchdiff <span class="string">'!sh -c "git diff `git oldest-ancestor`.."'</span></div><div class="line">git config --global alias.branchlog <span class="string">'!sh -c "git log `git oldest-ancestor`.."'</span></div></pre></td></tr></table></figure>
+<p>上述三个命令就可以找到最初的commit点，以及这个分支做了什么。参见<code>stackoverflow</code>上的回答:  <a href="https://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git" rel="external nofollow noopener noreferrer" target="_blank">Finding a branch point with Git? - Stack Overflow</a></p>
+<h3 id="git分支图"><a href="#git分支图" class="headerlink" title="git分支图"></a>git分支图</h3><p>如果你使用<code>zsh</code>, 内置的有两个相关的命令<code>glgg</code>,<code>glgga</code>.</p>
+<ul>
+<li><code>glgg</code>： 显示当前分支的分支图</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  ~  <span class="built_in">alias</span> glgg</div><div class="line">glgg=<span class="string">'git log --graph'</span></div></pre></td></tr></table></figure>
+<img src="/2017/09/12/git-branch-log/glgg.png" alt="glgg.png" title="">
+<ul>
+<li><code>glgga</code>: 显示所有分支的分支图 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  ~  <span class="built_in">alias</span> glgga</div><div class="line">glgga=<span class="string">'git log --graph --decorate --all'</span></div></pre></td></tr></table></figure>
+<img src="/2017/09/12/git-branch-log/glgga.png" alt="glgga.png" title="">
+<p>从分支图中可以快速的看出当前分支是在哪里fork出来的</p>
+<h4 id="分支图的显示方式"><a href="#分支图的显示方式" class="headerlink" title="分支图的显示方式"></a>分支图的显示方式</h4><ul>
+<li><p>reverse chronological： 默认显示方式，会按照commit的时间，逆序显示</p>
+</li>
+<li><p>topo order： 按照commit的拓扑顺序显示，子提交在父提交之前显示</p>
+</li>
+</ul>
+<p>查看fork点的时候，最好是按照拓扑排序显示，这样分支图不会很乱，便于找到。</p>
+<h3 id="可视化工具"><a href="#可视化工具" class="headerlink" title="可视化工具"></a>可视化工具</h3><p>可视化工具和git log的用法是一样的，顺着查找即可。这里我用<code>idea</code>为例：</p>
+<img src="/2017/09/12/git-branch-log/idea.png" alt="idea.png" title="">
+<p>开启InteliSort后，注意红框勾上。</p>
+<img src="/2017/09/12/git-branch-log/idea-sorted.png" alt="idea-sorted.png" title="">
+<p>开启后是按照提交排序的，并没有按照插入的时间，这样可以清楚的顺着提交找到最初的fork点。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="https://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git" rel="external nofollow noopener noreferrer" target="_blank">Finding a branch point with Git? - Stack Overflow</a></p>
+</li>
+<li><p><a href="http://www.cnblogs.com/chucklu/p/4748394.html" rel="external nofollow noopener noreferrer" target="_blank">git图示所有分支的历史 - ChuckLu - 博客园</a></p>
+</li>
+<li><p><a href="http://gitbook.liuhui998.com/3_4.html" rel="external nofollow noopener noreferrer" target="_blank">Git Book 中文版 - 查看历史 －Git日志</a></p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> git </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> git </tag>
+            
+            <tag> idea </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[用electron开发自己的工具]]></title>
       <url>http://qsli.github.io/2017/09/10/electron/</url>
       <content type="html"><![CDATA[<h2 id="electron-简介"><a href="#electron-简介" class="headerlink" title="electron 简介"></a>electron 简介</h2><p>web是天生跨平台的。</p>
