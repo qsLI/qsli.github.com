@@ -6,13 +6,52 @@ toc: true
 abbrlink: 18103
 ---
 
+## 模块
+
+jackson主要有三个模块： `jackson-core`, `jackson-databind`, `jackson-annotation`.
+
+- `jackson-core`
+
+- `jackson-databind`
+
+- `jackson-annotation`
+
+Module
+
 ## 使用
 
 ### maven 依赖
 
+jackson有两个包名，一个是1.x之前使用的，一个是2.x之后使用的
 
+> org.codehaus.jackson is an older version of Jackson.
+
+> com.fasterxml.jackson represents the new project and package.
+
+> The reason is, Jackson has moved from Codehaus to Github when releasing Jackson 2.
+
+maven依赖：
+
+```xml
+<properties>
+  ...
+  <!-- Use the latest version whenever possible. -->
+  <jackson.version>2.9.0</jackson.version>
+  ...
+</properties>
+
+<dependencies>
+  ...
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>${jackson.version}</version>
+  </dependency>
+  ...
+</dependencies>
+```
 默认解析公有的字段，和带有getter和setter的字段
-@JsonAutoDetect
+`@JsonAutoDetect`
 
 Changing property auto-detection
 
@@ -29,9 +68,6 @@ public class POJOWithNoFields {
   public int value;
 }
 ```
-
-## jackson-annotations
-
 
 ### 忽略属性
 
@@ -112,6 +148,11 @@ com.fasterxml.jackson.databind.JsonMappingException: Can not find a (Map) Key de
 
 1. [FasterXML/jackson-annotations: Core annotations (annotations that only depend on jackson-core) for Jackson data processor](https://github.com/FasterXML/jackson-annotations)
 
+2. [Jackson fasterxml和codehaus的区别 （fasterxml vs. codehaus） - Clement-Xu的专栏 - CSDN博客](http://blog.csdn.net/clementad/article/details/46416647)
+
+3. [java - org.codehaus.jackson versus com.fasterxml.jackson.core - Stack Overflow](https://stackoverflow.com/questions/30782706/org-codehaus-jackson-versus-com-fasterxml-jackson-core)
+
+4. [Jackson data binding - 知乎专栏](https://zhuanlan.zhihu.com/p/23392268)
 
 
 注入的message-converters优先级高于默认注入的json转换器
