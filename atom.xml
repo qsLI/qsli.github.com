@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-11-12T10:10:12.576Z</updated>
+  <updated>2017-11-12T10:57:04.411Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MAT-Ubuntu无法打开Report</title>
+    <link href="http://qsli.github.io/2017/11/12/MAT-Ubuntu/"/>
+    <id>http://qsli.github.io/2017/11/12/MAT-Ubuntu/</id>
+    <published>2017-11-12T10:57:04.000Z</published>
+    <updated>2017-11-12T10:57:04.411Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>可以运行<code>Leak Suspects</code>，可以看到报告文件确实生成了，但是无法打开，看error log如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">Unhandled event loop exception</div><div class="line"></div><div class="line">org.eclipse.swt.SWTException: Failed to execute runnable (org.eclipse.swt.SWTError: No more handles [Browser style SWT.MOZILLA and Java system property org.eclipse.swt.browser.DefaultType=mozilla are not supported with GTK 3 as XULRunner is not ported for GTK 3 yet])</div><div class="line">	at org.eclipse.swt.SWT.error(SWT.java:4491)</div><div class="line">	at org.eclipse.swt.SWT.error(SWT.java:4406)</div><div class="line">	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:138)</div><div class="line">	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3794)</div><div class="line">	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3433)</div><div class="line">	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:1127)</div><div class="line">	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:337)</div><div class="line">	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1018)</div><div class="line">	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:156)</div><div class="line">	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:694)</div><div class="line">	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:337)</div><div class="line">	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:606)</div><div class="line">	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)</div><div class="line">	at org.eclipse.mat.ui.rcp.Application.start(Application.java:26)</div><div class="line">	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)</div><div class="line">	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)</div><div class="line">	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)</div><div class="line">	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)</div><div class="line">	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)</div><div class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</div><div class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</div><div class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</div><div class="line">	at java.lang.reflect.Method.invoke(Method.java:498)</div><div class="line">	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:669)</div><div class="line">	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:608)</div><div class="line">	at org.eclipse.equinox.launcher.Main.run(Main.java:1515)</div><div class="line">	at org.eclipse.equinox.launcher.Main.main(Main.java:1488)</div><div class="line">Caused by: org.eclipse.swt.SWTError: No more handles [Browser style SWT.MOZILLA and Java system property org.eclipse.swt.browser.DefaultType=mozilla are not supported with GTK 3 as XULRunner is not ported for GTK 3 yet]</div><div class="line">	at org.eclipse.swt.SWT.error(SWT.java:4517)</div><div class="line">	at org.eclipse.swt.browser.MozillaDelegate.&lt;init&gt;(MozillaDelegate.java:57)</div><div class="line">	at org.eclipse.swt.browser.Mozilla.create(Mozilla.java:663)</div><div class="line">	at org.eclipse.swt.browser.Browser.&lt;init&gt;(Browser.java:99)</div><div class="line">	at org.eclipse.mat.ui.internal.panes.QueryTextResultPane.createPartControl(QueryTextResultPane.java:72)</div><div class="line">	at org.eclipse.mat.ui.editor.MultiPaneEditor.addPage(MultiPaneEditor.java:585)</div><div class="line">	at org.eclipse.mat.ui.editor.MultiPaneEditor.addPage(MultiPaneEditor.java:574)</div><div class="line">	at org.eclipse.mat.ui.editor.MultiPaneEditor.addNewPage(MultiPaneEditor.java:496)</div><div class="line">	at org.eclipse.mat.ui.QueryExecution.doDisplayResult(QueryExecution.java:300)</div><div class="line">	at org.eclipse.mat.ui.QueryExecution.access$0(QueryExecution.java:240)</div><div class="line">	at org.eclipse.mat.ui.QueryExecution$1.run(QueryExecution.java:144)</div><div class="line">	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)</div><div class="line">	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:135)</div><div class="line">	... 24 more</div></pre></td></tr></table></figure>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>这个是<code>gtk</code>的问题。</p>
+<p>添加<code>--launcher.GTK_version</code>和<code>2</code>到<code>MemoryAnalyzer.ini</code>文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-startup</div><div class="line">plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar</div><div class="line">--launcher.library</div><div class="line">plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.1.300.v20150602-1417</div><div class="line">--launcher.GTK_version</div><div class="line">2</div><div class="line">-vmargs</div><div class="line">-Xmx1024m</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://askubuntu.com/questions/761604/eclipse-not-working-in-16-04" rel="external nofollow noopener noreferrer" target="_blank">Eclipse not working in 16.04 - Ask Ubuntu</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;现象&quot;&gt;&lt;a href=&quot;#现象&quot; class=&quot;headerlink&quot; title=&quot;现象&quot;&gt;&lt;/a&gt;现象&lt;/h2&gt;&lt;p&gt;可以运行&lt;code&gt;Leak Suspects&lt;/code&gt;，可以看到报告文件确实生成了，但是无法打开，看error log如下:&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="java" scheme="http://qsli.github.io/categories/java/"/>
+    
+    
+      <category term="mat" scheme="http://qsli.github.io/tags/mat/"/>
+    
+  </entry>
   
   <entry>
     <title>使用greys来排查线上问题</title>
@@ -1145,47 +1176,6 @@ FD is followed by one of these characters, describing the mode under which the f
     
       <category term="tomcat" scheme="http://qsli.github.io/categories/tomcat/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>jar文件查看</title>
-    <link href="http://qsli.github.io/2017/01/27/jar/"/>
-    <id>http://qsli.github.io/2017/01/27/jar/</id>
-    <published>2017-01-27T09:03:36.000Z</published>
-    <updated>2017-04-16T12:04:30.010Z</updated>
-    
-    <content type="html"><![CDATA[<p>查看jar包内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unzip -q -c myarchive.jar META-INF/MANIFEST.MF</div></pre></td></tr></table></figure>
-<blockquote>
-<p><code>-q</code> will suppress verbose output from the unzip program</p>
-<p><code>-c</code> will extract to stdout</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">unzip -q -c servlet-api.jar META-INF/MANIFEST.MF</div><div class="line">Manifest-Version: 1.0</div><div class="line">Ant-Version: Apache Ant 1.8.1</div><div class="line">Created-By: 1.6.0_45-b06 (Sun Microsystems Inc.)</div><div class="line">X-Compile-Source-JDK: 1.6</div><div class="line">X-Compile-Target-JDK: 1.6</div><div class="line"></div><div class="line">Name: javax/servlet/</div><div class="line">Specification-Title: Java API for Servlets</div><div class="line">Specification-Version: 3.0</div><div class="line">Specification-Vendor: Sun Microsystems, Inc.</div><div class="line">Implementation-Title: javax.servlet</div><div class="line">Implementation-Version: 3.0.FR</div><div class="line">Implementation-Vendor: Apache Software Foundation</div></pre></td></tr></table></figure>
-<h2 id="jar命令"><a href="#jar命令" class="headerlink" title="jar命令"></a>jar命令</h2><p>在linux下如何查看一个jar文件中有哪些类呢？</p>
-<p><code>jar tf test.jar</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">META-INF/</div><div class="line">META-INF/MANIFEST.MF</div><div class="line">javax/</div><div class="line">javax/servlet/</div><div class="line">javax/servlet/annotation/</div><div class="line">javax/servlet/descriptor/</div><div class="line">javax/servlet/http/</div><div class="line">...</div><div class="line">javax/servlet/resources/xml.xsd</div><div class="line">META-INF/NOTICE</div><div class="line">META-INF/LICENSE</div></pre></td></tr></table></figure>
-<h2 id="grepjar"><a href="#grepjar" class="headerlink" title="grepjar"></a>grepjar</h2><p>有些时候，我们需要查看一个jar文件中是否包含了某个方法，这个在linux下可以通过下面的命令来查询</p>
-<p><code>grepjar methodName class.jar</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ grepjar <span class="string">'getStatus'</span> servlet-api.jar</div><div class="line">javax/servlet/http/HttpServletResponse.class:getStatus</div><div class="line">javax/servlet/http/HttpServletResponseWrapper.class:getStatus</div></pre></td></tr></table></figure>
-<p>参数：</p>
-<p>||option || meaning ||<br>|-b |  Print byte offset of match.|<br>|–|—————|<br>|-c |  Print number of matches.|<br>|-i |  Compare case-insensitively.|<br>|-n |  Print line number of each match.|<br>|-s |  Suppress error messages.|<br>|-w |  Force PATTERN to match only whole words.|<br>|-e | PATTERN  Use PATTERN as regular expression.|<br>|–help |  Print help, then exit.|<br>|-V |  |<br>|–version |   Print version number, then exit.|</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://stackoverflow.com/questions/7066063/how-to-read-manifest-mf-file-from-jar-using-bash" rel="external nofollow noopener noreferrer" target="_blank">How to read MANIFEST.MF file from JAR using Bash - Stack Overflow</a></p>
-<p><a href="http://xiaofengwu.tumblr.com/post/63518704051/linux%E6%9F%A5%E7%9C%8Bjar%E4%B8%AD%E7%9A%84%E7%B1%BB%E4%BB%A5%E5%8F%8A%E7%B1%BB%E4%B8%AD%E6%96%B9%E6%B3%95%E5%91%BD%E4%BB%A4" rel="external nofollow noopener noreferrer" target="_blank">吴峰子 — linux查看jar中的类以及类中方法命令</a></p>
-<p><a href="http://www.tutorialspoint.com/unix_commands/grepjar.htm" rel="external nofollow noopener noreferrer" target="_blank">grepdiff - Unix, Linux Command</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;查看jar包内容&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://qsli.github.io/categories/java/"/>
-    
-    
-      <category term="jar" scheme="http://qsli.github.io/tags/jar/"/>
     
   </entry>
   
