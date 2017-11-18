@@ -4,6 +4,41 @@
   
     
     <entry>
+      <title><![CDATA[Guava中的ThreadFactoryBuilder]]></title>
+      <url>http://qsli.github.io/2017/11/18/ThreadFactoryBuilder/</url>
+      <content type="html"><![CDATA[<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>java中自定义线程池时可以传入一个<code>ThreadFactory</code>，用来创建线程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">    * Creates a new &#123;<span class="doctag">@code</span> ThreadPoolExecutor&#125; with the given initial</div><div class="line">    * parameters and default rejected execution handler.</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> corePoolSize the number of threads to keep in the pool, even</div><div class="line">    *        if they are idle, unless &#123;<span class="doctag">@code</span> allowCoreThreadTimeOut&#125; is set</div><div class="line">    * <span class="doctag">@param</span> maximumPoolSize the maximum number of threads to allow in the</div><div class="line">    *        pool</div><div class="line">    * <span class="doctag">@param</span> keepAliveTime when the number of threads is greater than</div><div class="line">    *        the core, this is the maximum time that excess idle threads</div><div class="line">    *        will wait for new tasks before terminating.</div><div class="line">    * <span class="doctag">@param</span> unit the time unit for the &#123;<span class="doctag">@code</span> keepAliveTime&#125; argument</div><div class="line">    * <span class="doctag">@param</span> workQueue the queue to use for holding tasks before they are</div><div class="line">    *        executed.  This queue will hold only the &#123;<span class="doctag">@code</span> Runnable&#125;</div><div class="line">    *        tasks submitted by the &#123;<span class="doctag">@code</span> execute&#125; method.</div><div class="line">    * <span class="doctag">@param</span> threadFactory the factory to use when the executor</div><div class="line">    *        creates a new thread</div><div class="line">    * <span class="doctag">@throws</span> IllegalArgumentException if one of the following holds:&lt;br&gt;</div><div class="line">    *         &#123;<span class="doctag">@code</span> corePoolSize &lt; 0&#125;&lt;br&gt;</div><div class="line">    *         &#123;<span class="doctag">@code</span> keepAliveTime &lt; 0&#125;&lt;br&gt;</div><div class="line">    *         &#123;<span class="doctag">@code</span> maximumPoolSize &lt;= 0&#125;&lt;br&gt;</div><div class="line">    *         &#123;<span class="doctag">@code</span> maximumPoolSize &lt; corePoolSize&#125;</div><div class="line">    * <span class="doctag">@throws</span> NullPointerException if &#123;<span class="doctag">@code</span> workQueue&#125;</div><div class="line">    *         or &#123;<span class="doctag">@code</span> threadFactory&#125; is null</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></div><div class="line">                             <span class="keyword">int</span> maximumPoolSize,</div><div class="line">                             <span class="keyword">long</span> keepAliveTime,</div><div class="line">                             TimeUnit unit,</div><div class="line">                             BlockingQueue&lt;Runnable&gt; workQueue,</div><div class="line">                             ThreadFactory threadFactory) &#123;</div><div class="line">       <span class="keyword">this</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</div><div class="line">            threadFactory, defaultHandler);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p><code>ThreadFactory</code>接口只有一个方法，就是创建线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ThreadFactory</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Constructs a new &#123;<span class="doctag">@code</span> Thread&#125;.  Implementations may also initialize</div><div class="line">     * priority, name, daemon status, &#123;<span class="doctag">@code</span> ThreadGroup&#125;, etc.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> r a runnable to be executed by new thread instance</div><div class="line">     * <span class="doctag">@return</span> constructed thread, or &#123;<span class="doctag">@code</span> null&#125; if the request to</div><div class="line">     *         create a thread is rejected</div><div class="line">     */</div><div class="line">    <span class="function">Thread <span class="title">newThread</span><span class="params">(Runnable r)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建<code>Thread</code>时可以设置一些列的属性， 属性比较多，于是<code>guava</code>里有一个便利类 ———— <code>ThreadFactoryBuilder</code>。</p>
+<p>直接看<code>build</code>方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title">build</span><span class="params">(ThreadFactoryBuilder builder)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> String nameFormat = builder.nameFormat;</div><div class="line">    <span class="keyword">final</span> Boolean daemon = builder.daemon;</div><div class="line">    <span class="keyword">final</span> Integer priority = builder.priority;</div><div class="line">    <span class="keyword">final</span> UncaughtExceptionHandler uncaughtExceptionHandler =</div><div class="line">        builder.uncaughtExceptionHandler;</div><div class="line">    <span class="keyword">final</span> ThreadFactory backingThreadFactory =</div><div class="line">        (builder.backingThreadFactory != <span class="keyword">null</span>)</div><div class="line">        ? builder.backingThreadFactory</div><div class="line">        : Executors.defaultThreadFactory();</div><div class="line">    <span class="keyword">final</span> AtomicLong count = (nameFormat != <span class="keyword">null</span>) ? <span class="keyword">new</span> AtomicLong(<span class="number">0</span>) : <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactory() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable runnable)</span> </span>&#123;</div><div class="line">        Thread thread = backingThreadFactory.newThread(runnable);</div><div class="line">        <span class="keyword">if</span> (nameFormat != <span class="keyword">null</span>) &#123;</div><div class="line">          thread.setName(format(nameFormat, count.getAndIncrement()));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (daemon != <span class="keyword">null</span>) &#123;</div><div class="line">          thread.setDaemon(daemon);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (priority != <span class="keyword">null</span>) &#123;</div><div class="line">          thread.setPriority(priority);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (uncaughtExceptionHandler != <span class="keyword">null</span>) &#123;</div><div class="line">          thread.setUncaughtExceptionHandler(uncaughtExceptionHandler);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> thread;</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>使用起来挺顺手的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> ThreadPoolExecutor executor = <span class="keyword">new</span> ThreadPoolExecutor(</div><div class="line">          <span class="number">10</span>,</div><div class="line">          <span class="number">15</span>,</div><div class="line">          <span class="number">10</span>,</div><div class="line">          TimeUnit.SECONDS,</div><div class="line">          blockingQueue,</div><div class="line">          <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(<span class="string">"guava-%d"</span>).build(),</div><div class="line">          <span class="keyword">new</span> ThreadPoolExecutor.DiscardPolicy()</div><div class="line">  );</div></pre></td></tr></table></figure>
+<p>主要就是给线程整一个名字，用<code>jstack</code>等工具排查问题时方便知道是哪个线程池里的。</p>
+<p><code>jstack</code>的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&quot;guava-9&quot; #19 prio=5 os_prio=0 tid=0x00007f5024468000 nid=0x5e3b waiting on condition [0x00007f50104f7000]</div><div class="line">   java.lang.Thread.State: WAITING (parking)</div><div class="line">        at sun.misc.Unsafe.park(Native Method)</div><div class="line">        - parking to wait for  &lt;0x00000000d709af38&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)</div><div class="line">        at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)</div><div class="line">        at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)</div><div class="line">        at java.util.concurrent.ArrayBlockingQueue.take(ArrayBlockingQueue.java:403)</div><div class="line">        at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1067)</div><div class="line">        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)</div><div class="line">        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)</div><div class="line">        at java.lang.Thread.run(Thread.java:745)</div></pre></td></tr></table></figure>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><ol>
+<li><a href="http://www.importnew.com/20263.html" rel="external nofollow noopener noreferrer" target="_blank">ExecutorService-10个要诀和技巧 - ImportNew</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> guava </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> concurrent </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[MAT-Ubuntu无法打开Report]]></title>
       <url>http://qsli.github.io/2017/11/12/MAT-Ubuntu/</url>
       <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>可以运行<code>Leak Suspects</code>，可以看到报告文件确实生成了，但是无法打开，看error log如下:</p>
@@ -3475,64 +3510,6 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
-      <title><![CDATA[fabric 分布式部署]]></title>
-      <url>http://qsli.github.io/2015/11/03/fabric/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
-<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
-<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
-<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
-<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
-<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
-<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
-<blockquote>
-<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
-</blockquote>
-<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
-<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
-<blockquote>
-<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
-</blockquote>
-<p>下面是参考的一些文章</p>
-<blockquote>
-<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
-</blockquote>
-<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
-<blockquote>
-<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
-</blockquote>
-<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
-<ul>
-<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
-<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
-<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
-<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
-<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
-<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> fabric </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[机器学习框架调研]]></title>
       <url>http://qsli.github.io/2015/11/03/machine_learning/</url>
       <content type="html"><![CDATA[<h1 id="机器学习框架调研"><a href="#机器学习框架调研" class="headerlink" title="机器学习框架调研"></a>机器学习框架调研</h1><h2 id="DMTK"><a href="#DMTK" class="headerlink" title="DMTK"></a>DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
@@ -3636,6 +3613,64 @@ or (using formats recognized by popular editors)
         <tags>
             
             <tag> 机器学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[fabric 分布式部署]]></title>
+      <url>http://qsli.github.io/2015/11/03/fabric/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
+<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
+<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
+<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
+<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
+<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
+<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
+<blockquote>
+<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
+</blockquote>
+<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
+<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
+<blockquote>
+<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
+</blockquote>
+<p>下面是参考的一些文章</p>
+<blockquote>
+<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
+</blockquote>
+<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
+<blockquote>
+<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
+</blockquote>
+<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
+<ul>
+<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
+<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
+<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
+<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
+<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
+<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> fabric </tag>
             
         </tags>
         
