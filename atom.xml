@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-11-26T15:02:14.386Z</updated>
+  <updated>2017-11-26T15:21:01.000Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -20,10 +20,19 @@
     <link href="http://qsli.github.io/2017/11/26/jinfo/"/>
     <id>http://qsli.github.io/2017/11/26/jinfo/</id>
     <published>2017-11-26T15:02:14.000Z</published>
-    <updated>2017-11-26T15:02:14.386Z</updated>
+    <updated>2017-11-26T15:21:01.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="查看最终生效的flag"><a href="#查看最终生效的flag" class="headerlink" title="查看最终生效的flag"></a>查看最终生效的flag</h2><p><code>sudo -u tomcat jinfo pid</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Attaching to process ID 30350, please wait...</div><div class="line">Debugger attached successfully.</div><div class="line">Server compiler detected.</div><div class="line">JVM version is 24.45-b08</div><div class="line">...</div><div class="line">...</div><div class="line">sun.cpu.endian = little</div><div class="line">package.access = sun.,org.apache.catalina.,org.apache.coyote.,org.apache.tomcat.,org.apache.jasper.,sun.beans.</div><div class="line">sun.cpu.isalist = </div><div class="line"></div><div class="line">VM Flags:</div><div class="line"></div><div class="line">-Djava.util.logging.config.file=/tomcat/www/application/conf/logging.properties -Xms6g -Xmx6g -Xmn4g -XX:PermSize=256m -XX:MaxPermSize=256M ... -Djava.io.tmpdir=/tomcat/www/application/temp</div></pre></td></tr></table></figure>
+<h3 id="java-XX-PrintFlagsFinal"><a href="#java-XX-PrintFlagsFinal" class="headerlink" title="java -XX:+PrintFlagsFinal"></a>java -XX:+PrintFlagsFinal</h3><p>使用<code>-version</code>可以查看java支持的开关</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -XX:+PrintFlagsFinal -version</div></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">➜  qsli.github.com (hexo|✚6…) java -XX:+PrintFlagsFinal -version</div><div class="line">[Global flags]</div><div class="line">    uintx AdaptiveSizeDecrementScaleFactor          = 4                                   &#123;product&#125;</div><div class="line">    uintx AdaptiveSizeMajorGCDecayTimeScale         = 10                                  &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePausePolicy                   = 0                                   &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePolicyCollectionCostMargin    = 50                                  &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePolicyInitializingSteps       = 20                                  &#123;product&#125;</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    uintx YoungGenerationSizeSupplementDecay        = 8                                   &#123;product&#125;</div><div class="line">    uintx YoungPLABSize                             = 4096                                &#123;product&#125;</div><div class="line">     bool ZeroTLAB                                  = false                               &#123;product&#125;</div><div class="line">     intx hashCode                                  = 5                                   &#123;product&#125;</div><div class="line">java version &quot;1.8.0_112&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_112-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.112-b15, mixed mode)</div></pre></td></tr></table></figure>
+<p>但是<code>白衣大侠</code>说，<code>-version</code>的结果可能不准确，最好实际跑一下。</p>
+<blockquote>
+<p>经常以类似下面的语句去查看参数，偷懒不起应用，用-version代替。有些参数设置后会影响其他参数，所以查看时也把它带上。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -server -Xmx1024m -Xms1024m -XX:+UseConcMarkSweepGC -XX:+PrintFlagsFinal -version| grep ParallelGCThreads</div></pre></td></tr></table></figure>
 <h2 id="动态打开jvm的开关"><a href="#动态打开jvm的开关" class="headerlink" title="动态打开jvm的开关"></a>动态打开jvm的开关</h2><p>jinfo可以动态的改变jvm的flag， 而不必重启服务器。虽然只对一些特定的flag有效，但是有的时候也很有用。</p>
 <p>支持动态开启和关闭的的flag，可以通过下面的命令查看。</p>
 <p><code>java -XX:+PrintFlagsFinal -version | grep managed</code></p>
@@ -45,6 +54,8 @@
 <li><p><a href="http://mp.weixin.qq.com/s?__biz=MzU3NDAxMzU1Nw==&amp;mid=2247484957&amp;idx=3&amp;sn=ee1e459b6e579555b7006cb69a6bb7f1&amp;chksm=fd39af07ca4e2611707621a71dedfa7329668d741fa2b4bdc9835ef14583cf79adb378d8d6c6&amp;mpshare=1&amp;scene=1&amp;srcid=1123RfpGGNhu1XF30IA20OFH#rd" rel="external nofollow noopener noreferrer" target="_blank">Java调优经验谈</a></p>
 </li>
 <li><p><a href="http://rednaxelafx.iteye.com/blog/1049240" rel="external nofollow noopener noreferrer" target="_blank">通过jinfo工具在full GC前后做heap dump - Script Ahead, Code Behind - ITeye博客</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzIzODYyNjkzNw==&amp;mid=2247483687&amp;idx=1&amp;sn=41f24dac62c0ca65e4dfe32eae62f3f2&amp;chksm=e9373031de40b927497e5b9aa5dacae6e0a5bac8c760e05ae1d983baf700f45fe8f6c1cfca41&amp;mpshare=1&amp;scene=1&amp;srcid=0904E8auyJdEzKjyytGtjpVO#rd" rel="external nofollow noopener noreferrer" target="_blank">关键业务系统的JVM参数推荐(2016热冬版）</a></p>
 </li>
 </ol>
 ]]></content>

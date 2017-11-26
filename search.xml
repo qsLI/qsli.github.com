@@ -8,6 +8,15 @@
       <url>http://qsli.github.io/2017/11/26/jinfo/</url>
       <content type="html"><![CDATA[<h2 id="查看最终生效的flag"><a href="#查看最终生效的flag" class="headerlink" title="查看最终生效的flag"></a>查看最终生效的flag</h2><p><code>sudo -u tomcat jinfo pid</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Attaching to process ID 30350, please wait...</div><div class="line">Debugger attached successfully.</div><div class="line">Server compiler detected.</div><div class="line">JVM version is 24.45-b08</div><div class="line">...</div><div class="line">...</div><div class="line">sun.cpu.endian = little</div><div class="line">package.access = sun.,org.apache.catalina.,org.apache.coyote.,org.apache.tomcat.,org.apache.jasper.,sun.beans.</div><div class="line">sun.cpu.isalist = </div><div class="line"></div><div class="line">VM Flags:</div><div class="line"></div><div class="line">-Djava.util.logging.config.file=/tomcat/www/application/conf/logging.properties -Xms6g -Xmx6g -Xmn4g -XX:PermSize=256m -XX:MaxPermSize=256M ... -Djava.io.tmpdir=/tomcat/www/application/temp</div></pre></td></tr></table></figure>
+<h3 id="java-XX-PrintFlagsFinal"><a href="#java-XX-PrintFlagsFinal" class="headerlink" title="java -XX:+PrintFlagsFinal"></a>java -XX:+PrintFlagsFinal</h3><p>使用<code>-version</code>可以查看java支持的开关</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -XX:+PrintFlagsFinal -version</div></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">➜  qsli.github.com (hexo|✚6…) java -XX:+PrintFlagsFinal -version</div><div class="line">[Global flags]</div><div class="line">    uintx AdaptiveSizeDecrementScaleFactor          = 4                                   &#123;product&#125;</div><div class="line">    uintx AdaptiveSizeMajorGCDecayTimeScale         = 10                                  &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePausePolicy                   = 0                                   &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePolicyCollectionCostMargin    = 50                                  &#123;product&#125;</div><div class="line">    uintx AdaptiveSizePolicyInitializingSteps       = 20                                  &#123;product&#125;</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    uintx YoungGenerationSizeSupplementDecay        = 8                                   &#123;product&#125;</div><div class="line">    uintx YoungPLABSize                             = 4096                                &#123;product&#125;</div><div class="line">     bool ZeroTLAB                                  = false                               &#123;product&#125;</div><div class="line">     intx hashCode                                  = 5                                   &#123;product&#125;</div><div class="line">java version &quot;1.8.0_112&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_112-b15)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.112-b15, mixed mode)</div></pre></td></tr></table></figure>
+<p>但是<code>白衣大侠</code>说，<code>-version</code>的结果可能不准确，最好实际跑一下。</p>
+<blockquote>
+<p>经常以类似下面的语句去查看参数，偷懒不起应用，用-version代替。有些参数设置后会影响其他参数，所以查看时也把它带上。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -server -Xmx1024m -Xms1024m -XX:+UseConcMarkSweepGC -XX:+PrintFlagsFinal -version| grep ParallelGCThreads</div></pre></td></tr></table></figure>
 <h2 id="动态打开jvm的开关"><a href="#动态打开jvm的开关" class="headerlink" title="动态打开jvm的开关"></a>动态打开jvm的开关</h2><p>jinfo可以动态的改变jvm的flag， 而不必重启服务器。虽然只对一些特定的flag有效，但是有的时候也很有用。</p>
 <p>支持动态开启和关闭的的flag，可以通过下面的命令查看。</p>
 <p><code>java -XX:+PrintFlagsFinal -version | grep managed</code></p>
@@ -29,6 +38,8 @@
 <li><p><a href="http://mp.weixin.qq.com/s?__biz=MzU3NDAxMzU1Nw==&amp;mid=2247484957&amp;idx=3&amp;sn=ee1e459b6e579555b7006cb69a6bb7f1&amp;chksm=fd39af07ca4e2611707621a71dedfa7329668d741fa2b4bdc9835ef14583cf79adb378d8d6c6&amp;mpshare=1&amp;scene=1&amp;srcid=1123RfpGGNhu1XF30IA20OFH#rd" rel="external nofollow noopener noreferrer" target="_blank">Java调优经验谈</a></p>
 </li>
 <li><p><a href="http://rednaxelafx.iteye.com/blog/1049240" rel="external nofollow noopener noreferrer" target="_blank">通过jinfo工具在full GC前后做heap dump - Script Ahead, Code Behind - ITeye博客</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzIzODYyNjkzNw==&amp;mid=2247483687&amp;idx=1&amp;sn=41f24dac62c0ca65e4dfe32eae62f3f2&amp;chksm=e9373031de40b927497e5b9aa5dacae6e0a5bac8c760e05ae1d983baf700f45fe8f6c1cfca41&amp;mpshare=1&amp;scene=1&amp;srcid=0904E8auyJdEzKjyytGtjpVO#rd" rel="external nofollow noopener noreferrer" target="_blank">关键业务系统的JVM参数推荐(2016热冬版）</a></p>
 </li>
 </ol>
 ]]></content>
@@ -3602,64 +3613,6 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
-      <title><![CDATA[fabric 分布式部署]]></title>
-      <url>http://qsli.github.io/2015/11/03/fabric/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
-<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
-<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
-<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
-<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
-<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
-<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
-<blockquote>
-<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
-</blockquote>
-<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
-<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
-<blockquote>
-<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
-</blockquote>
-<p>下面是参考的一些文章</p>
-<blockquote>
-<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
-</blockquote>
-<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
-<blockquote>
-<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
-</blockquote>
-<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
-<ul>
-<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
-<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
-<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
-<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
-<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
-<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> fabric </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[机器学习框架调研]]></title>
       <url>http://qsli.github.io/2015/11/03/machine_learning/</url>
       <content type="html"><![CDATA[<h1 id="机器学习框架调研"><a href="#机器学习框架调研" class="headerlink" title="机器学习框架调研"></a>机器学习框架调研</h1><h2 id="DMTK"><a href="#DMTK" class="headerlink" title="DMTK"></a>DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
@@ -3763,6 +3716,64 @@ or (using formats recognized by popular editors)
         <tags>
             
             <tag> 机器学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[fabric 分布式部署]]></title>
+      <url>http://qsli.github.io/2015/11/03/fabric/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
+<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
+<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
+<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
+<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
+<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
+<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
+<blockquote>
+<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
+</blockquote>
+<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
+<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
+<blockquote>
+<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
+</blockquote>
+<p>下面是参考的一些文章</p>
+<blockquote>
+<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
+</blockquote>
+<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
+<blockquote>
+<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
+</blockquote>
+<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
+<ul>
+<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
+<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
+<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
+<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
+<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
+<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> fabric </tag>
             
         </tags>
         
