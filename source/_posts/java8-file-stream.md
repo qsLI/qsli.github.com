@@ -1,6 +1,6 @@
 title: java8 Stream使用不当，导致文件没有关闭
 tags: java
-category: java8
+category: java
 toc: true
 date: 2017-11-04 20:24:31
 ---

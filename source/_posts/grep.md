@@ -91,6 +91,19 @@ night and all the nights to come."
 
 > 3
 
+## `grep -P`
+
+支持Perl style的正则表达式
+
+> -P, --perl-regexp
+>  Interpret PATTERN as a Perl regular expression.  This is highly experimental and grep -P may warn of  unimplemented
+>  features.
+
+### 零宽断言
+
+## 捕获组
+
+
 ### `grep -l`
 
 显示有匹配行的文件，只显示文件名称，不显示内容
