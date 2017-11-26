@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2017-11-18T20:01:22.412Z</updated>
+  <updated>2017-11-26T15:02:14.386Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jinfo使用</title>
+    <link href="http://qsli.github.io/2017/11/26/jinfo/"/>
+    <id>http://qsli.github.io/2017/11/26/jinfo/</id>
+    <published>2017-11-26T15:02:14.000Z</published>
+    <updated>2017-11-26T15:02:14.386Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="查看最终生效的flag"><a href="#查看最终生效的flag" class="headerlink" title="查看最终生效的flag"></a>查看最终生效的flag</h2><p><code>sudo -u tomcat jinfo pid</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Attaching to process ID 30350, please wait...</div><div class="line">Debugger attached successfully.</div><div class="line">Server compiler detected.</div><div class="line">JVM version is 24.45-b08</div><div class="line">...</div><div class="line">...</div><div class="line">sun.cpu.endian = little</div><div class="line">package.access = sun.,org.apache.catalina.,org.apache.coyote.,org.apache.tomcat.,org.apache.jasper.,sun.beans.</div><div class="line">sun.cpu.isalist = </div><div class="line"></div><div class="line">VM Flags:</div><div class="line"></div><div class="line">-Djava.util.logging.config.file=/tomcat/www/application/conf/logging.properties -Xms6g -Xmx6g -Xmn4g -XX:PermSize=256m -XX:MaxPermSize=256M ... -Djava.io.tmpdir=/tomcat/www/application/temp</div></pre></td></tr></table></figure>
+<h2 id="动态打开jvm的开关"><a href="#动态打开jvm的开关" class="headerlink" title="动态打开jvm的开关"></a>动态打开jvm的开关</h2><p>jinfo可以动态的改变jvm的flag， 而不必重启服务器。虽然只对一些特定的flag有效，但是有的时候也很有用。</p>
+<p>支持动态开启和关闭的的flag，可以通过下面的命令查看。</p>
+<p><code>java -XX:+PrintFlagsFinal -version | grep managed</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">qsli.github.com (hexo|✚6…) java -XX:+PrintFlagsInitial | grep manageable</div><div class="line">     intx CMSAbortablePrecleanWaitMillis            = 100                                 &#123;manageable&#125;</div><div class="line">     intx CMSTriggerInterval                        = -1                                  &#123;manageable&#125;</div><div class="line">     intx CMSWaitDuration                           = 2000                                &#123;manageable&#125;</div><div class="line">     bool HeapDumpAfterFullGC                       = false                               &#123;manageable&#125;</div><div class="line">     bool HeapDumpBeforeFullGC                      = false                               &#123;manageable&#125;</div><div class="line">     bool HeapDumpOnOutOfMemoryError                = false                               &#123;manageable&#125;</div><div class="line">    ccstr HeapDumpPath                              =                                     &#123;manageable&#125;</div><div class="line">    uintx MaxHeapFreeRatio                          = 70                                  &#123;manageable&#125;</div><div class="line">    uintx MinHeapFreeRatio                          = 40                                  &#123;manageable&#125;</div><div class="line">     bool PrintClassHistogram                       = false                               &#123;manageable&#125;</div><div class="line">     bool PrintClassHistogramAfterFullGC            = false                               &#123;manageable&#125;</div><div class="line">     bool PrintClassHistogramBeforeFullGC           = false                               &#123;manageable&#125;</div><div class="line">     bool PrintConcurrentLocks                      = false                               &#123;manageable&#125;</div><div class="line">     bool PrintGC                                   = false                               &#123;manageable&#125;</div><div class="line">     bool PrintGCDateStamps                         = false                               &#123;manageable&#125;</div><div class="line">     bool PrintGCDetails                            = false                               &#123;manageable&#125;</div><div class="line">     bool PrintGCID                                 = false                               &#123;manageable&#125;</div><div class="line">     bool PrintGCTimeStamps                         = false                               &#123;manageable&#125;</div></pre></td></tr></table></figure>
+<p>用<code>JConsole</code>打开，可以看到相应的<code>MXBean</code>节点:</p>
+<img src="/2017/11/26/jinfo/jinfo.png" alt="jinfo.png" title="">
+<p>使用代码也可以获取对应的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> afei</div><div class="line"> * <span class="doctag">@version</span> 1.0.0</div><div class="line"> * <span class="doctag">@since</span> 2017年07月25日</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiagnosticOptionsTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        HotSpotDiagnostic mxBean = <span class="keyword">new</span> HotSpotDiagnostic();</div><div class="line">        List&lt;VMOption&gt; diagnosticVMOptions = mxBean.getDiagnosticOptions();</div><div class="line">        <span class="keyword">for</span> (VMOption vmOption:diagnosticVMOptions)&#123;</div><div class="line">            System.out.println(vmOption.getName() + <span class="string">" = "</span> + vmOption.getValue());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>代码拷贝自参考1</p>
+</blockquote>
+<p>然后就可以使用下面的命令，打开或者关闭相应的开关</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-flag [+|-]name</div><div class="line">            enables or disables the given boolean command line flag.</div></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo -u tomcat jinfo -flag  -PrintGC `pgrep <span class="_">-f</span> tomcat`</div><div class="line">sudo -u tomcat jinfo -flag  +PrintGC `pgrep <span class="_">-f</span> tomcat`</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="http://www.jianshu.com/p/c321d0808a1b" rel="external nofollow noopener noreferrer" target="_blank">jinfo命令详解 - 简书</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzU3NDAxMzU1Nw==&amp;mid=2247484957&amp;idx=3&amp;sn=ee1e459b6e579555b7006cb69a6bb7f1&amp;chksm=fd39af07ca4e2611707621a71dedfa7329668d741fa2b4bdc9835ef14583cf79adb378d8d6c6&amp;mpshare=1&amp;scene=1&amp;srcid=1123RfpGGNhu1XF30IA20OFH#rd" rel="external nofollow noopener noreferrer" target="_blank">Java调优经验谈</a></p>
+</li>
+<li><p><a href="http://rednaxelafx.iteye.com/blog/1049240" rel="external nofollow noopener noreferrer" target="_blank">通过jinfo工具在full GC前后做heap dump - Script Ahead, Code Behind - ITeye博客</a></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;查看最终生效的flag&quot;&gt;&lt;a href=&quot;#查看最终生效的flag&quot; class=&quot;headerlink&quot; title=&quot;查看最终生效的flag&quot;&gt;&lt;/a&gt;查看最终生效的flag&lt;/h2&gt;&lt;p&gt;&lt;code&gt;sudo -u tomcat jinfo pid&lt;/co
+    
+    </summary>
+    
+      <category term="java" scheme="http://qsli.github.io/categories/java/"/>
+    
+    
+      <category term="jinfo" scheme="http://qsli.github.io/tags/jinfo/"/>
+    
+  </entry>
   
   <entry>
     <title>executor总结</title>
@@ -1153,43 +1200,6 @@ FD is followed by one of these characters, describing the mode under which the f
     
     
       <category term="beanfactory" scheme="http://qsli.github.io/tags/beanfactory/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell命令长度限制</title>
-    <link href="http://qsli.github.io/2017/02/06/shell-input-limit/"/>
-    <id>http://qsli.github.io/2017/02/06/shell-input-limit/</id>
-    <published>2017-02-05T17:08:23.000Z</published>
-    <updated>2017-04-16T12:04:30.014Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="两个命令"><a href="#两个命令" class="headerlink" title="两个命令"></a>两个命令</h2><h3 id="ARG-MAX"><a href="#ARG-MAX" class="headerlink" title="ARG_MAX"></a>ARG_MAX</h3><blockquote>
-<p>The limit for the length of a command line is not imposed by the shell, but by the operating system. This limit is usually in the range of hundred kilobytes. POSIX denotes this limit ARG_MAX and on POSIX conformant systems you can query it with</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ getconf ARG_MAX    <span class="comment"># Get argument limit in bytes</span></div></pre></td></tr></table></figure>
-<p>在我的cygwin上的结果:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  getconf ARG_MAX</div><div class="line">32000</div></pre></td></tr></table></figure>
-<h3 id="xargs-–show-limits"><a href="#xargs-–show-limits" class="headerlink" title="xargs –show-limits"></a>xargs –show-limits</h3><p>我的Cygwin上的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">➜   xargs --show-limits</div><div class="line">您的环境变量占有 7787 个字节</div><div class="line">此系统的参数长度 POSIX 上限: 22165</div><div class="line">所有系统中所允许的最小参数长度 POSIX 上限: 4096</div><div class="line">我们实际能用的最大命令长度: 14378</div><div class="line">我们实际能用的命令缓冲区的大小: 22165</div><div class="line">Maximum parallelism (--max-procs must be no greater): 2147483647</div><div class="line"></div><div class="line">xargs 中的命令现在将继续执行，并且它会尝试读取输入并运行命令；如果您不想它发生，请按下“文件结束”按键(ctrl-D)。</div><div class="line">警告: echo 将至少运行一次。如果您不想它发生，请按下中断按键。(ctrl-C)</div></pre></td></tr></table></figure>
-<h2 id="绕过限制"><a href="#绕过限制" class="headerlink" title="绕过限制"></a>绕过限制</h2><p>使用脚本编写。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><p><a href="http://stackoverflow.com/questions/19354870/bash-command-line-and-input-limit" rel="external nofollow noopener noreferrer" target="_blank">shell - Bash command line and input limit - Stack Overflow</a></p>
-</li>
-<li><p><a href="http://stackoverflow.com/questions/6846263/maximum-length-of-command-line-argument-that-can-be-passed-to-sqlplus-from-lin" rel="external nofollow noopener noreferrer" target="_blank">Maximum length of command line argument that can be passed to SQL*Plus (from Linux C Shell)? - Stack Overflow</a></p>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;两个命令&quot;&gt;&lt;a href=&quot;#两个命令&quot; class=&quot;headerlink&quot; title=&quot;两个命令&quot;&gt;&lt;/a&gt;两个命令&lt;/h2&gt;&lt;h3 id=&quot;ARG-MAX&quot;&gt;&lt;a href=&quot;#ARG-MAX&quot; class=&quot;headerlink&quot; title=&quot;ARG
-    
-    </summary>
-    
-      <category term="shell" scheme="http://qsli.github.io/categories/shell/"/>
-    
-    
-      <category term="limit" scheme="http://qsli.github.io/tags/limit/"/>
     
   </entry>
   
