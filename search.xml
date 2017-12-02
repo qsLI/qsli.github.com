@@ -4,6 +4,65 @@
   
     
     <entry>
+      <title><![CDATA[缓存System.currentTimeMillis的调用]]></title>
+      <url>http://qsli.github.io/2017/12/02/cache-system-time/</url>
+      <content type="html"><![CDATA[<h2 id="系统时间缓存的必要"><a href="#系统时间缓存的必要" class="headerlink" title="系统时间缓存的必要"></a>系统时间缓存的必要</h2><img src="/2017/12/02/cache-system-time/time-cache.jpg" alt="time-cache.jpg" title="">
+<p>除了网络服务器，监控系统和日志系统也会频繁的调用<code>System.currentTimeMillis</code>。看公<br>司内部实现的异步日志中就对系统时间进行了缓存。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><script src="//gist.github.com/a42cea0411b2cff131f34d82d030115b.js"></script>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>使用<code>JMH</code>做一个<code>benchmark</code>压力测试， <code>JMH</code>在做测试之前会有预热的过程，以排<br>除<code>jit</code>等因素的影响，在系统达到稳定运行的时候再去对比两个方法的调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> RunnerException </span>&#123;</div><div class="line">Options opt = <span class="keyword">new</span> OptionsBuilder()</div><div class="line">               .include(CurrentTimeMillions.class.getSimpleName())</div><div class="line">               .mode(Mode.AverageTime)</div><div class="line">               .measurementIterations(<span class="number">2000</span>)</div><div class="line">               .forks(<span class="number">1</span>)</div><div class="line">               .build();</div><div class="line"></div><div class="line">       <span class="keyword">new</span> Runner(opt).run();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># Run complete. Total time: 01:07:53</div><div class="line"></div><div class="line">Benchmark                            Mode   Cnt   Score     Error  Units</div><div class="line">CurrentTimeMillions.test             avgt  2000  ≈ 10⁻⁸             s/op</div><div class="line">CurrentTimeMillions.testSystemTimer  avgt  2000  ≈ 10⁻⁹             s/op</div></pre></td></tr></table></figure>
+<p>可以看到还是差了一个数量级，如果对时间的精度要求没有那么高，还是可以缓存下的。</p>
+<h2 id="查看调用的系统方法"><a href="#查看调用的系统方法" class="headerlink" title="查看调用的系统方法"></a>查看调用的系统方法</h2><p>使用<code>strace</code>attach 到当前的进程，查看进程相应的调用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo strace -p  [pid]</div></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜ sudo strace -p 15588</div><div class="line">strace: Process 15588 attached</div><div class="line">futex(0x7f8c175f99d0, FUTEX_WAIT, 15589, NULL</div></pre></td></tr></table></figure>
+<p>并没有看到具体的系统调用，查找原因发现：</p>
+<blockquote>
+<p>这里使用 ltrace 是因为 linux 支持 VDSO 之后，gettimeofday 属于快速系统调用，使<br>用 strace 是看不到执行结果的。</p>
+<p>What is actually happening here is that we are linking to the vDSO (virtual<br>dynamic shared object), which is a small fully relocatable shared library<br>pre-mapped into the user address space. The linking happens during the first<br>call of gettimeofday, after which the call is resolved, and the first indirect<br>jump goes straight into the function.</p>
+</blockquote>
+<p>重新使用<code>ltrace</code>查看：</p>
+<p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">➜  ~  sudo ltrace  -c -S  -p 16365</div><div class="line">^C% time     seconds  usecs/call     calls      <span class="keyword">function</span></div><div class="line">------ ----------- ----------- --------- --------------------</div><div class="line"> 76.73   14.190163        1880      7544 SYS_getegid32</div><div class="line"> 23.27    4.303741      614820         7 SYS_madvise1</div><div class="line">  0.00    0.000197          24         8 SYS_exit</div><div class="line">------ ----------- ----------- --------- --------------------</div><div class="line">100.00   18.494101                  7559 total</div></pre></td></tr></table></figure>
+<p>然而还是没有看到<code>gettimeofday</code>的调用，具体原因不得而知。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><blockquote>
+<p>premature optimization is the root of all evil 过早优化是万恶之源</p>
+</blockquote>
+<p>如果系统的性能能满足我们的要求，就不要过早的做这些优化 ; 系统优化之前需要先做<br>profiling，找到真正的瓶颈，在次之前需要保持系统的简单，可靠。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><p><a href="http://blog.csdn.net/will_awoke/article/details/27084907" rel="external nofollow noopener noreferrer" target="_blank">SystemTimer CurrentTimeMillis 时间缓存 - CSDN 博客</a></p>
+</li>
+<li><p>《NIO trick and trap 》</p>
+</li>
+<li><p><a href="http://feiyang21687.github.io/SystemNano/" rel="external nofollow noopener noreferrer" target="_blank">System.nanoTime() 的实现分析 – 陈飞 – 码农</a></p>
+</li>
+<li><p><a href="http://blog.caoxudong.info/blog/2017/09/08/currentTimeMillis_in_java" rel="external nofollow noopener noreferrer" target="_blank">jdk8 中的时间获取</a></p>
+</li>
+<li><p><a href="http://pzemtsov.github.io/2017/07/23/the-slow-currenttimemillis.html" rel="external nofollow noopener noreferrer" target="_blank">The slow currentTimeMillis()</a></p>
+</li>
+<li><p><a href="http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8185891" rel="external nofollow noopener noreferrer" target="_blank">Bug ID: JDK-8185891 System.currentTimeMillis() is slow on Linux, especially with the HPET time source</a></p>
+</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> cache </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用google perf工具来排查堆外内存占用]]></title>
       <url>http://qsli.github.io/2017/12/02/google-perf-tools/</url>
       <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>线上机器内存不足，经常被系统<code>oom killer</code>干掉。</p>
@@ -3723,6 +3782,64 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
+      <title><![CDATA[fabric 分布式部署]]></title>
+      <url>http://qsli.github.io/2015/11/03/fabric/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
+<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
+<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
+<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
+<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
+<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
+<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
+<blockquote>
+<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
+</blockquote>
+<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
+<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
+<blockquote>
+<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
+</blockquote>
+<p>下面是参考的一些文章</p>
+<blockquote>
+<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
+</blockquote>
+<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
+<blockquote>
+<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
+</blockquote>
+<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
+<ul>
+<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
+<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
+<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
+<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
+<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
+<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> fabric </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[机器学习框架调研]]></title>
       <url>http://qsli.github.io/2015/11/03/machine_learning/</url>
       <content type="html"><![CDATA[<h1 id="机器学习框架调研"><a href="#机器学习框架调研" class="headerlink" title="机器学习框架调研"></a>机器学习框架调研</h1><h2 id="DMTK"><a href="#DMTK" class="headerlink" title="DMTK"></a>DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
@@ -3826,64 +3943,6 @@ or (using formats recognized by popular editors)
         <tags>
             
             <tag> 机器学习 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[fabric 分布式部署]]></title>
-      <url>http://qsli.github.io/2015/11/03/fabric/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
-<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1;command2;command3'</span></div></pre></td></tr></table></figure>
-<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host <span class="string">'command1|command2|command3'</span></div></pre></td></tr></table></figure></p>
-<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh [user]@[server] &lt;&lt; EOF</div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line"><span class="built_in">command</span> 3</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</div></pre></td></tr></table></figure></p>
-<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
-<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
-<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
-<blockquote>
-<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
-</blockquote>
-<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t -p port user@host <span class="string">'cmd'</span></div></pre></td></tr></table></figure></p>
-<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
-<blockquote>
-<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
-</blockquote>
-<p>下面是参考的一些文章</p>
-<blockquote>
-<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
-</blockquote>
-<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
-<blockquote>
-<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
-</blockquote>
-<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
-<ul>
-<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install fabric</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fab <span class="_">-f</span> xxx.py <span class="built_in">command</span></div></pre></td></tr></table></figure>
-<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
-<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></div><div class="line">	run(<span class="string">'uname -s'</span>)</div></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ fab -H localhost,linuxbox host_type</div><div class="line">	[localhost] run: uname <span class="_">-s</span></div><div class="line">	[localhost] out: Darwin</div><div class="line">	[linuxbox] run: uname <span class="_">-s</span></div><div class="line">	[linuxbox] out: Linux</div><div class="line">	</div><div class="line">	Done.</div><div class="line">	Disconnecting from localhost... done.</div><div class="line">	Disconnecting from linuxbox... done.</div></pre></td></tr></table></figure></p>
-<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
-<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@parralel</span></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="meta">@role()</span></div><div class="line"><span class="meta">@host()</span></div></pre></td></tr></table></figure></p>
-<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> fabric </tag>
             
         </tags>
         
