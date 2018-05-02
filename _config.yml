@@ -95,6 +95,9 @@ nofollow:
     - https://chenyuzuoo.github.io/
     - https://zhangpengdeshu.github.io/
 
+include:
+  - .well-known/**/acme-challenge
+
 # robots.txt
 robotstxt:
   useragent: "*"

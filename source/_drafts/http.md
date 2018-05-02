@@ -13,6 +13,27 @@ abbrlink: 13962
 
 CRLF分隔
 
+```
+HTTP-message   = Request | Response     ; HTTP/1.1 messages
+
+
+ generic-message = start-line
+                          *(message-header CRLF)
+                          CRLF
+                          [ message-body ]
+        start-line      = Request-Line | Status-Line
+
+    message-header = field-name ":" [ field-value ]
+       field-name     = token
+       field-value    = *( field-content | LWS )
+       field-content  = <the OCTETs making up the field-value
+                        and consisting of either *TEXT or combinations
+                        of token, separators, and quoted-string>
+
+       message-body = entity-body
+                    | <entity-body encoded as per Transfer-Encoding>
+```
+
 ### Request LINE
 
 ### Request HEADER
@@ -52,3 +73,5 @@ websocket
 [HTTP2.0的奇妙日常 | Web前端 腾讯AlloyTeam Blog | 愿景: 成为地球卓越的Web团队！](http://www.alloyteam.com/2015/03/http2-0-di-qi-miao-ri-chang/)
 
 [Ed Burns谈HTTP/2和Java EE Servlet 4规范](http://www.infoq.com/cn/news/2015/04/burns-servlet-http2)
+
+[HTTP/1.1: HTTP Message](https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html)

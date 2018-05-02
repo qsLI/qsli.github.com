@@ -1,6 +1,6 @@
 title: 使用greys来排查线上问题
 tags: greys
-category: shell
+category: perf
 toc: true
 date: 2017-11-12 18:10:12
 ---

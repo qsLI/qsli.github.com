@@ -24,4 +24,3 @@ category: guava
 ## 参考
 
 1. [Little's law - Wikipedia](https://en.wikipedia.org/wiki/Little%27s_law)
-
