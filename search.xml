@@ -4,6 +4,47 @@
   
     
     <entry>
+      <title><![CDATA[将其他日志框架桥接到slf4j]]></title>
+      <url>http://qsli.github.io/2018/05/05/slf4j-bridge/</url>
+      <content type="html"><![CDATA[<h2 id="SLF4J"><a href="#SLF4J" class="headerlink" title="SLF4J"></a>SLF4J</h2><p>java世界的日志框架太多了, <code>Jakarta Commons Logging (JCL)</code>,  java.util.logging (jul), Log4j, Logback等等. 其中 log4j和logback是同一个作者写的, 这个作者为了统一日志的API, 又创作了SLF4J, SLF4J采用门面模式定义了日志操作的API, 但是并没有提供实现,<br>具体的实现由用户引入的jar包决定, 比如Log4j或者Logback等.</p>
+<p>为了能让之前的项目, 比如一个比较古老的项目使用了 JCL, 也能使用<code>SLF4J</code>带来的好处(接口和实现分离), 就出现了桥接的需求.</p>
+<p> <img src="https://www.slf4j.org/images/legacy.png" alt=""></p>
+<p> 一旦桥接到了<code>SLF4J</code>, 底层的日志实现就可以随便选了.</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p> 这里拿<code>JCL</code>为例, 介绍下如何使用桥接包.</p>
+<ol>
+<li>exclude掉<code>JCL</code>对应的jar包</li>
+<li>引入<code>jcl-over-slf4j</code></li>
+</ol>
+<p>比如拿<code>spring mvc</code>为例, 他内部使用的是<code>JCL</code>作为日志实现, 我们需要做的就是:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--exclude--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;sl4j.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jcl-over-slf4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.25<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>桥接的实现原理就是不引入<code>JCL</code>等之前包的实现, 在桥接的jar包中实现一套相同的api.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">➜  jcl-over-slf4j-1.7.25-sources  tree</span><br><span class="line">.</span><br><span class="line">├── META-INF</span><br><span class="line">│   ├── MANIFEST.MF</span><br><span class="line">│   └── services</span><br><span class="line">│       └── org.apache.commons.logging.LogFactory</span><br><span class="line">└── org</span><br><span class="line">    └── apache</span><br><span class="line">        └── commons</span><br><span class="line">            └── logging</span><br><span class="line">                ├── impl</span><br><span class="line">                │   ├── NoOpLog.java</span><br><span class="line">                │   ├── package.html</span><br><span class="line">                │   ├── SimpleLog.java</span><br><span class="line">                │   ├── SLF4JLocationAwareLog.java</span><br><span class="line">                │   ├── SLF4JLogFactory.java</span><br><span class="line">                │   └── SLF4JLog.java</span><br><span class="line">                ├── LogConfigurationException.java</span><br><span class="line">                ├── LogFactory.java</span><br><span class="line">                ├── Log.java</span><br><span class="line">                └── package.html</span><br></pre></td></tr></table></figure>
+<p>在<code>LogFactory</code>中使用的是<code>SLF4JLogFactory</code>来获取<code>Logger</code>, 最终用到的是<code>slf4j-api</code>中定义的方法.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// org.apache.commons.logging.LogFactory</span></span><br><span class="line"><span class="keyword">static</span> LogFactory logFactory = <span class="keyword">new</span> SLF4JLogFactory();</span><br><span class="line"></span><br><span class="line"><span class="comment">// org.apache.commons.logging.impl.SLF4JLogFactory#getInstance(java.lang.String)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Log <span class="title">getInstance</span><span class="params">(String name)</span> <span class="keyword">throws</span> LogConfigurationException </span>&#123;</span><br><span class="line">        Log instance = loggerMap.get(name);</span><br><span class="line">        <span class="keyword">if</span> (instance != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Log newInstance;</span><br><span class="line">            Logger slf4jLogger = LoggerFactory.getLogger(name);</span><br><span class="line">            <span class="keyword">if</span> (slf4jLogger <span class="keyword">instanceof</span> LocationAwareLogger) &#123;</span><br><span class="line">                newInstance = <span class="keyword">new</span> SLF4JLocationAwareLog((LocationAwareLogger) slf4jLogger);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                newInstance = <span class="keyword">new</span> SLF4JLog(slf4jLogger);</span><br><span class="line">            &#125;</span><br><span class="line">            Log oldInstance = loggerMap.putIfAbsent(name, newInstance);</span><br><span class="line">            <span class="keyword">return</span> oldInstance == <span class="keyword">null</span> ? newInstance : oldInstance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.slf4j.org/legacy.html" rel="external nofollow noopener noreferrer" target="_blank">Log4j Bridge</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/24272450" rel="external nofollow noopener noreferrer" target="_blank">Java 日志框架解析(上) - 历史演进</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/24275518" rel="external nofollow noopener noreferrer" target="_blank">Java 日志框架解析(下) - 最佳实践</a></li>
+<li><a href="http://tech.lede.com/2017/02/06/rd/server/log4jSearch/index.html" rel="external nofollow noopener noreferrer" target="_blank">日志工具现状调研 | 网易乐得技术团队</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> logback </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[dubbo泛化调用原理]]></title>
       <url>http://qsli.github.io/2018/05/02/dubbo-generic-invoke/</url>
       <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
@@ -70,7 +111,7 @@
     <entry>
       <title><![CDATA[greys启动分析]]></title>
       <url>http://qsli.github.io/2018/04/02/greys-start/</url>
-      <content type="html"><![CDATA[<h1 id="greys-简介"><a href="#greys-简介" class="headerlink" title="greys 简介"></a>greys 简介</h1><p>greys的使用参见链接： <a href="https://qsli.github.io/2017/11/12/greys/">greys-anatomy 简介</a></p>
+      <content type="html"><![CDATA[<h1 id="greys-简介"><a href="#greys-简介" class="headerlink" title="greys 简介"></a>greys 简介</h1><p>greys的使用参见链接： <a href="/2017/11/12/greys/" title="使用greys来排查线上问题">使用greys来排查线上问题</a></p>
 <h1 id="greys-sh"><a href="#greys-sh" class="headerlink" title="greys.sh"></a>greys.sh</h1><p>一般使用greys时，启动命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u tomcat -H ./greys.sh [pid]</span><br></pre></td></tr></table></figure>
 <p><code>greys.sh</code>的最后一行<code>main &quot;${@}&quot;</code>将命令行的所有参数都传给了main函数， 看main函数的实现：</p>
@@ -3338,7 +3379,7 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
-      <title><![CDATA[Spring Mvc源码剖析]]></title>
+      <title><![CDATA[Spring Mvc源码剖析(一)]]></title>
       <url>http://qsli.github.io/2016/10/02/spring-mvc/</url>
       <content type="html"><![CDATA[<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><img src="/2016/10/02/spring-mvc/arch.jpg">
 <p>SpringMVC的核心是 <code>DispatcherServlet</code></p>
@@ -4339,6 +4380,7 @@ or (using formats recognized by popular editors)
 <h3 id="静态资源"><a href="#静态资源" class="headerlink" title="静态资源"></a>静态资源</h3><p>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 config.yml 文件中的 post_asset_folder 选项设为 true 来打开。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_config.yml</span><br><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure></p>
 <p>当资源文件管理功能打开后，Hexo将会在你每一次通过 hexo new [layout] <title> 命令创建新文章时自动创建一个文件夹。这个资源文件夹将会有与这个 markdown 文件一样的名字。将所有与你的文章有关的资源放在这个关联文件夹中之后，你可以通过相对路径来引用它们，这样你就得到了一个更简单而且方便得多的工作流。</title></p>
 <h3 id="内链"><a href="#内链" class="headerlink" title="内链"></a>内链</h3><p><a href="http://marshal.ohtly.com/2015/09/12/internal-link-and-image-for-hexo/" rel="external nofollow noopener noreferrer" target="_blank">Hexo使用内链及文章中加入图片的方法</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% post_link ec2-build-md %&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="seo"><a href="#seo" class="headerlink" title="seo"></a>seo</h3><p><a href="http://www.jianshu.com/p/86557c34b671" rel="external nofollow noopener noreferrer" target="_blank">Hexo Seo优化让你的博客在google搜索排名第一</a></p>
 <h2 id="Markdown-语法简介"><a href="#Markdown-语法简介" class="headerlink" title="Markdown 语法简介"></a>Markdown 语法简介</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1、分段： 两个回车</span><br><span class="line"></span><br><span class="line">2、换行 两个空格 + 回车</span><br><span class="line"></span><br><span class="line">3、标题 #~###### 井号的个数表示几级标题，即Markdown可以表示一级标题到六级标题</span><br><span class="line"></span><br><span class="line">4、引用 &gt;</span><br><span class="line"></span><br><span class="line">5、列表 *，+，-，1.，选其中之一，注意后面有个空格</span><br><span class="line"></span><br><span class="line">6、代码区块 四个空格开头</span><br><span class="line"></span><br><span class="line">7、链接 [文字](链接地址)</span><br><span class="line"></span><br><span class="line">8、图片 &#123;% 图片地址 图片说明 %&#125;</span><br><span class="line">，图片地址可以是本地路劲，也可以是网络地址</span><br><span class="line"></span><br><span class="line">9、强调 **文字**，__文字__，_文字_，*文字*</span><br><span class="line"></span><br><span class="line">10、代码</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -4353,7 +4395,11 @@ or (using formats recognized by popular editors)
 <p>##一级分支</p>
 <p>###二级分支</p>
 <p>####三级分支</p>
-</blockquote>]]></content>
+</blockquote>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://blog.gezhiqiang.com/2016/11/27/hexo-inner-link/" rel="external nofollow noopener noreferrer" target="_blank">hexo的站内链接问题 | Node 小栈</a></li>
+</ul>
+]]></content>
       
         <categories>
             
