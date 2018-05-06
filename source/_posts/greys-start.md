@@ -8,7 +8,7 @@ date: 2018-04-02 01:31:53
 
 # greys 简介
 
-greys的使用参见链接： [greys-anatomy 简介](https://qsli.github.io/2017/11/12/greys/)
+greys的使用参见链接： {% post_link greys %}
 
 # greys.sh
 

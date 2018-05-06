@@ -63,6 +63,11 @@ post_asset_folder: true
 
 [Hexo使用内链及文章中加入图片的方法](http://marshal.ohtly.com/2015/09/12/internal-link-and-image-for-hexo/)
 
+```
+{% post_link ec2-build-md %}
+
+```
+
 ### seo
 
 [Hexo Seo优化让你的博客在google搜索排名第一](http://www.jianshu.com/p/86557c34b671)
@@ -112,3 +117,7 @@ post_asset_folder: true
 ###二级分支
 ####三级分支
 {% endpullquote %}
+
+# 参考
+
+- [hexo的站内链接问题 | Node 小栈](http://blog.gezhiqiang.com/2016/11/27/hexo-inner-link/)
