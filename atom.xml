@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2018-07-07T18:03:55.376Z</updated>
+  <updated>2018-07-08T07:56:57.992Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>swappiness</title>
+    <link href="http://qsli.github.io/2018/07/08/swap/"/>
+    <id>http://qsli.github.io/2018/07/08/swap/</id>
+    <published>2018-07-08T07:56:57.000Z</published>
+    <updated>2018-07-08T07:56:57.992Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="sysctl中和swap相关的参数"><a href="#sysctl中和swap相关的参数" class="headerlink" title="sysctl中和swap相关的参数"></a>sysctl中和swap相关的参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  sudo sysctl -a  | grep swap</span><br><span class="line">vm.swappiness = 0</span><br></pre></td></tr></table></figure><blockquote><p>Swappiness is a Linux kernel parameter that controls the relative weight given to swapping out of runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value causes the kernel to avoid swapping; a higher value causes the kernel to try to use swap space.<br>取值说明:</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vm.swappiness = 0，表示只有在避免OOM的时候才进行swap操作；(并不是关闭swap)</span><br><span class="line">vm.swappiness = 60，系统默认值；</span><br><span class="line">vm.swappiness = 100，系统主动的进行swap操作。</span><br></pre></td></tr></table></figure><h2 id="关闭swap"><a href="#关闭swap" class="headerlink" title="关闭swap"></a>关闭swap</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/vm/swappiness</span><br><span class="line">sudo echo 0 | sudo tee /proc/sys/vm/swappiness</span><br><span class="line">sudo swapoff/swapon -a</span><br></pre></td></tr></table></figure><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3NDcyMTQyNQ==&amp;mid=206046053&amp;idx=1&amp;sn=76f7a31003d80c3089c3a266e4b139e0&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" rel="external nofollow noopener noreferrer" target="_blank">Qunar技术沙龙</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;sysctl中和swap相关的参数&quot;&gt;&lt;a href=&quot;#sysctl中和swap相关的参数&quot; class=&quot;headerlink&quot; title=&quot;sysctl中和swap相关的参数&quot;&gt;&lt;/a&gt;sysctl中和swap相关的参数&lt;/h2&gt;&lt;figure class
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="http://qsli.github.io/categories/linux/"/>
+    
+    
+      <category term="swap" scheme="http://qsli.github.io/tags/swap/"/>
+    
+  </entry>
   
   <entry>
     <title>java中的引用</title>
@@ -501,32 +526,6 @@
       <category term="git" scheme="http://qsli.github.io/tags/git/"/>
     
       <category term="idea" scheme="http://qsli.github.io/tags/idea/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用electron开发自己的工具</title>
-    <link href="http://qsli.github.io/2017/09/10/electron/"/>
-    <id>http://qsli.github.io/2017/09/10/electron/</id>
-    <published>2017-09-10T08:14:12.000Z</published>
-    <updated>2017-09-10T08:27:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="electron-简介"><a href="#electron-简介" class="headerlink" title="electron 简介"></a>electron 简介</h2><p>web是天生跨平台的。</p><p>前几年用ubuntu的时候，各种软件都没有相应的版本，十分的蛋疼。这几年随着web的发展，情况改善了许多。<br>比如说chrome的app， 安装好之后和原生的应用几乎没有区别，可以从ubuntu的dash里面搜索到，可以独立打开。</p><p><code>electron</code>则是直接整一个微型的chrome，加上html写的界面，直接做客户端。也有类似<code>atom</code>， <code>visual source code</code>等大型应用也是使用<code>electron</code>构建的。</p><img src="/2017/09/10/electron/electron.jpg"><h2 id="简单的想法"><a href="#简单的想法" class="headerlink" title="简单的想法"></a>简单的想法</h2><p>之前在windows平台，使用的非常顺手的一个剪贴板增强工具——<a href="http://www.appinn.com/clibor/" rel="external nofollow noopener noreferrer" target="_blank">Clibor – 来自日本的剪贴板辅助工具[Win] - 小众软件</a>， 这个软件非常好用的一个功能就是支持<code>定型文</code>。所谓的<code>定型文</code>就是你事先录制好的一些常用的<br>条目，然后当你需要使用的时候，按快捷键呼出界面，选中想要的<code>定型文</code>，直接就给你复制到了剪贴板，十分的方便。</p><img src="/2017/09/10/electron/item.png"><p>windows不爽的就是shell不好用， 虽然有<code>cygwin</code>,<code>babun</code>，<code>cmder</code>等还算不错的终端，但是用起来卡卡的，所以最终我还是迁移到了ubuntu，各种命令，各种爽。</p><p>但是，作为一个后端的开发，每天要上服务器上查各种问题，各种长长的命令，各种记不住，所以还是要有一个类似小抄试的工具来增强下工作效率。恰巧，上次在youtube上看electorn的一个视频——<a href="https://www.youtube.com/watch?v=FNHBfN8c32U" rel="external nofollow noopener noreferrer" target="_blank">Electron: Desktop Apps with Web Languages - GitHub Universe 2016 - YouTube</a>。这个视频大概介绍了electron，介绍了一些使用electron开发的有意思的应用， 恰巧我看到了一个叫做<code>mojibar</code>的简单应用。</p><img src="/2017/09/10/electron/mojibar.gif"><p>她的这个应用是，搜索moji表情对应的文字， 然后会筛选出来相应的结果，然后复制到剪贴板上，支持快捷键呼出。看到这个就瞬间来了灵感，这和我要的小抄应用简直十分吻合。好在<code>electron</code>并不复杂，就研究了下代码自己改造了一番，于是就有了这篇文章。</p><h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p>这个demo基本可以在日常的工作中使用了， github的repo在——<a href="https://github.com/qsLI/quake-select" rel="external nofollow noopener noreferrer" target="_blank">qsLI/quake-select</a></p><p>下面是界面的截图：</p><img src="/2017/09/10/electron/select.png"><p>配置文件在json中，类似下面的形式：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"commands"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"desc"</span>: <span class="string">"查看jvm堆的使用情况"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"sudo -u tomcat jmap -heap  `pgrep -f 'tomcat'`"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"opt"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"desc"</span>: <span class="string">"查看jvm最终加载的开关"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"java -XX:+PrintFlagsFinal -version"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"opt"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"desc"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"sudo -u tomcat jcmd `pgrep -f tomcat` VM.flags"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"opt"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"desc"</span>: <span class="string">"查看jvm加载的系统变量"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"sudo -u tomcat jcmd `pgrep -f tomcat` VM.system_properties"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"opt"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"desc"</span>: <span class="string">"查看本机jcmd支持的命令"</span>,</span><br><span class="line">      <span class="attr">"command"</span>: <span class="string">"sudo -u tomcat jcmd `pgrep -f tomcat` help"</span>,</span><br><span class="line">      <span class="attr">"tag"</span>: <span class="string">"opt"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>目前支持按照<code>command</code>和<code>tag</code>搜索， mojibar使用的这个库在ubuntu下菜单会显示不出来，以后有时间再fix。</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol><li><p><a href="https://electron.atom.io/" rel="external nofollow noopener noreferrer" target="_blank">Electron | Build cross platform desktop apps with JavaScript, HTML, and CSS.</a></p></li><li><p><a href="https://zhuanlan.zhihu.com/p/20225295" rel="external nofollow noopener noreferrer" target="_blank">使用 Electron 构建桌面应用 - 知乎专栏</a></p></li><li><p><a href="http://www.appinn.com/clibor/" rel="external nofollow noopener noreferrer" target="_blank">Clibor – 来自日本的剪贴板辅助工具[Win] - 小众软件</a></p></li><li><p><a href="https://www.youtube.com/watch?v=FNHBfN8c32U" rel="external nofollow noopener noreferrer" target="_blank">Electron: Desktop Apps with Web Languages - GitHub Universe 2016 - YouTube</a></p></li><li><p><a href="https://github.com/muan/mojibar" rel="external nofollow noopener noreferrer" target="_blank">muan/mojibar: Emoji searcher but as a menubar app.</a></p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;electron-简介&quot;&gt;&lt;a href=&quot;#electron-简介&quot; class=&quot;headerlink&quot; title=&quot;electron 简介&quot;&gt;&lt;/a&gt;electron 简介&lt;/h2&gt;&lt;p&gt;web是天生跨平台的。&lt;/p&gt;
-&lt;p&gt;前几年用ubuntu的时候，各
-      
-    
-    </summary>
-    
-      <category term="fe" scheme="http://qsli.github.io/categories/fe/"/>
-    
-    
-      <category term="electron" scheme="http://qsli.github.io/tags/electron/"/>
     
   </entry>
   
