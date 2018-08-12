@@ -14,6 +14,8 @@ post 请求
 
 调试 verbose模式
 
+--trace-ascii
+
 超时
 
 编码

@@ -1,7 +1,7 @@
-title: swap
+title: linux-memory
 toc: true
-tags:
-category:
+tags: memory
+category: linux
 ---
 
 
@@ -35,8 +35,6 @@ vm.swappiness = 30
 vm.page-cluster = 3
 vm.percpu_pagelist_fraction = 0
 vm.stat_interval = 1
-
-
 ```
 
 oom_dump_tasks
@@ -69,24 +67,64 @@ vm.overcommit_kbytes间接设置的，公式如下：
 
 vm.overcommit_ratio 是内核参数，缺省值是50，表示物理内存的50%。如果你不想使用比率，也可以直接指定内存的字节数大小，通过另一个内核参数 vm.overcommit_kbytes 即可；
 
+换页:
 
-vm.swappiness = 0，表示只有在避免OOM的时候才进行swap操作；(*并不是关闭swap*)
-vm.swappiness = 60，系统默认值；
-vm.swappiness = 100，系统主动的进行swap操作。
+- 文件系统换页
 
-关闭swap
+脏的(主存中修改过)  --> 回写磁盘
+干净的(没有修改过)  --> 因为磁盘已经存在副本, 页面换出仅仅释放这些内存
+
+- 匿名换页
+
+匿名内存: 无文件系统位置或路径名的内存. 它包括进程地址空间的工作数据, 称作堆.
+
+匿名页面换出要求迁移数据到物理交换设备或者交换文件. Linux用交换(swapping)来命名这种类型的换页.
+
+轻微缺页(min_flt):  该任务不需要从硬盘拷数据而发生的缺页（次缺页）。
+
+严重缺页(maj_flt):  该任务需要从硬盘拷数据而发生的缺页（主缺页）, 需要访问存储设备。
+
+映射的状态:
+
+A. 未分配
+B. 已分配, 未映射(未填充并且未发生缺页)
+            |               轻微缺页
+            |             /
+            |缺页  磁盘读写 
+            |             \
+            |               严重缺页
+            v
+C. 已分配, 已映射到主存(RAM)
+D. 系统压力  --->  已分配, 已映射到物理交换空间(磁盘)
+
+RSS: Resident Set Size 常驻集合大小: 已分配的内存页(C)大小
+VIRT:虚拟内存大小, 所有已分配的区域(B+C+D)
+
+交换出一个进程, 要求进程的所有私有数据被写入交换设备, 包括线程结构和进程堆(匿名数据).
+进程的一小部分元数据总是常驻于内核内存中, 内核仍能知道已交换出的进程.
+
+页面换出
+
+kswapd()
 
 ```
-cat /proc/sys/vm/swappiness
-sudo echo 0 > /proc/sys/vm/swappiness
-sudo echo 0 | sudo tee /proc/sys/vm/swappiness
-sudo swapoff/swapon -a
+➜  ~ sudo sysctl -a | grep vm.min_free_kbytes
+vm.min_free_kbytes = 67584
 ```
+
+
+
+文件系统缓存占用
+
+内部碎片
+外部碎片
+
 
 ## 参考
 
-- [Linux的OOM killer简单测试 - carlosfu--专注于java服务端开发 - ITeye博客](http://carlosfu.iteye.com/blog/2276955)
-- [Qunar技术沙龙](https://mp.weixin.qq.com/s?__biz=MzA3NDcyMTQyNQ==&mid=206046053&idx=1&sn=76f7a31003d80c3089c3a266e4b139e0&3rd=MzA3MDU4NTYzMw==&scene=6#rd)
 - [learning-kernel/mem-management.rst at master · datawolf/learning-kernel](https://github.com/datawolf/learning-kernel/blob/master/source/mem-management.rst)
 - [理解Linux的memory overcommit | Linux Performance](http://linuxperf.com/?p=102)
 - [Linux虚拟内存系统常用参数说明 - CSDN博客](https://blog.csdn.net/justlinux2010/article/details/19482359)
+- [Linux的OOM killer简单测试 - carlosfu--专注于java服务端开发 - ITeye博客](http://carlosfu.iteye.com/blog/2276955)
+- [Linux内核之旅](https://mp.weixin.qq.com/s?__biz=MzI3NzA5MzUxNA==&mid=2664602848&idx=1&sn=8ffebce2c02ed92e7ec5ab309eba0368&mpshare=1&scene=1&srcid=0716mGuzyYJyZs2S1k8FgYD2#rd)
+- [Linux Used内存到底哪里去了？ | 系统技术非业余研究](http://blog.yufeng.info/archives/2456)
