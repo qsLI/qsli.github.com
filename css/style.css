@@ -1598,3 +1598,6 @@ li.post-list-item::before {
 
 ul.post-list {
   counter-reset: section; }
+
+.toc-text {
+  overflow-wrap: break-word; }
