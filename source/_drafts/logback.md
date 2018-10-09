@@ -91,14 +91,7 @@ logback定义了以下日志级别：
 
 
 
-|| Logger  Name	|| Attached  Appenders	|| Additivity Flag ||	Output Targets || Comment ||
-|root |	A1 |	not applicable |	A1	| Since the root logger stands at the top of the logger hierarchy, the additivity flag does not apply to it.|
-|x |	A-x1, A-x2	| true |	A1, A-x1, A-x2	| Appenders of "x" and of root.|
-|x.y	none	true	A1, A-x1, A-x2	Appenders of "x" and of root.
-|x.y.z	A-xyz1	true	A1, A-x1, A-x2, A-xyz1	Appenders of "x.y.z", "x" and of root.
-|security	A-sec	false	A-sec	No appender accumulation since the additivity flag is set to false. Only appender A-sec will be used.
-|security.access	none	true	A-sec	Only appenders of "security" because the additivity flag in "security" is set to false.
-
+![image-20180819180255641](/Users/qishengli/Documents/qsli.github.com/source/_drafts/image-20180819180255641.png)
 
 
 ## logger 的层级关系
