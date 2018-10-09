@@ -4,6 +4,36 @@
   
     
     <entry>
+      <title><![CDATA[sqlserver杀掉慢查询]]></title>
+      <url>http://qsli.github.io/2018/10/09/sqlserver-slow-killer/</url>
+      <content type="html"><![CDATA[<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><p>查询慢查询的信息：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span></span><br><span class="line">    <span class="keyword">SUBSTRING</span>(qt.TEXT, (er.statement_start_offset/<span class="number">2</span>)+<span class="number">1</span>, ((<span class="keyword">CASE</span> er.statement_end_offset <span class="keyword">WHEN</span> <span class="number">-1</span> <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(qt.TEXT) <span class="keyword">ELSE</span> er.statement_end_offset <span class="keyword">END</span> - er.statement_start_offset)/<span class="number">2</span>)+<span class="number">1</span>) <span class="keyword">AS</span> query_sql,</span><br><span class="line">    er.session_id <span class="keyword">AS</span> pid,</span><br><span class="line">    er.status <span class="keyword">AS</span> <span class="keyword">status</span>,</span><br><span class="line">    er.command <span class="keyword">AS</span> command,</span><br><span class="line">    sp.hostname <span class="keyword">AS</span> hostname,</span><br><span class="line">    DB_NAME(sp.dbid) <span class="keyword">AS</span> db_name,</span><br><span class="line">    sp.program_name <span class="keyword">AS</span> program_name,</span><br><span class="line">    er.cpu_time <span class="keyword">AS</span> cpu_time,</span><br><span class="line">    er.total_elapsed_time <span class="keyword">AS</span> cost_time</span><br><span class="line"><span class="keyword">FROM</span> sys.sysprocesses <span class="keyword">AS</span> sp <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> sys.dm_exec_requests <span class="keyword">AS</span> er <span class="keyword">ON</span> sp.spid = er.session_id</span><br><span class="line"><span class="keyword">CROSS</span> <span class="keyword">APPLY</span> sys.dm_exec_sql_text(er.sql_handle) <span class="keyword">AS</span> qt</span><br><span class="line"><span class="keyword">WHERE</span> <span class="number">1</span> = <span class="keyword">CASE</span> <span class="keyword">WHEN</span> er.status <span class="keyword">IN</span> (<span class="string">'RUNNABLE'</span>, <span class="string">'SUSPENDED'</span>, <span class="string">'RUNNING'</span>) <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">WHEN</span> er.status = <span class="string">'SLEEPING'</span> <span class="keyword">AND</span> sp.open_tran  &gt; <span class="number">0</span> <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span></span><br><span class="line"><span class="keyword">AND</span> er.command = <span class="string">'SELECT'</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> er.total_elapsed_time <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+<p>查询的结果如下：</p>
+<img src="/2018/10/09/sqlserver-slow-killer/image-20181009091326051.png">
+<p>结果中展示了session的<code>pid</code>以及正在执行的命令，消耗的cpu时间以及总的耗费时间，如果需要杀掉这个session，可以用下面的命令：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">kill</span> &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://docs.microsoft.com/en-us/sql/t-sql/language-elements/kill-transact-sql?view=sql-server-2017" rel="external nofollow noopener noreferrer" target="_blank">KILL (Transact-SQL) | Microsoft Docs</a></li>
+<li><a href="https://gist.github.com/alexsorokoletov/a079629f9e1435c7f81f" rel="external nofollow noopener noreferrer" target="_blank">Helpful functions when you need to find out what is going on on SQL Server</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> db </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> sqlserver-killer </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[sudo命令的环境路径]]></title>
       <url>http://qsli.github.io/2018/10/07/sudo-path/</url>
       <content type="html"><![CDATA[<p>运行sudo命令时，有时会提示：</p>
@@ -4768,6 +4798,64 @@ or (using formats recognized by popular editors)
     </entry>
     
     <entry>
+      <title><![CDATA[fabric 分布式部署]]></title>
+      <url>http://qsli.github.io/2015/11/03/fabric/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
+<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@host <span class="string">'command1;command2;command3'</span></span><br></pre></td></tr></table></figure>
+<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@host <span class="string">'command1|command2|command3'</span></span><br></pre></td></tr></table></figure></p>
+<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [user]@[server] &lt;&lt; EOF</span><br><span class="line"><span class="built_in">command</span> 1</span><br><span class="line"><span class="built_in">command</span> 2</span><br><span class="line"><span class="built_in">command</span> 3</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</span><br></pre></td></tr></table></figure></p>
+<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
+<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
+<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
+<blockquote>
+<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
+</blockquote>
+<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -t -p port user@host <span class="string">'cmd'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
+<blockquote>
+<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
+</blockquote>
+<p>下面是参考的一些文章</p>
+<blockquote>
+<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
+</blockquote>
+<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
+<blockquote>
+<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
+</blockquote>
+<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
+<ul>
+<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install fabric</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fab -f xxx.py <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
+<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></span><br><span class="line">	run(<span class="string">'uname -s'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ fab -H localhost,linuxbox host_type</span><br><span class="line">	[localhost] run: uname -s</span><br><span class="line">	[localhost] out: Darwin</span><br><span class="line">	[linuxbox] run: uname -s</span><br><span class="line">	[linuxbox] out: Linux</span><br><span class="line">	</span><br><span class="line">	Done.</span><br><span class="line">	Disconnecting from localhost... <span class="keyword">done</span>.</span><br><span class="line">	Disconnecting from linuxbox... <span class="keyword">done</span>.</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
+<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@parralel</span></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="meta">@role()</span></span><br><span class="line"><span class="meta">@host()</span></span><br></pre></td></tr></table></figure></p>
+<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> fabric </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[机器学习框架调研]]></title>
       <url>http://qsli.github.io/2015/11/03/machine_learning/</url>
       <content type="html"><![CDATA[<h1 id="机器学习框架调研"><a href="#机器学习框架调研" class="headerlink" title="机器学习框架调研"></a>机器学习框架调研</h1><h2 id="DMTK"><a href="#DMTK" class="headerlink" title="DMTK"></a>DMTK</h2><p> <img src="http://www.dmtk.io/img/pic1_V7.jpg" width="150" height="150" alt="图片名称" align="center"></p>
@@ -4875,64 +4963,6 @@ or (using formats recognized by popular editors)
         <tags>
             
             <tag> 机器学习 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[fabric 分布式部署]]></title>
-      <url>http://qsli.github.io/2015/11/03/fabric/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   在一台linux主机上执行命令，如果太繁琐可以写成 Shell 脚本；如果在一个集群上批量执行命令呢？<br>一台一台的ssh登录去执行当然是可以的，如果集群太大，就太繁琐了。下面介绍一些在集群上执行命令的方法。</p>
-<h2 id="ssh-远程执行命令"><a href="#ssh-远程执行命令" class="headerlink" title="ssh 远程执行命令"></a>ssh 远程执行命令</h2><pre><code>通过 ssh 可以按照下面的方式远程执行命令
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@host <span class="string">'command1;command2;command3'</span></span><br></pre></td></tr></table></figure>
-<p>或者使用管道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@host <span class="string">'command1|command2|command3'</span></span><br></pre></td></tr></table></figure></p>
-<p>或者使用如下的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [user]@[server] &lt;&lt; EOF</span><br><span class="line"><span class="built_in">command</span> 1</span><br><span class="line"><span class="built_in">command</span> 2</span><br><span class="line"><span class="built_in">command</span> 3</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
-<p>或者将要执行的命令写入 Shell 脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh user@host <span class="string">'bash -s'</span> &lt; local_script.sh</span><br></pre></td></tr></table></figure></p>
-<p>可以通过指定ssh 参数 <code>-o StrictHostKeyChecking=no</code> 来省去下面的交互过程 </p>
-<p><img src="http://farm8.staticflickr.com/7399/8778510478_4a428cc5f4.jpg" alt=""></p>
-<p><strong>但是上面的方法执行 sudo 命令的时候会出错</strong><br>此时需要加上 ssh 的 <code>-t</code> 参数<br>man 一下 ssh 查找 -t 参数可以看到如下的解释</p>
-<blockquote>
-<p>-t<br>Force pseudo-tty allocation.  This can be used to execute arbi‐<br>             trary screen-based programs on a remote machine, which can be<br>             very useful, e.g. when implementing menu services.  Multiple -t<br>             options force tty allocation, even if ssh has no local tty.</p>
-</blockquote>
-<p>具体的意思就是强制提供一个远程服务器的虚拟tty终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -t -p port user@host <span class="string">'cmd'</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"><a href="#即可执行sudo命令，但是自己还要手工输入远程服务器的密码" class="headerlink" title="即可执行sudo命令，但是自己还要手工输入远程服务器的密码"></a>即可执行sudo命令，但是自己还要手工输入远程服务器的密码</h2><p>要想写在脚本中自动执行还需要使用 expect<br>expect是 linux下的一个命令用来处理执行命令中的交互，python 也有相应的库 pexpect</p>
-<blockquote>
-<p>Expect  is a program that “talks” to other interactive programs accord‐<br>       ing to a script. </p>
-</blockquote>
-<p>下面是参考的一些文章</p>
-<blockquote>
-<p><a href="http://malcontentcomics.com/systemsboy/2006/07/send-remote-commands-via-ssh.html" rel="external nofollow noopener noreferrer" target="_blank">Send Remote Commands Via SSH</a><br><a href="http://www.shellhacks.com/en/Running-Commands-on-a-Remote-Linux-Server-over-SSH" rel="external nofollow noopener noreferrer" target="_blank">Running Commands on a Remote Linux Server over SSH</a></p>
-</blockquote>
-<h2 id="其他集群管理命令"><a href="#其他集群管理命令" class="headerlink" title="其他集群管理命令"></a>其他集群管理命令</h2><p>如 pssh mussh</p>
-<blockquote>
-<p><a href="http://xiaorui.cc/2014/07/09/linux%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7mussh%E5%92%8Cpssh/" rel="external nofollow noopener noreferrer" target="_blank">linux集群管理工具mussh和pssh</a></p>
-</blockquote>
-<h2 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h2><p>fabric 是基于 ssh 的一个python库，主要用来做运维或者批量部署<br><a href="http://www.fabfile.org/" rel="external nofollow noopener noreferrer" target="_blank">fabric官网</a></p>
-<ul>
-<li>安装 fabric<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install fabric</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装完成即可使用 fabric，fabric上手简单，功能强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fab -f xxx.py <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
-<p>fab 默认在当前目录下寻找 fabfiles，如果你的文件是其他的名字，使用 <code>-f</code>指定即可</p>
-<p>脚本的编写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fabric.api <span class="keyword">import</span> run</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">host_type</span><span class="params">()</span>:</span></span><br><span class="line">	run(<span class="string">'uname -s'</span>)</span><br></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ fab -H localhost,linuxbox host_type</span><br><span class="line">	[localhost] run: uname -s</span><br><span class="line">	[localhost] out: Darwin</span><br><span class="line">	[linuxbox] run: uname -s</span><br><span class="line">	[linuxbox] out: Linux</span><br><span class="line">	</span><br><span class="line">	Done.</span><br><span class="line">	Disconnecting from localhost... <span class="keyword">done</span>.</span><br><span class="line">	Disconnecting from linuxbox... <span class="keyword">done</span>.</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>-H</code>可以指定运行的host， 也可以在代码中指定。<br>用户名和密码都是存在 env 环境变量中，也可在脚本中更改<br><a href="http://docs.fabfile.org/en/1.10/usage/env.html?highlight=env" rel="external nofollow noopener noreferrer" target="_blank">The environment dictionary</a></p>
-<p>同时 fabric 还提供了一些装饰器，具体的可以查文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@parralel</span></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="meta">@role()</span></span><br><span class="line"><span class="meta">@host()</span></span><br></pre></td></tr></table></figure></p>
-<p>详细讲解可以参考这篇文章 <a href="http://wklken.me/posts/2013/03/25/python-tool-fabric.html" rel="external nofollow noopener noreferrer" target="_blank">Python fabric实现远程操作和部署 </a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> fabric </tag>
             
         </tags>
         
