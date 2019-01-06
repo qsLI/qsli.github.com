@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title><![CDATA[mybatis-get-generated-id]]></title>
+      <url>http://qsli.github.io/2019/01/06/mybatis-get-generated-id/</url>
+      <content type="html"><![CDATA[<h2 id="mybatis获取自增主键"><a href="#mybatis获取自增主键" class="headerlink" title="mybatis获取自增主键"></a>mybatis获取自增主键</h2><h3 id="使用useGeneratedKeys"><a href="#使用useGeneratedKeys" class="headerlink" title="使用useGeneratedKeys"></a>使用useGeneratedKeys</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"add"</span> <span class="attr">parameterType</span>=<span class="string">"Staff"</span> <span class="attr">useGeneratedKeys</span>=<span class="string">"true"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">  insert into Staff(name, age) values(#&#123;name&#125;, #&#123;age&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>useGeneratedKeys</code>既可以用于单条插入语句中获取自增主键，也可以用于多条语句中获取自增主键。</p>
+<h3 id="使用-IDENTITY"><a href="#使用-IDENTITY" class="headerlink" title="使用@@IDENTITY"></a>使用@@IDENTITY</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"add"</span> <span class="attr">parameterType</span>=<span class="string">"Staff"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span> <span class="attr">order</span>=<span class="string">"AFTER"</span> <span class="attr">resultType</span>=<span class="string">"java.lang.Integer"</span>&gt;</span></span><br><span class="line">			select @@IDENTITY</span><br><span class="line">    <span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br><span class="line">    insert into Staff(name, age) values(#&#123;name&#125;, #&#123;age&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只支持一条插入时获取自增主键，而且跟数据库的支持有关.</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://www.cnblogs.com/fsjohnhuang/p/4078659.html" rel="external nofollow noopener noreferrer" target="_blank">MyBatis魔法堂：Insert操作详解（返回主键、批量插入） - ^_^肥仔John - 博客园</a></li>
+<li><a href="https://buptubuntu.github.io/2017/07/16/Mybatis-Auto-Generate-Key/" rel="external nofollow noopener noreferrer" target="_blank">Mybatis Auto Generate Key | buptubuntu的博客</a></li>
+<li><a href="http://www.mybatis.org/generator/configreference/generatedKey.html" rel="external nofollow noopener noreferrer" target="_blank">MyBatis Generator Core – The <generatedkey> Element</generatedkey></a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> mybatis </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 自增主键 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[sqlserver杀掉慢查询]]></title>
       <url>http://qsli.github.io/2018/10/09/sqlserver-slow-killer/</url>
       <content type="html"><![CDATA[<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><p>查询慢查询的信息：</p>
