@@ -4,6 +4,71 @@
   
     
     <entry>
+      <title><![CDATA[升级grafana]]></title>
+      <url>http://qsli.github.io/2019/01/10/grafana-upgrade/</url>
+      <content type="html"><![CDATA[<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>目前的grafana版本过低，只有在状态变化的时候才发送报警的提醒</p>
+<blockquote>
+<p>Grafana sends notifications on state changes, so OK -&gt; Alerting, Alerting -&gt; OK, OK -&gt; NoData, etc</p>
+</blockquote>
+<p>高版本有work around可以解决：</p>
+<blockquote>
+<p>This is possible since 5.3 if you configure alert reminder at the same or lower interval as the alert rule.</p>
+<p>It’s not exactly what’s described in this issue but its close enough that we won’t implement this feature.</p>
+</blockquote>
+<h2 id="当前配置信息"><a href="#当前配置信息" class="headerlink" title="当前配置信息"></a>当前配置信息</h2><p>当前版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ sudo yum list installed | grep grafana</span><br><span class="line">grafana.x86_64                        4.6.3-1                        installed</span><br></pre></td></tr></table></figure>
+<p>启动脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ ps axu | grep grafana</span><br><span class="line">qisheng+ 24599  0.0  0.0 112660   976 pts/1    S+   14:10   0:00 grep --color=auto grafana</span><br><span class="line">grafana  28995  0.9  0.2 2414524 46008 ?       Ssl  Jan08  28:22 /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini --pidfile=/var/run/grafana/grafana-server.pid cfg:default.paths.logs=/var/<span class="built_in">log</span>/grafana cfg:default.paths.data=/var/lib/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins</span><br></pre></td></tr></table></figure>
+<p>LDAP配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#################################### Auth LDAP ##########################</span></span><br><span class="line">[auth.ldap]</span><br><span class="line">enabled = <span class="literal">true</span></span><br><span class="line">config_file = /etc/grafana/ldap.toml</span><br><span class="line">allow_sign_up = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="风险评估"><a href="#风险评估" class="headerlink" title="风险评估"></a>风险评估</h2><p>grafana只是作为展示层，升级对程序打点和数据收集无影响，而且grafana是后向兼容的；升级只会影响监控的查看和报警。</p>
+<blockquote>
+<p>We recommend everyone to upgrade Grafana often to stay up to date with the latest fixes and enhancements. In order make this a reality Grafana upgrades are backward compatible and the upgrade process is simple &amp; quick.</p>
+</blockquote>
+<h2 id="升级步骤"><a href="#升级步骤" class="headerlink" title="升级步骤"></a>升级步骤</h2><h3 id="备份配置文件"><a href="#备份配置文件" class="headerlink" title="备份配置文件"></a>备份配置文件</h3><ul>
+<li>/etc/grafana/grafana.ini </li>
+<li>/etc/grafana/ldap.toml</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ sudo cp -p /etc/grafana/ldap.toml ~/</span><br><span class="line">[qisheng.li@yd-devops-web yum.repos.d]<span class="variable">$sudo</span> cp -p  /etc/grafana/grafana.ini  ~/</span><br></pre></td></tr></table></figure>
+<h3 id="备份db"><a href="#备份db" class="headerlink" title="备份db"></a>备份db</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ sudo cp -p /var/lib/grafana/grafana.db ~/</span><br></pre></td></tr></table></figure>
+<h3 id="更新yum源"><a href="#更新yum源" class="headerlink" title="更新yum源"></a>更新yum源</h3><p>aliyun的yum的最新版本是<code>4.6.3</code>是我们当前使用的版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ yum info grafana</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">Installed Packages</span><br><span class="line">Name        : grafana</span><br><span class="line">Arch        : x86_64</span><br><span class="line">Version     : 4.6.3</span><br><span class="line">Release     : 1</span><br><span class="line">Size        : 133 M</span><br><span class="line">Repo        : installed</span><br><span class="line">Summary     : Grafana</span><br><span class="line">URL         : https://grafana.com</span><br><span class="line">License     : <span class="string">"Apache 2.0"</span></span><br><span class="line">Description : Grafana</span><br></pre></td></tr></table></figure>
+<p>添加grafana的源<a href="http://docs.grafana.org/installation/rpm/" rel="external nofollow noopener noreferrer" target="_blank">Installing on RPM-based Linux | Grafana Documentation</a></p>
+<p>新建配置文件<code>/etc/yum.repos.d/grafana.repo</code></p>
+<p>键入一下内容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[grafana]</span></span><br><span class="line"><span class="attr">name</span>=grafana</span><br><span class="line"><span class="attr">baseurl</span>=https://packages.grafana.com/oss/rpm</span><br><span class="line"><span class="attr">repo_gpgcheck</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgkey</span>=https://packages.grafana.com/gpg.key</span><br><span class="line"><span class="attr">sslverify</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">sslcacert</span>=/etc/pki/tls/certs/ca-bundle.crt</span><br></pre></td></tr></table></figure>
+<p>grafana也提供了beta的源，生产环境不建议使用。</p>
+<p>再次查看yum信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ yum info grafana</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.aliyun.com</span><br><span class="line"> * extras: mirrors.aliyun.com</span><br><span class="line"> * updates: mirrors.aliyun.com</span><br><span class="line">Installed Packages</span><br><span class="line">Name        : grafana</span><br><span class="line">Arch        : x86_64</span><br><span class="line">Version     : 4.6.3</span><br><span class="line">Release     : 1</span><br><span class="line">Size        : 133 M</span><br><span class="line">Repo        : installed</span><br><span class="line">Summary     : Grafana</span><br><span class="line">URL         : https://grafana.com</span><br><span class="line">License     : <span class="string">"Apache 2.0"</span></span><br><span class="line">Description : Grafana</span><br><span class="line"></span><br><span class="line">Available Packages</span><br><span class="line">Name        : grafana</span><br><span class="line">Arch        : x86_64</span><br><span class="line">Version     : 5.4.2</span><br><span class="line">Release     : 1</span><br><span class="line">Size        : 52 M</span><br><span class="line">Repo        : grafana</span><br><span class="line">Summary     : Grafana</span><br><span class="line">URL         : https://grafana.com</span><br><span class="line">License     : <span class="string">"Apache 2.0"</span></span><br><span class="line">Description : Grafana</span><br></pre></td></tr></table></figure>
+<p>可以拿到<code>5.4.2</code>的信息了</p>
+<h3 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@yd-devops-web yum.repos.d]$ sudo yum update grafana</span><br></pre></td></tr></table></figure>
+<h2 id="配置reminder"><a href="#配置reminder" class="headerlink" title="配置reminder"></a>配置reminder</h2><p><img src="image-20190110234737778.png" alt="image-20190110234737778"></p>
+<p>这样如果处于alert状态就会每隔30s报一次</p>
+<p><img src="image-20190110234843905.png" alt="image-20190110234843905"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://github.com/grafana/grafana/issues/12356" rel="external nofollow noopener noreferrer" target="_blank">Send alert notification for every alert eval regardless of state · Issue #12356 · grafana/grafana</a></li>
+<li><a href="http://docs.grafana.org/installation/upgrading/" rel="external nofollow noopener noreferrer" target="_blank">Upgrading | Grafana Documentation</a></li>
+<li><a href="https://github.com/grafana/grafana/issues/7277" rel="external nofollow noopener noreferrer" target="_blank">[Question] Alert notify only once ? · Issue #7277 · grafana/grafana</a></li>
+<li><a href="http://docs.grafana.org/installation/rpm/" rel="external nofollow noopener noreferrer" target="_blank">Installing on RPM-based Linux | Grafana Documentation</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> grafana </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[mybatis-get-generated-id]]></title>
       <url>http://qsli.github.io/2019/01/06/mybatis-get-generated-id/</url>
       <content type="html"><![CDATA[<h2 id="mybatis获取自增主键"><a href="#mybatis获取自增主键" class="headerlink" title="mybatis获取自增主键"></a>mybatis获取自增主键</h2><h3 id="使用useGeneratedKeys"><a href="#使用useGeneratedKeys" class="headerlink" title="使用useGeneratedKeys"></a>使用useGeneratedKeys</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"add"</span> <span class="attr">parameterType</span>=<span class="string">"Staff"</span> <span class="attr">useGeneratedKeys</span>=<span class="string">"true"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">  insert into Staff(name, age) values(#&#123;name&#125;, #&#123;age&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
