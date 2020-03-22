@@ -4505,45 +4505,33 @@ or (using formats recognized by popular editors)
     <entry>
       <title><![CDATA[Unicode历史]]></title>
       <url>http://qsli.github.io/2016/09/26/character-encoding/</url>
-      <content type="html"><![CDATA[<h1 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h1><blockquote>
-<p>字符编码（英语：Character encoding）、字集码是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。</p>
-</blockquote>
-<p>简单的说，就是计算机只认<code>0</code>和<code>1</code>，于是在数据取出来的时候根据一个类似字典的东西，按照一定的规则将比特信息转换成对应的字符信息，这样人们才可以理解到底存储了什么。</p>
-<h2 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h2><p><code>ASCII</code>（American Standard Code for Information Interchange） 编码是基于拉丁字母的一套编码系统。</p>
+      <content type="html"><![CDATA[<h2 id="Character-set-（字符集）"><a href="#Character-set-（字符集）" class="headerlink" title="Character set （字符集）"></a>Character set （字符集）</h2><p>简单的说，就是计算机只认<code>0</code>和<code>1</code>，于是在数据取出来的时候根据一个类似字典的东西，按照一定的规则将比特信息转换成对应的字符信息，这样人们才可以理解到底存储了什么。</p>
+<h3 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h3><p><code>ASCII</code>（American Standard Code for Information Interchange） 编码是基于拉丁字母的一套编码系统。</p>
 <p><code>ASCII</code>使用指定的<code>7</code> 位或<code>8</code> 位二进制数组合来表示<code>128</code> 或<code>256</code> 种可能的字符。</p>
 <blockquote>
 <p>ASCII的局限在于只能显示26个基本拉丁字母、阿拉伯数目字和英式标点符号，因此只能用于显示现代美国英语（而且在处理英语当中的外来词如naïve、café、élite等等时，所有重音符号都不得不去掉，即使这样做会违反拼写规则）。而EASCII虽然解决了部分西欧语言的显示问题，但对更多其他语言依然无能为力。因此现在的软件系统大多采用Unicode。</p>
 </blockquote>
 <p>后续有其扩展版本<code>EASCII</code>。这个扩展的版本虽然扩充了一些字符，增大了EASCII的表达能力，但是仍不能满足全球各个国家的需求。于是各个国家就自己搞了一套编码的规则，但是随着web的发展，越来越需要一套统一的编解码标准，于是Unicode应运而出。</p>
-<h2 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h2><img src="/2016/09/26/character-encoding/Unicode_logo.jpg">
+<h3 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h3><img src="/2016/09/26/character-encoding/Unicode_logo.jpg">
 <blockquote>
-<p>Unicode provides a unique number for every character,</p>
-</blockquote>
-<blockquote>
-<p>no matter what the platform,</p>
-</blockquote>
-<blockquote>
-<p>no matter what the program,</p>
-</blockquote>
-<blockquote>
-<p>no matter what the language.</p>
+<p>Unicode provides a unique number for every character,<br>no matter what the platform,<br>no matter what the program,<br>no matter what the language.</p>
 </blockquote>
 <p>定义：</p>
 <blockquote>
 <p>Unicode（中文：万国码、国际码、统一码、单一码）是计算机科学领域里的一项业界标准。它对世界上大部分的文字系统进行了整理、编码，使得电脑可以用更为简单的方式来呈现和处理文字。</p>
 </blockquote>
-<blockquote>
+<h4 id="code-point"><a href="#code-point" class="headerlink" title="code point"></a><strong>code point</strong></h4><blockquote>
 <p>In Unicode, a character is dened as the smallest component of a written language that has semantic value.<br>The number assigned to a character is called a <strong>code point</strong>. A code point is denoted by U+ following by a<br>hexadecimal number from 4 to 8 digits long. Most of the code points in use are 4 digits long. For example,<br><code>U+03C6</code> is the code point for the Greek character f.</p>
 </blockquote>
 <img src="/2016/09/26/character-encoding/unicode-layout.jpg">
 <blockquote>
 <p>在文字处理方面，统一码为每一个字符而非字形定义唯一的代码（即一个整数）。换句话说，统一码以一种抽象的方式（即数字）来处理字符，并将视觉上的演绎工作（例如字体大小、外观形状、字体形态、文体等）留给其他软件来处理，例如网页浏览器或是文字处理器。</p>
 </blockquote>
-<h3 id="Java中判断是否是中文字符"><a href="#Java中判断是否是中文字符" class="headerlink" title="Java中判断是否是中文字符"></a>Java中判断是否是中文字符</h3><blockquote>
+<h4 id="Java中判断是否是中文字符"><a href="#Java中判断是否是中文字符" class="headerlink" title="Java中判断是否是中文字符"></a>Java中判断是否是中文字符</h4><blockquote>
 <p>Java判断一个字符串是否有中文一般情况是利用Unicode编码(CJK统一汉字的编码区间：0x4e00–0x9fbb)的正则来做判断，但是其实这个区间来判断中文不是非常精确，因为有些中文的标点符号比如：，。等等是不能识别的。</p>
 </blockquote>
 <p>具体的参见参考中的<code>Java 完美判断中文字符</code></p>
-<h3 id="遗留的问题"><a href="#遗留的问题" class="headerlink" title="遗留的问题"></a>遗留的问题</h3><blockquote>
+<h4 id="遗留的问题"><a href="#遗留的问题" class="headerlink" title="遗留的问题"></a>遗留的问题</h4><blockquote>
 <p>需要注意的是，Unicode只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储。</p>
 </blockquote>
 <p>存储中存在的问题：</p>
@@ -4562,22 +4550,74 @@ or (using formats recognized by popular editors)
 <blockquote>
 <p>2）Unicode在很长一段时间内无法推广，直到互联网的出现。</p>
 </blockquote>
-<h3 id="CJK"><a href="#CJK" class="headerlink" title="CJK"></a>CJK</h3><blockquote>
+<ul>
+<li>CJK</li>
+</ul>
+<blockquote>
 <p>Q: What does the term “CJK” mean?</p>
 </blockquote>
 <blockquote>
 <p>A: It is a commonly used acronym for “Chinese, Japanese, and Korean”. The term “CJK character” generally refers to “Chinese characters”, or more specifically, the Chinese (= Han) ideographs used in the writing systems of the Chinese and Japanese languages, occasionally for Korean, and historically in Vietnam.</p>
 </blockquote>
+<h2 id="Character-encoding（字符编码）"><a href="#Character-encoding（字符编码）" class="headerlink" title="Character encoding（字符编码）"></a>Character encoding（字符编码）</h2><blockquote>
+<p>字符编码（英语：Character encoding）、字集码是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。</p>
+</blockquote>
+<img src="/2016/09/26/character-encoding/relation.png">
+<p><strong>code point</strong>:</p>
+<blockquote>
+<p>A code point is encoded as a sequence of integers (called code units), whose bit size depends upon the selected character encoding.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Character Encoding</th>
+<th>Code Unit</th>
+<th>size</th>
+<th>Encoded value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UTF-8</td>
+<td>8-bit</td>
+<td>0xF0 0x9D 0x84 0x9E</td>
+<td>4 bytes.</td>
+<td>A sequence of 4 code units each 8-bits in length</td>
+</tr>
+<tr>
+<td>UTF-16</td>
+<td>16-bit</td>
+<td>0xD834 0xDD1E</td>
+<td>4 bytes.</td>
+<td>A sequence of 2 code units each 16-bits in length</td>
+</tr>
+<tr>
+<td>UTF-32</td>
+<td>32-bit</td>
+<td>0x0001D11E</td>
+<td>4 bytes.</td>
+<td>A sequence of 1 code units each 32-bits in length</td>
+</tr>
+</tbody>
+</table>
 <h3 id="UTF-8编码"><a href="#UTF-8编码" class="headerlink" title="UTF-8编码"></a>UTF-8编码</h3><blockquote>
 <p>互联网的普及，强烈要求出现一种统一的编码方式。<strong>UTF-8就是在互联网上使用最广的一种Unicode的实现方式。</strong>其他实现方式还包括UTF-16（字符用两个字节或四个字节表示）和UTF-32（字符用四个字节表示），不过在互联网上基本不用。重复一遍，这里的关系是，UTF-8是Unicode的实现方式之一。</p>
 </blockquote>
 <h4 id="8的含义"><a href="#8的含义" class="headerlink" title="8的含义"></a>8的含义</h4><blockquote>
 <p>unicode在很长一段时间内无法推广，直到互联网的出现，为解决unicode如何在网络上传输的问题，于是面向传输的众多 <strong>UTF（UCS Transfer Format）标准出现了，顾名思义，UTF-8就是每次8个位传输数据，而UTF-16就是每次16个位。</strong>UTF-8就是在互联网上使用最广的一种unicode的实现方式，这是为传输而设计的编码，并使编码无国界，这样就可以显示全世界上所有文化的字符了。</p>
 </blockquote>
-<h4 id="UTF-8和Unicode"><a href="#UTF-8和Unicode" class="headerlink" title="UTF-8和Unicode"></a>UTF-8和Unicode</h4><blockquote>
+<p><strong>Code Unit</strong>:</p>
+<ul>
+<li>UTF-8的8指的就是最小为8位一个单元，也即一字节为一个单元，UTF-8可以包含一个单元，二个单元，三个单元及四个单元，对应即是一，二，三及四字节。</li>
+<li>UTF-16的16指的就是最小为16位一个单元，也即两字节为一个单元，UTF-16可以包含一个单元和两个单元，对应即是两个字节和四个字节。我们操作UTF-16时就是以它的一个单元为基本单位的。</li>
+<li>同理，UTF-32以32位一个单元，它只包含这一种单元就够了，它的一单元自然也就是四字节了。</li>
+</ul>
+<h4 id="UTF-8和Unicode"><a href="#UTF-8和Unicode" class="headerlink" title="UTF-8和Unicode"></a>UTF-8和Unicode</h4><img src="/2016/09/26/character-encoding/encoding.png">
+<blockquote>
 <p>UTF-8最大的一个特点，就是它是一种变长的编码方式。它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度，当字符在ASCII 码的范围时，就用一个字节表示，保留了ASCII字符一个字节的编码做为它的一部分，注意的是unicode一个中文字符占2个字节，而UTF-8一个中 文字符占3个字节）。从unicode到uft-8并不是直接的对应，而是要过一些算法和规则来转换。</p>
 </blockquote>
-<h3 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h3><blockquote>
+<h4 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h4><blockquote>
 <p>UTF-8的编码规则很简单，只有二条：</p>
 </blockquote>
 <blockquote>
@@ -4645,7 +4685,10 @@ or (using formats recognized by popular editors)
 <li><p>将数据替换上述的<code>x</code>，得到 <code>11010111 10100111 = 0xD7A7</code></p>
 </li>
 </ol>
-<h4 id="字节序"><a href="#字节序" class="headerlink" title="字节序"></a>字节序</h4><p>UTF-8最多使用6个byte表示一个字符，于是就存在一个字节序的问题。<br>字节序分为两种：</p>
+<ul>
+<li>字节序</li>
+</ul>
+<p>UTF-8最多使用6个byte表示一个字符，于是就存在一个字节序的问题。<br>字节序分为两种：</p>
 <ol>
 <li><strong>Little-Endian</strong>:<br>字节序低位在前  小尾 在操作系统上很常用，也是计算机系统上最常用的字节序</li>
 <li><strong>Big-Endian</strong>: 字节序高位在前 大尾  也称为网络字节序</li>
@@ -4654,9 +4697,12 @@ or (using formats recognized by popular editors)
 <blockquote>
 <p>“endian”这个词出自《格列佛游记》。小人国的内战就源于吃鸡蛋时是究竟从大头(Big-Endian)敲开还是从小头(Little-Endian)敲开，由此曾发生过六次叛乱，其中一个皇帝送了命，另一个丢了王位。</p>
 </blockquote>
-<h4 id="字节序用途"><a href="#字节序用途" class="headerlink" title="字节序用途"></a>字节序用途</h4><blockquote>
+<ul>
+<li>字节序用途<blockquote>
 <p>Little-Endian最常用，大部分用户的操作系统（如windows, FreeBsd,Linux）是Little Endian的。</p>
 </blockquote>
+</li>
+</ul>
 <blockquote>
 <p>Big-Endian最常用在网络协议上，例如TCP/IP协议使用的是big endian. 操作系统上如MAC OS ,是Big Endian 的。<br>本质上说，Little Endian还是Big Endian与操作系统和芯片类型都有关系。PowerPC系列采用big endian方式存储数据，x86系列则采用little endian方式存储数据。</p>
 </blockquote>
@@ -4664,10 +4710,12 @@ or (using formats recognized by popular editors)
 <blockquote>
 <p>Unicode规范中定义，每一个文件的最前面分别加入一个表示编码顺序的字符，这个字符的名字叫做”零宽度非换行空格”（ZERO WIDTH NO-BREAK SPACE），用FEFF表示。这正好是两个字节，而且FF比FE大1。<br>如果一个文本文件的头两个字节是FE FF，就表示该文件采用大头方式；如果头两个字节是FF FE，就表示该文件采用小头方式。</p>
 </blockquote>
-<h2 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h2><img src="/2016/09/26/character-encoding/emoji.jpg">
+<h2 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h2><p>展示就是软件相关的了， 不同的字体渲染出来的也不一样</p>
+<img src="/2016/09/26/character-encoding/glyphs.png" title="Fonts map the same code point to different glyphs">
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h3><img src="/2016/09/26/character-encoding/emoji.jpg">
 <p>emoji表情采用的是 Unicode编码，Emoji就是一种在Unicode位于<code>\u1F601-\u1F64F</code>区段的字符。这个显然超过了目前常用的UTF-8字符集的编码范围<code>\u0000-\uFFFF</code>。</p>
 <p>使用utf8mb4编码便可以解决上述的问题</p>
-<h2 id="宽字符"><a href="#宽字符" class="headerlink" title="宽字符"></a>宽字符</h2><p>宽字符（Wide character） 是程序设计的术语。它是一个抽象的术语（没有规定具体实现细节），用以表示比8位字符还宽的数据类型。它不同于Unicode。</p>
+<h3 id="宽字符"><a href="#宽字符" class="headerlink" title="宽字符"></a>宽字符</h3><p>宽字符（Wide character） 是程序设计的术语。它是一个抽象的术语（没有规定具体实现细节），用以表示比8位字符还宽的数据类型。它不同于Unicode。</p>
 <p>wchar_t在ANSI/ISO C中是一个数据类型，且某些其它的编程语言也用它来表示宽字符。</p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
 <li><p><a href="https://zh.wikipedia.org/wiki/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81" rel="external nofollow noopener noreferrer" target="_blank">字符编码</a></p>
@@ -4685,6 +4733,14 @@ or (using formats recognized by popular editors)
 <li><p><a href="http://blog.csdn.net/sunshine1314/article/details/2309655" rel="external nofollow noopener noreferrer" target="_blank">关于Big Endian 和 Little Endian</a></p>
 </li>
 <li><p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" rel="external nofollow noopener noreferrer" target="_blank">字符编码笔记：ASCII，Unicode和UTF-8</a></p>
+</li>
+<li><p><a href="https://my.oschina.net/goldenshaw/blog/310331" rel="external nofollow noopener noreferrer" target="_blank">字符集与编码（四）——Unicode - Just do 挨踢 - OSCHINA</a></p>
+</li>
+<li><p><a href="https://www.freecodecamp.org/news/a-beginner-friendly-guide-to-unicode-d6d45a903515/" rel="external nofollow noopener noreferrer" target="_blank">A Beginner-Friendly Guide to Unicode ?</a></p>
+</li>
+<li><p><a href="https://my.oschina.net/goldenshaw/blog/311848" rel="external nofollow noopener noreferrer" target="_blank">字符集与编码（五）——代码单元及length方法 - Just do 挨踢 - OSCHINA</a></p>
+</li>
+<li><p><a href="http://zuga.net/articles/text-code-point-vs-code-unit/" rel="external nofollow noopener noreferrer" target="_blank">Zuga.net | Text - Code point vs. code unit</a></p>
 </li>
 </ol>
 ]]></content>
