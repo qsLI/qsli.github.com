@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2020/03/23/cglib-tips/</loc>
+    
+    <lastmod>2020-03-22T17:56:51.374Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2015/10/08/hello-world/</loc>
+    
+    <lastmod>2020-03-22T10:31:14.103Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/recommendation/index.html</loc>
+    
+    <lastmod>2020-03-22T09:40:20.016Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2016/09/26/character-encoding/</loc>
     
     <lastmod>2020-03-22T08:54:21.829Z</lastmod>
@@ -422,13 +443,6 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2015/10/08/hello-world/</loc>
-    
-    <lastmod>2018-08-11T12:42:41.640Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://qsli.github.io/2017/01/17/guava-eventbus/</loc>
     
     <lastmod>2018-08-11T12:42:41.631Z</lastmod>
@@ -572,13 +586,6 @@
     <loc>http://qsli.github.io/tags/index.html</loc>
     
     <lastmod>2018-08-11T12:42:40.548Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/recommendation/index.html</loc>
-    
-    <lastmod>2018-08-11T12:42:40.547Z</lastmod>
     
   </url>
   
