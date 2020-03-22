@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.7.1"
+    "version": "3.9.0"
   },
   "dependencies": {
-    "hexo": "^3.4.4",
+    "hexo": "^3.9.0",
+    "hexo-asset-image": "^1.0.0",
     "hexo-autonofollow": "^1.0.1",
     "hexo-deployer-git": "0.0.4",
     "hexo-deployer-heroku": "0.0.3",
@@ -33,5 +34,6 @@
     "hexo-server": "^0.1.2",
     "hexo-tag-bootstrap": "0.0.8",
     "hexo-tag-plantuml": "^1.0.0"
-  }
+  },
+  "devDependencies": {}
 }

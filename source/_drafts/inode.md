@@ -12,6 +12,7 @@ abbrlink: 6042
 - 进程何时释放File Descriptor？可共享？
 - Dentry是如何构建的？
 - linux VFS
+- debug fs
 
 [Linux VFS分析(二) - 北落不吉 - 博客园](http://www.cnblogs.com/hzl6255/archive/2012/12/31/2840854.html)
 
@@ -132,4 +133,8 @@ Blocks for storing the ilist
 6. [关于 Linux 文件系统的 Superblock, Inode, Dentry 和 File – ElmerZhang's Blog](http://www.elmerzhang.com/2012/12/25/suerblock-inode-dentry-file-of-filesystem/)
 
 7. [The Dentry Object](http://www.makelinux.net/books/lkd2/ch12lev1sec7)
+
+8. [files - How to see information inside inode data structure - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/279729/how-to-see-information-inside-inode-data-structure)
+
+9. [Linux内核中从inode结构得到文件路径名](http://terenceli.github.io/%E6%8A%80%E6%9C%AF/2014/08/31/get-the-full-pathname-from-inode)
 

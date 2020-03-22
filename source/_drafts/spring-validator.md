@@ -365,7 +365,7 @@ private void validate(ConfigurationPropertyName name, Object target, Class<?> ty
 	}
 ```
 
-![image-20180929024048202](/Users/qishengli/Documents/qsli.github.com/source/_drafts/image-20180929024048202.png)
+![image-20180929024048202](/image-20180929024048202.png)
 
 
 

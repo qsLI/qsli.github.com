@@ -91,7 +91,11 @@ logback定义了以下日志级别：
 
 
 
-![image-20180819180255641](/Users/qishengli/Documents/qsli.github.com/source/_drafts/image-20180819180255641.png)
+![image-20180819180255641](/image-20180819180255641.png)
+
+catalina.out - 启动日志，和localhost日志功能类似，默认ROOT logger打印至此，其他未显式配置的logger也走这里， 所以尽量不要过滤级别
+error.log - 异常日志， 配置了`additivity=true`的必须多加一个error log对应的appender（打印error级别的日志）
+sys.log  - 业务日志
 
 
 ## logger 的层级关系
