@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://qsli.github.io/"/>
-  <updated>2020-04-25T12:36:21.334Z</updated>
+  <updated>2020-04-27T05:59:37.209Z</updated>
   <id>http://qsli.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tomcat busy thread如何统计的</title>
+    <link href="http://qsli.github.io/2020/04/27/tomcat-busy-thread/"/>
+    <id>http://qsli.github.io/2020/04/27/tomcat-busy-thread/</id>
+    <published>2020-04-27T05:59:37.000Z</published>
+    <updated>2020-04-27T05:59:37.209Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="tomcat-busy-thread"><a href="#tomcat-busy-thread" class="headerlink" title="tomcat busy thread"></a>tomcat busy thread</h2><p>突然好奇tomcat的busy thread怎么统计的，翻了下代码。</p><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// org.apache.tomcat.util.net.AbstractEndpoint#getCurrentThreadsBusy   </span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the amount of threads that are in use</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the amount of threads that are in use</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCurrentThreadsBusy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (executor!=<span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (executor <span class="keyword">instanceof</span> ThreadPoolExecutor) &#123;</span><br><span class="line">      <span class="keyword">return</span> ((ThreadPoolExecutor)executor).getActiveCount();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (executor <span class="keyword">instanceof</span> ResizableExecutor) &#123;</span><br><span class="line">      <span class="keyword">return</span> ((ResizableExecutor)executor).getActiveCount();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>其实就是在执行任务的线程跟线程的状态没有关系：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// java.util.concurrent.ThreadPoolExecutor#getActiveCount</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the approximate number of threads that are actively</span></span><br><span class="line"><span class="comment">     * executing tasks.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the number of threads</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getActiveCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> ReentrantLock mainLock = <span class="keyword">this</span>.mainLock;</span><br><span class="line">  mainLock.lock();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (Worker w : workers)</span><br><span class="line">      <span class="keyword">if</span> (w.isLocked())</span><br><span class="line">        ++n;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    mainLock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> MBeanServer server = ManagementFactory.getPlatformMBeanServer();</span><br><span class="line">Set&lt;ObjectName&gt; names = server.queryNames(<span class="keyword">new</span> ObjectName(<span class="string">"Catalina:type=ThreadPool,*"</span>), <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">final</span> ObjectName name : names) &#123;</span><br><span class="line">    System.out.println(name);</span><br><span class="line">    <span class="keyword">final</span> Object maxThreads = server.getAttribute(name, <span class="string">"maxThreads"</span>);</span><br><span class="line">    <span class="keyword">final</span> Object currentThreadCount = server.getAttribute(name, <span class="string">"currentThreadCount"</span>);</span><br><span class="line">    <span class="keyword">final</span> Object currentThreadsBusy = server.getAttribute(name, <span class="string">"currentThreadsBusy"</span>);</span><br><span class="line">    System.out.println(<span class="string">"maxThreads = "</span> + maxThreads);</span><br><span class="line">    System.out.println(<span class="string">"currentThreadCount = "</span> + currentThreadCount);</span><br><span class="line">    System.out.println(<span class="string">"currentThreadsBusy = "</span> + currentThreadsBusy);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>输出结果</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Catalina:<span class="built_in">type</span>=ThreadPool,name=<span class="string">"ajp-nio-8009"</span></span><br><span class="line">maxThreads = 200</span><br><span class="line">currentThreadCount = 10</span><br><span class="line">currentThreadsBusy = 0</span><br><span class="line">Catalina:<span class="built_in">type</span>=ThreadPool,name=<span class="string">"http-nio-8080"</span></span><br><span class="line">maxThreads = 200</span><br><span class="line">currentThreadCount = 10</span><br><span class="line">currentThreadsBusy = 0</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;tomcat-busy-thread&quot;&gt;&lt;a href=&quot;#tomcat-busy-thread&quot; class=&quot;headerlink&quot; title=&quot;tomcat busy thread&quot;&gt;&lt;/a&gt;tomcat busy thread&lt;/h2&gt;&lt;p&gt;突然好奇to
+      
+    
+    </summary>
+    
+      <category term="tomcat" scheme="http://qsli.github.io/categories/tomcat/"/>
+    
+    
+      <category term="busy-thread" scheme="http://qsli.github.io/tags/busy-thread/"/>
+    
+  </entry>
   
   <entry>
     <title>Druid连接泄露记录</title>
@@ -502,31 +527,6 @@
     
     
       <category term="greys" scheme="http://qsli.github.io/tags/greys/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Let&#39;s go!(Go语言学习)</title>
-    <link href="http://qsli.github.io/2018/01/20/go-figure/"/>
-    <id>http://qsli.github.io/2018/01/20/go-figure/</id>
-    <published>2018-01-20T13:42:33.000Z</published>
-    <updated>2018-08-11T12:42:41.476Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="go学习资料"><a href="#go学习资料" class="headerlink" title="go学习资料"></a>go学习资料</h2><h3 id="go-tutorial"><a href="#go-tutorial" class="headerlink" title="go tutorial"></a>go tutorial</h3><p><a href="https://tour.golang.org/list" rel="external nofollow noopener noreferrer" target="_blank">A Tour of Go</a></p><p>简单的语法介绍, 可以在线编译/运行</p><img src="/2018/01/20/go-figure/go-tour.png"><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><h4 id="go-get访问被墙网站"><a href="#go-get访问被墙网站" class="headerlink" title="go get访问被墙网站"></a>go get访问被墙网站</h4><p>有些包只有墙外才能访问到, 因此第一步必须翻墙.</p><blockquote><p>另一个方法是实用 cow, 这是shadowsocks-go作者的另一个开发项目，根据项目介绍很容易的配置,可以在本机启动一个http代理，以shadowsocks为二级代理。</p></blockquote><p>补充一点, 用alias的方式, 可以只指定go使用代理</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">alias</span> go=<span class="string">'http_proxy=127.0.0.1:8080  https_proxy=127.0.0.1:8080 go'</span></span><br></pre></td></tr></table></figure><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol><li><p><a href="http://colobu.com/2017/01/26/how-to-go-get-behind-GFW/" rel="external nofollow noopener noreferrer" target="_blank">如何在长城后面go get一些库 | 鸟窝</a></p></li><li><p><a href="https://tour.golang.org/list" rel="external nofollow noopener noreferrer" target="_blank">A Tour of Go</a></p></li><li><p><a href="https://stackoverflow.com/questions/10383299/how-do-i-configure-go-to-use-a-proxy" rel="external nofollow noopener noreferrer" target="_blank">How do I configure Go to use a proxy? - Stack Overflow</a></p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;go学习资料&quot;&gt;&lt;a href=&quot;#go学习资料&quot; class=&quot;headerlink&quot; title=&quot;go学习资料&quot;&gt;&lt;/a&gt;go学习资料&lt;/h2&gt;&lt;h3 id=&quot;go-tutorial&quot;&gt;&lt;a href=&quot;#go-tutorial&quot; class=&quot;header
-      
-    
-    </summary>
-    
-      <category term="go" scheme="http://qsli.github.io/categories/go/"/>
-    
-    
-      <category term="go学习资料" scheme="http://qsli.github.io/tags/go%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
     
   </entry>
   
