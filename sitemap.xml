@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2020/04/28/feign-method-timeout/</loc>
+    
+    <lastmod>2020-04-28T06:00:44.543Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/04/27/tomcat-busy-thread/</loc>
     
     <lastmod>2020-04-27T05:59:37.209Z</lastmod>
