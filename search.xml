@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title><![CDATA[crontab和邮件]]></title>
+      <url>http://qsli.github.io/2020/05/01/crontab/</url>
+      <content type="html"><![CDATA[<h1 id="crontab是什么"><a href="#crontab是什么" class="headerlink" title="crontab是什么"></a>crontab是什么</h1><p>linux下的定时任务执行</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">*     *     *   *    *        <span class="built_in">command</span> to be executed</span><br><span class="line">-     -     -   -    -</span><br><span class="line">|     |     |   |    |</span><br><span class="line">|     |     |   |    +----- day of week (0 - 6) (Sunday=0)</span><br><span class="line">|     |     |   +------- month (1 - 12)</span><br><span class="line">|     |     +--------- day of        month (1 - 31)</span><br><span class="line">|     +----------- hour (0 - 23)</span><br><span class="line">+------------- min (0 - 59)</span><br></pre></td></tr></table></figure>
+<p>在线<code>crontab</code>表达式生成： </p>
+<img src="/2020/05/01/crontab/image-20200501221243150.png">
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p><code>crontab</code>的输出分为三种：</p>
+<ul>
+<li>1 代表标准输出(<code>stdout</code>)</li>
+<li>2代表错误输出(<code>stderr</code>)</li>
+<li><strong>&amp;</strong> 表示等同于的意思，2&gt;&amp;1表示将标准错误输出重定向到标准输出stdout</li>
+</ul>
+<h2 id="重定向stdout"><a href="#重定向stdout" class="headerlink" title="重定向stdout"></a>重定向stdout</h2><h3 id="为何重定向"><a href="#为何重定向" class="headerlink" title="为何重定向"></a>为何重定向</h3><p><code>crontab</code>的输出如果没有重定向到<code>/dev/null</code><strong>就会发送邮件</strong>, crontab的标准输出一般不太关心，可以重定向。</p>
+<p>邮件内容一般存储在 <code>/var/mail/$user</code> 中，如果不清理就会打满服务器根分区，最终导致机器无法登陆。</p>
+<h2 id="如何重定向"><a href="#如何重定向" class="headerlink" title="如何重定向"></a>如何重定向</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5 0 * * *  sh /home/q/tools/bin/zip_homeq_log_daily.sh 1&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p>标准输出流重定向到空设备</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash test.sh &gt;test.out     				//脚本的标准输出写入到文件test.out ,标准错误输出直接打印在屏幕 等价于：bash test.sh 1&gt;test.out</span><br><span class="line">bash test.sh &gt;test.out 2&gt;&amp;1 			//标准输出和标准错误输出都写入到test.out并且不会互相覆盖，等价于 bash test.sh &amp;&gt;test.out</span><br><span class="line">bash test.sh &gt;test.out 2&gt;test.out //标准输出和标准错误输出都写入到test.out，会出现互相覆盖的问题，正常情况不推荐这样使用</span><br><span class="line">bash test.sh &amp;&gt;test.out 					//等价于第二种方法</span><br></pre></td></tr></table></figure>
+<h2 id="不要重定向stderr"><a href="#不要重定向stderr" class="headerlink" title="不要重定向stderr"></a>不要重定向stderr</h2><p><code>stderr</code>可能就是脚本执行过程中发生了错误， 这个是需要关注的， 最好不要重定向到空设备。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 7 * * * sh /home/q/tools/bin/carnival/carnival.sh 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p><strong>最好不要这样做！</strong></p>
+<p>当<code>stderr</code>中有输出时，需要发送邮件，必须指定邮件的接收人。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-dev-api server]<span class="comment"># crontab -e -u root</span></span><br><span class="line">MAILTO=<span class="string">"qisheng.li@yaduo.com,fan.zhang@yaduo.com"</span></span><br><span class="line">*/3 * * * * /bin/sh /datadisk/mv.sh 1&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p>当脚本执行发生错误的时候，邮箱里就有一封邮件。</p>
+<img src="/2020/05/01/crontab/image-20180813104941719.png">
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://serverfault.com/questions/133058/how-to-send-the-output-from-a-cronjob-to-multiple-e-mail-addresses" rel="external nofollow noopener noreferrer" target="_blank">email - How to send the output from a cronjob to multiple e-mail addresses? - Server Fault</a></li>
+<li><a href="http://mengalong.github.io/2018/10/31/crontab-redirect/" rel="external nofollow noopener noreferrer" target="_blank">Linux crontab 输出重定向不生效问题解决 — Mengalong</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> crontab </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[配置sudo.log]]></title>
       <url>http://qsli.github.io/2020/05/01/sudo-log/</url>
       <content type="html"><![CDATA[<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><h2 id="配置-sudo-log"><a href="#配置-sudo-log" class="headerlink" title="配置 sudo.log"></a>配置 sudo.log</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># touch /var/log/sudo.log</span></span><br><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># visudo</span></span><br></pre></td></tr></table></figure>
