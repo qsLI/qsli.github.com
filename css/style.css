@@ -1601,3 +1601,12 @@ ul.post-list {
 
 .toc-text {
   overflow-wrap: break-word; }
+
+.post-copyright {
+  margin-bottom: 30px;
+  line-height: 30px;
+  margin-top: 30px;
+  padding: 0.5em 1em;
+  border-left: 3px solid #ff1700;
+  background-color: #f9f9f9;
+  list-style: none; }

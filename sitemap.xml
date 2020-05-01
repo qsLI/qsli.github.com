@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2019/01/06/mybatis-get-generated-id/</loc>
+    
+    <lastmod>2020-05-01T14:24:05.464Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/05/01/crontab/</loc>
     
     <lastmod>2020-05-01T14:15:28.041Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>http://qsli.github.io/2019/01/10/grafana-upgrade/</loc>
     
     <lastmod>2019-01-10T15:53:08.311Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2019/01/06/mybatis-get-generated-id/</loc>
-    
-    <lastmod>2019-01-06T09:41:12.086Z</lastmod>
     
   </url>
   
