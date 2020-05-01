@@ -4,6 +4,36 @@
   
     
     <entry>
+      <title><![CDATA[配置sudo.log]]></title>
+      <url>http://qsli.github.io/2020/05/01/sudo-log/</url>
+      <content type="html"><![CDATA[<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><h2 id="配置-sudo-log"><a href="#配置-sudo-log" class="headerlink" title="配置 sudo.log"></a>配置 sudo.log</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># touch /var/log/sudo.log</span></span><br><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># visudo</span></span><br></pre></td></tr></table></figure>
+<p><code>visudo</code>有语法检查，比直接修改 <code>/etc/sudoers</code>要安全些， 在末尾加入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Defaults logfile=/var/<span class="built_in">log</span>/sudo.log    <span class="comment">#增加日志输出地址</span></span><br></pre></td></tr></table></figure>
+<p>可以测试下是否生效:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># sudo yum install -y sl</span></span><br></pre></td></tr></table></figure>
+<p>然后查看sudo.log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@yd-test-01-pms <span class="built_in">log</span>]<span class="comment"># cat sudo.log</span></span><br><span class="line">Aug 21 10:54:05 : root : TTY=pts/0 ; PWD=/var/<span class="built_in">log</span> ; USER=root ; COMMAND=/bin/yum</span><br><span class="line">    install -y sl</span><br><span class="line">Aug 21 10:54:25 : root : TTY=pts/0 ; PWD=/var/<span class="built_in">log</span> ; USER=root ;</span><br><span class="line">    COMMAND=/bin/less sudo.log</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://note.t4x.org/system/sudo-log-config/" rel="external nofollow noopener noreferrer" target="_blank">Centos 6.4 sudo 日志文件配置方法 | Byrd’s Weblog</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> sudo-log </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Spring中bean name重复的问题]]></title>
       <url>http://qsli.github.io/2020/04/29/spring-bean-duplic-name/</url>
       <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.atour.oss.dao.mapper.OssFileMapper.insert</span><br><span class="line"></span><br><span class="line">	at org.apache.ibatis.binding.MapperMethod<span class="variable">$SqlCommand</span>.&lt;init&gt;(MapperMethod.java:227)</span><br><span class="line">	at org.apache.ibatis.binding.MapperMethod.&lt;init&gt;(MapperMethod.java:49)</span><br><span class="line">	at org.apache.ibatis.binding.MapperProxy.cachedMapperMethod(MapperProxy.java:65)</span><br><span class="line">	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58)</span><br><span class="line">	at com.sun.proxy.<span class="variable">$Proxy188</span>.insert(Unknown Source)</span><br></pre></td></tr></table></figure>
