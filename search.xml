@@ -4,6 +4,57 @@
   
     
     <entry>
+      <title><![CDATA[mysql jdbc驱动参数性能调优]]></title>
+      <url>http://qsli.github.io/2020/05/03/jdbc-connector/</url>
+      <content type="html"><![CDATA[<h2 id="SSL对性能的影响"><a href="#SSL对性能的影响" class="headerlink" title="SSL对性能的影响"></a>SSL对性能的影响</h2><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>我将驱动从</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>升级到：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>同样的sql（for循环写库），执行时间从<code>18607</code>上升至<code>46000</code>, 时间翻了一倍还多。wireshark抓包之后发现，之后的包都不是mysql协议的（看不到具体内容了）：<br><img src="/2020/05/03/jdbc-connector/image-20200503084506187.png"></p>
+<p>打开网络调试，<code>-Djavax.net.debug=all</code>，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> AA CB 5A 46 58 C1 55   BD DC 3F 8A 03 03 03 03  ...ZFX.U..?.....</span><br><span class="line">main, WRITE: TLSv1.2 Application Data, length = 96</span><br><span class="line">[Raw write]: length = 101</span><br><span class="line">0000: 17 03 03 00 60 33 3D D6   C6 D6 59 F1 48 C5 07 BC  ....`3=...Y.H...</span><br><span class="line">0010: BA 2C 95 88 C4 60 FC 83   5A CB B3 EA 52 C3 9C F6  .,...`..Z...R...</span><br><span class="line">0020: 96 8B A4 85 01 EE 22 E5   4B 36 DD 26 87 46 F1 FD  ......<span class="string">".K6.&amp;.F..</span></span><br><span class="line"><span class="string">0030: E9 E9 42 DA 51 D7 96 10   F4 6D F5 FF 81 DE F0 5E  ..B.Q....m.....^</span></span><br><span class="line"><span class="string">0040: 9D BE 8D 08 77 05 B7 A0   14 2F 38 AC 50 D8 DA E0  ....w..../8.P...</span></span><br><span class="line"><span class="string">0050: D1 7C 0D B8 07 E2 8B 05   7C 8E 1E D5 71 FA 48 21  ............q.H!</span></span><br><span class="line"><span class="string">0060: FC A5 FF 91 0F                                     .....</span></span><br><span class="line"><span class="string">[Raw read]: length = 5</span></span><br><span class="line"><span class="string">0000: 17 03 03 00 40                                     ....@</span></span><br><span class="line"><span class="string">[Raw read]: length = 64</span></span><br><span class="line"><span class="string">0000: 46 0D 04 E4 49 AE 5A DB   3C 0B 36 59 23 62 55 3C  F...I.Z.&lt;.6Y#bU&lt;</span></span><br><span class="line"><span class="string">0010: B9 C0 AC A2 EF 04 28 51   28 0F C0 7C A8 37 58 0B  ......(Q(....7X.</span></span><br><span class="line"><span class="string">0020: 1D 28 49 A1 41 CD 61 85   B7 7A A7 CA A9 8C 8B 3D  .(I.A.a..z.....=</span></span><br><span class="line"><span class="string">0030: 5E 99 92 50 6E F2 23 86   1F 8F 1A 2F 6F 41 C7 BB  ^..Pn.#..../oA..</span></span><br><span class="line"><span class="string">main, READ: TLSv1.2 Application Data, length = 64</span></span><br><span class="line"><span class="string">Padded plaintext after DECRYPTION:  len = 64</span></span><br><span class="line"><span class="string">0000: 44 F8 0A ED 84 81 F4 1B   6E 87 73 BA A1 67 71 95  D.......n.s..gq.</span></span><br><span class="line"><span class="string">0010: 0A 00 00 01 00 01 FD 3C   B7 02 01 00 00 00 BA 36  .......&lt;.......6</span></span><br><span class="line"><span class="string">0020: 13 72 F5 7D 3A B7 11 69   F4 EE 87 38 FB A3 5A 29  .r..:..i...8..Z)</span></span><br><span class="line"><span class="string">0030: 6B 7F A5 D3 59 E1 28 5C   B2 74 F8 E8 F4 9E 01 01  k...Y.(\.t......</span></span><br><span class="line"><span class="string">Padded plaintext before ENCRYPTION:  len = 96</span></span><br><span class="line"><span class="string">0000: 60 74 1B E8 4E D3 47 52   EA 95 B9 FC 26 11 DA 20  `t..N.GR....&amp;.. </span></span><br><span class="line"><span class="string">0010: 28 00 00 00 03 69 6E 73   65 72 74 20 69 6E 74 6F  (....insert into</span></span><br><span class="line"><span class="string">0020: 20 77 6F 72 64 73 20 28   77 6F 72 64 29 20 20 76   words (word)  v</span></span><br><span class="line"><span class="string">0030: 61 6C 75 65 73 28 27 31   32 33 27 29 70 0D 4F 3B  alues('123')p.O;</span></span><br><span class="line"><span class="string">0040: 1D C3 CF E4 79 19 7E 1C   CC 66 A3 26 1C 81 38 C5  ....y....f.&amp;..8.</span></span><br><span class="line"><span class="string">0050: 47 52 89 4C FC 0B C9 00   39 CD 3E A9 03 03 03 03  GR.L....9.&gt;.....</span></span><br><span class="line"><span class="string">main, WRITE: TLSv1.2 Application Data, length = 96</span></span><br><span class="line"><span class="string">[Raw write]: length = 101</span></span><br></pre></td></tr></table></figure>
+<p>默认就把SSL打开了</p>
+<blockquote>
+<p><em>For 8.0.13 and later:</em> As long as the server is correctly configured to use SSL, there is no need to configure anything on the Connector/J client to use encrypted connections.</p>
+</blockquote>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote>
+<p>Connector/J can encrypt all data communicated between the JDBC driver and the server (except for the initial handshake) using SSL. There is a <strong>performance penalty</strong> for enabling connection encryption, the severity of which depends on multiple factors including (but not limited to) the size of the query, the amount of data returned, the server hardware, the SSL library used, the network bandwidth, and so on.</p>
+</blockquote>
+<p>这里有一个测试，<a href="https://www.percona.com/blog/2013/10/10/mysql-ssl-performance-overhead/" rel="external nofollow noopener noreferrer" target="_blank">SSL Performance Overhead in MySQL</a>，贴下对比：</p>
+<img src="/2020/05/03/jdbc-connector/sysbench-throughput.png">
+<img src="/2020/05/03/jdbc-connector/sysbench-response-time.png">
+<img src="/2020/05/03/jdbc-connector/connection-throughput.png">
+<h3 id="如何关闭："><a href="#如何关闭：" class="headerlink" title="如何关闭："></a>如何关闭：</h3><blockquote>
+<p><strong>useSSL</strong></p>
+<p>For 8.0.12 and earlier: Use SSL when communicating with the server (true/false), default is ‘true’ when connecting to MySQL 5.5.45+, 5.6.26+ or 5.7.6+, otherwise default is ‘false’.</p>
+<p>For 8.0.13 and later: Default is ‘true’. DEPRECATED. See sslMode property description for details.</p>
+<p>Default: true</p>
+<p>Since version: 3.0.2</p>
+</blockquote>
+<p>useSSL设置为false之后，就关闭了加密，之前的sql时间也降到了<code>22541</code></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.percona.com/blog/2013/10/10/mysql-ssl-performance-overhead/" rel="external nofollow noopener noreferrer" target="_blank">SSL Performance Overhead in MySQL</a></li>
+<li><a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html" rel="external nofollow noopener noreferrer" target="_blank">MySQL :: MySQL Connector/J 8.0 Developer Guide :: 6.7 Connecting Securely Using SSL</a></li>
+<li><a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-configuration-properties.html" rel="external nofollow noopener noreferrer" target="_blank">MySQL :: MySQL Connector/J 8.0 Developer Guide :: 6.3 Configuration Properties</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> jdbc </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> java-connector </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[crontab和邮件]]></title>
       <url>http://qsli.github.io/2020/05/01/crontab/</url>
       <content type="html"><![CDATA[<h1 id="crontab是什么"><a href="#crontab是什么" class="headerlink" title="crontab是什么"></a>crontab是什么</h1><p>linux下的定时任务执行</p>
