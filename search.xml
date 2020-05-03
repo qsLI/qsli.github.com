@@ -44,6 +44,7 @@
 <li>executeBatch执行的sql太多时最好分批次，避免对jvm造成太大的压力</li>
 <li>executeBatch执行的sql个数大于4</li>
 </ul>
+<img src="/2020/05/03/jdbc-batching/image-20200503183918245.png">
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://my.oschina.net/u/2300159/blog/783613" rel="external nofollow noopener noreferrer" target="_blank">MySQL Jdbc驱动的rewriteBatchedStatements参数使batch生效 - 如风达的个人空间 - OSCHINA</a></li>
 <li><a href="https://dev.mysql.com/doc/refman/5.6/en/insert-optimization.html" rel="external nofollow noopener noreferrer" target="_blank">MySQL :: MySQL 5.6 Reference Manual :: 8.2.4.1 Optimizing INSERT Statements</a></li>
