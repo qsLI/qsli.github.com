@@ -18,14 +18,9 @@ toc: true
 ## python
 
 - [Jupyter](http://jupyter.org/)
-
 - [Anaconda](https://www.continuum.io/downloads)
-
-## maven 
-
-- aliyun maven
-
-{% gist 47a98f1cbde1179f1fc6227734e4e2e8 %}
+- pip（豆瓣源）
+- virtualenv
 
 ## shell
 
@@ -73,3 +68,27 @@ curl -x socks5h://localhost:1080 http://www.google.com/
 ```
 
 此外还可以自动生成对应的各种语言的请求代码
+
+## HomeBrew
+
+![Homebrew Formulae logo](homebrew-256x256.png)
+
+- 国内源
+
+  替换及重置Homebrew默认源 [LUG@USTC]](https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git)
+
+  
+
+- brew cask 用命令装带图形界面的软件
+
+  [Homebrew/homebrew-cask: 🍻 A CLI workflow for the administration of macOS applications distributed as binaries](https://github.com/Homebrew/homebrew-cask)
+
+  可以安装idea等
+
+  ![Installing and uninstalling Atom (68747470733a2f2f692e696d6775722e636f6d2f626a723855785a2e676966.gif)](https://camo.githubusercontent.com/e0232f054269f4da8df572c3dea4f08def189df3/68747470733a2f2f692e696d6775722e636f6d2f626a723855785a2e676966)
+
+## maven 
+
+- aliyun maven
+
+{% gist 47a98f1cbde1179f1fc6227734e4e2e8 %}

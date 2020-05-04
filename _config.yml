@@ -97,7 +97,8 @@ nofollow:
 
 include:
   - .well-known/**/acme-challenge
-
+  
+mathjax: true
 # robots.txt
 robotstxt:
   useragent: "*"
