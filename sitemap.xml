@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2020/05/13/jdk-httpurlconnection-pit/</loc>
+    
+    <lastmod>2020-05-12T17:22:39.869Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2020/04/28/feign-method-timeout/</loc>
+    
+    <lastmod>2020-05-09T15:23:17.375Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/05/05/cache-prep-stmts/</loc>
     
     <lastmod>2020-05-04T16:21:27.855Z</lastmod>
@@ -61,13 +75,6 @@
     <loc>http://qsli.github.io/2020/04/29/spring-bean-duplic-name/</loc>
     
     <lastmod>2020-04-29T05:10:58.956Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2020/04/28/feign-method-timeout/</loc>
-    
-    <lastmod>2020-04-28T06:00:44.543Z</lastmod>
     
   </url>
   
@@ -268,14 +275,14 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
+    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
     
     <lastmod>2018-08-11T12:42:42.601Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
+    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
     
     <lastmod>2018-08-11T12:42:42.601Z</lastmod>
     

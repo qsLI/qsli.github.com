@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://qsli.github.io/2020/05/13/jdk-httpurlconnection-pit/</loc>
+    <lastmod>2020-05-12</lastmod>
+  </url>  <url>
+    <loc>http://qsli.github.io/2020/04/28/feign-method-timeout/</loc>
+    <lastmod>2020-05-09</lastmod>
+  </url>  <url>
     <loc>http://qsli.github.io/2020/05/05/cache-prep-stmts/</loc>
     <lastmod>2020-05-04</lastmod>
   </url>  <url>
@@ -21,9 +27,6 @@
   </url>  <url>
     <loc>http://qsli.github.io/2020/04/29/spring-bean-duplic-name/</loc>
     <lastmod>2020-04-29</lastmod>
-  </url>  <url>
-    <loc>http://qsli.github.io/2020/04/28/feign-method-timeout/</loc>
-    <lastmod>2020-04-28</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2020/04/27/tomcat-busy-thread/</loc>
     <lastmod>2020-04-27</lastmod>
@@ -109,10 +112,10 @@
     <loc>http://qsli.github.io/2018/05/06/spring-mvc-2/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
-    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
+    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
-    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
+    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2018/05/05/slf4j-bridge/</loc>
