@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title><![CDATA[升级feign版本遇到的坑]]></title>
+      <url>http://qsli.github.io/2020/07/26/upgrade-feign-pitfall/</url>
+      <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inner/user/checkLogin?ticket=af9fec70d1044ff8953bba62c5452fe6&amp;system=CRM</span><br><span class="line">&#123;<span class="string">"code"</span>:10001,<span class="string">"message"</span>:<span class="string">"参数错误"</span>,<span class="string">"result"</span>:null&#125;</span><br></pre></td></tr></table></figure>
+<p>回滚</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/inner/user/checkLogin?ticket=7377d3e51c8548ec9e1ec0ab6ecddc21&amp;serviceTicket=&amp;system=CRM</span><br><span class="line">&#123;<span class="string">"code"</span>:0,<span class="string">"message"</span>:null,<span class="string">"result"</span>:&#123;<span class="string">"userInfo"</span>:null,<span class="string">"token"</span>:null,<span class="string">"userLogin"</span>:<span class="literal">false</span>,<span class="string">"serviceLogin"</span>:<span class="literal">false</span>,<span class="string">"noPermission"</span>:<span class="literal">false</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>差别是正常的请求多了一个<code>&amp;serviceTicket=</code>， 代码升级了feign的版本和httpclient的版本，肯定是这俩中的一个出问题了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//feign.template.QueryTemplate#create(java.lang.String, java.lang.Iterable&lt;java.lang.String&gt;, java.nio.charset.Charset, feign.CollectionFormat)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> QueryTemplate <span class="title">create</span><span class="params">(String name,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     Iterable&lt;String&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     Charset charset,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     CollectionFormat collectionFormat)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"name is required."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (values == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"values are required"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* remove all empty values from the array */</span></span><br><span class="line">    <span class="comment">// 问题在这里，直接给干掉了</span></span><br><span class="line">    Collection&lt;String&gt; remaining = StreamSupport.stream(values.spliterator(), <span class="keyword">false</span>)</span><br><span class="line">        .filter(Util::isNotBlank)</span><br><span class="line">        .collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">    StringBuilder template = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    Iterator&lt;String&gt; iterator = remaining.iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      template.append(iterator.next());</span><br><span class="line">      <span class="keyword">if</span> (iterator.hasNext()) &#123;</span><br><span class="line">        template.append(<span class="string">","</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> QueryTemplate(template.toString(), name, remaining, charset, collectionFormat);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>虽然上面的写法也不太合常理，但是feign直接给干掉了也不太兼容。幸亏代码库里上面的写法少，直接改掉之后就ok了。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
+<li><a href="https://github.com/OpenFeign/feign/issues/872" rel="external nofollow noopener noreferrer" target="_blank">Empty query params shouldn’t be filtered out in RequestTemplate · Issue #872 · OpenFeign/feign</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> feign </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> feign </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[http-transfer-encoding探秘]]></title>
       <url>http://qsli.github.io/2020/07/26/http-transfer-encoding/</url>
       <content type="html"><![CDATA[<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>公司有一些后台系统支持导出Excel，导出量大的时候机器直接oom了。调用流程大概如下：</p>
