@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2020/07/26/http-transfer-encoding/</loc>
+    
+    <lastmod>2020-07-25T17:09:13.264Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/05/28/upgrade-grafana-7-0/</loc>
     
     <lastmod>2020-05-28T05:55:04.115Z</lastmod>
@@ -282,14 +289,14 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
+    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
     
     <lastmod>2018-08-11T12:42:42.601Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
+    <loc>http://qsli.github.io/2016/09/25/spring-mockMvc/</loc>
     
     <lastmod>2018-08-11T12:42:42.601Z</lastmod>
     
