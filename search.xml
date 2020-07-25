@@ -4,6 +4,84 @@
   
     
     <entry>
+      <title><![CDATA[网络连接的各种timeout]]></title>
+      <url>http://qsli.github.io/2020/07/26/timeout/</url>
+      <content type="html"><![CDATA[<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><h3 id="SERVER端DROP-SYNC报文导致的重试"><a href="#SERVER端DROP-SYNC报文导致的重试" class="headerlink" title="SERVER端DROP SYNC报文导致的重试"></a>SERVER端DROP SYNC报文导致的重试</h3><p>tcp sync 报文默认重试6次，每次等待的时间逐渐变长，最长等待 2^0 + 2^1 + 2^2 + 2^3 + 2^4 + 2^5 + 2^6 = 127 s</p>
+<h4 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h4><p>iptables 添加规则，drop掉TCP的sync包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@YD-Test-01 server]$ sudo iptables -A INPUT --protocol tcp --dport 7777 --syn -j DROP</span><br></pre></td></tr></table></figure>
+<p>简单启动一个server，监听7777端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@YD-Test-01 server]$ nc -l 7777 &amp;</span><br></pre></td></tr></table></figure>
+<p>tcpdump抓包，指定port 7777：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@YD-Test-01 server]$ sudo tcpdump -i lo -Ss0 -n src 127.0.0.1 and dst 127.0.0.1 and port 7777</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on lo, link-type EN10MB (Ethernet), capture size 65535 bytes</span><br><span class="line"></span><br><span class="line">19:36:44.372996 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517451113 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:36:45.375615 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517452116 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:36:47.379606 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517454120 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:36:51.387627 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517458128 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:36:59.403615 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517466144 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:37:15.435623 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517482176 ecr 0,nop,wscale 7], length 0</span><br><span class="line">19:37:47.499624 IP 127.0.0.1.51754 &gt; 127.0.0.1.cbt: Flags [S], seq 1069437352, win 43690, options [mss 65495,sackOK,TS val 517514240 ecr 0,nop,wscale 7], length 0</span><br></pre></td></tr></table></figure>
+<p>客户端超时时间：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[qisheng.li@YD-Test-01 server]$ time telnet  localhost 7777</span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">telnet: connect to address 127.0.0.1: Connection timed out</span><br><span class="line">Trying ::1...</span><br><span class="line">telnet: connect to address ::1: Network is unreachable</span><br><span class="line"></span><br><span class="line">real	2m7.257s</span><br><span class="line">user	0m0.000s</span><br><span class="line">sys	0m0.002s</span><br></pre></td></tr></table></figure>
+<p>做差得到重试的间隔， telnet总共请求了<code>2m7.257s</code>，从而可以倒推出最后一次等待的时间</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>时间差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19:36:44.372996</td>
+<td></td>
+</tr>
+<tr>
+<td>19:36:45.375615</td>
+<td>0:00:01.01 （1s）</td>
+</tr>
+<tr>
+<td>19:36:47.379606</td>
+<td>0:00:02.02 （2s）</td>
+</tr>
+<tr>
+<td>19:36:51.387627</td>
+<td>0:00:04.04 （4s）</td>
+</tr>
+<tr>
+<td>19:36:59.403615</td>
+<td>0:00:08.08 （8s）</td>
+</tr>
+<tr>
+<td>19:37:15.435623</td>
+<td>0:00:16.16 （16s)</td>
+</tr>
+<tr>
+<td>19:37:47.499624</td>
+<td>0:00:32.32 （32s）</td>
+</tr>
+<tr>
+<td></td>
+<td>0:01:04.254 （64s）</td>
+</tr>
+</tbody>
+</table>
+<img src="/2020/07/26/timeout/bO_12e9048Rl-nJJHUfGU9OI8lPWH0Xhvq6s4RR6NS4rwktJagWyb9TX6FxvFdwHScwiSlfCFYahNcY0UGo3QmJR_9BZgHkMF7u5i7wi6sSjQI-6q9R9nZPNrEngwdXxcM6VdtfJaciyB5SGpiH7iFjKjzfJYUiqYK2FLAIE-SMF8OGW05FO8nLmK1ALtCbD1Z-aLGlvswY8tplrpibewPCZxW00.png">
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.chengweiyang.cn/2017/02/18/linux-connect-timeout/" rel="external nofollow noopener noreferrer" target="_blank">Linux 建立 TCP 连接的超时时间分析</a></li>
+<li><a href="https://hoswey.github.io/2019/07/23/%E6%B5%85%E8%B0%88Java%E4%B8%AD%E7%9A%84TCP%E8%B6%85%E6%97%B6/" rel="external nofollow noopener noreferrer" target="_blank">浅谈Java中的TCP超时 | 程序员，川流不息</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1574588" rel="external nofollow noopener noreferrer" target="_blank">从linux源码看socket(tcp)的timeout - 云+社区 - 腾讯云</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> base </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> tcp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[升级feign版本遇到的坑]]></title>
       <url>http://qsli.github.io/2020/07/26/upgrade-feign-pitfall/</url>
       <content type="html"><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inner/user/checkLogin?ticket=af9fec70d1044ff8953bba62c5452fe6&amp;system=CRM</span><br><span class="line">&#123;<span class="string">"code"</span>:10001,<span class="string">"message"</span>:<span class="string">"参数错误"</span>,<span class="string">"result"</span>:null&#125;</span><br></pre></td></tr></table></figure>
