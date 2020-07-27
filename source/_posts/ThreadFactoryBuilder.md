@@ -1,8 +1,11 @@
+---
 title: Guava中的ThreadFactoryBuilder
-tags: concurrent
-category: guava
+tags: guava
+category: base
 toc: true
-date: 2017-11-18 17:15:34
+typora-root-url: ThreadFactoryBuilder
+typora-copy-images-to: ThreadFactoryBuilder
+date:  2017-11-18 17:15:34
 ---
 
 

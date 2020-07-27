@@ -3,8 +3,8 @@ title: Feign方法级别的超时
 tags: spring-cloud
 category: feign
 toc: true
-typora-root-url: Feign方法级别的超时
-typora-copy-images-to: Feign方法级别的超时
+typora-root-url: feign-method-timeout
+typora-copy-images-to: feign-method-timeout
 date: 2020-04-28 14:00:44
 ---
 
