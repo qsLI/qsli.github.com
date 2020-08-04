@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2020/08/04/druid-pitfall/</loc>
+    
+    <lastmod>2020-08-04T08:16:21.980Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2020/05/28/upgrade-grafana-7-0/</loc>
+    
+    <lastmod>2020-08-04T07:54:09.179Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2017/11/18/ThreadFactoryBuilder/</loc>
+    
+    <lastmod>2020-07-26T11:10:21.384Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/07/26/timeout/</loc>
     
     <lastmod>2020-07-25T17:40:02.772Z</lastmod>
@@ -19,13 +40,6 @@
     <loc>http://qsli.github.io/2020/07/26/http-transfer-encoding/</loc>
     
     <lastmod>2020-07-25T17:09:13.264Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2020/05/28/upgrade-grafana-7-0/</loc>
-    
-    <lastmod>2020-05-28T05:55:04.115Z</lastmod>
     
   </url>
   
@@ -250,13 +264,6 @@
     <loc>http://qsli.github.io/2017/01/27/tomcat-AbstractMethodError/</loc>
     
     <lastmod>2018-08-11T12:42:42.784Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2017/11/18/ThreadFactoryBuilder/</loc>
-    
-    <lastmod>2018-08-11T12:42:42.776Z</lastmod>
     
   </url>
   
