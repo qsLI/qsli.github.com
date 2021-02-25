@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2017/02/28/servlet-async/</loc>
+    
+    <lastmod>2021-02-25T12:21:04.860Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2016/09/30/pagination/</loc>
+    
+    <lastmod>2020-12-13T11:32:22.818Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2020/07/26/timeout/</loc>
+    
+    <lastmod>2020-12-01T15:52:21.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2020/05/03/jdbc-connector/</loc>
+    
+    <lastmod>2020-11-29T14:43:00.599Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2020/08/04/druid-pitfall/</loc>
     
-    <lastmod>2020-08-04T08:16:21.980Z</lastmod>
+    <lastmod>2020-08-04T08:17:43.312Z</lastmod>
     
   </url>
   
@@ -19,13 +47,6 @@
     <loc>http://qsli.github.io/2017/11/18/ThreadFactoryBuilder/</loc>
     
     <lastmod>2020-07-26T11:10:21.384Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2020/07/26/timeout/</loc>
-    
-    <lastmod>2020-07-25T17:40:02.772Z</lastmod>
     
   </url>
   
@@ -68,13 +89,6 @@
     <loc>http://qsli.github.io/2020/05/03/jdbc-batching/</loc>
     
     <lastmod>2020-05-03T10:40:19.146Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2020/05/03/jdbc-connector/</loc>
-    
-    <lastmod>2020-05-03T05:06:50.763Z</lastmod>
     
   </url>
   
@@ -345,13 +359,6 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2017/02/28/servlet-async/</loc>
-    
-    <lastmod>2018-08-11T12:42:42.530Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://qsli.github.io/2018/07/08/reference/</loc>
     
     <lastmod>2018-08-11T12:42:42.520Z</lastmod>
@@ -397,13 +404,6 @@
     <loc>http://qsli.github.io/2017/01/08/pip/</loc>
     
     <lastmod>2018-08-11T12:42:42.348Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2016/09/30/pagination/</loc>
-    
-    <lastmod>2018-08-11T12:42:42.339Z</lastmod>
     
   </url>
   

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://qsli.github.io/2017/02/28/servlet-async/</loc>
+    <lastmod>2021-02-25</lastmod>
+  </url>  <url>
+    <loc>http://qsli.github.io/2016/09/30/pagination/</loc>
+    <lastmod>2020-12-13</lastmod>
+  </url>  <url>
+    <loc>http://qsli.github.io/2020/07/26/timeout/</loc>
+    <lastmod>2020-12-01</lastmod>
+  </url>  <url>
+    <loc>http://qsli.github.io/2020/05/03/jdbc-connector/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>  <url>
     <loc>http://qsli.github.io/2020/08/04/druid-pitfall/</loc>
     <lastmod>2020-08-04</lastmod>
   </url>  <url>
@@ -9,9 +21,6 @@
   </url>  <url>
     <loc>http://qsli.github.io/2017/11/18/ThreadFactoryBuilder/</loc>
     <lastmod>2020-07-26</lastmod>
-  </url>  <url>
-    <loc>http://qsli.github.io/2020/07/26/timeout/</loc>
-    <lastmod>2020-07-25</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2020/07/26/upgrade-feign-pitfall/</loc>
     <lastmod>2020-07-25</lastmod>
@@ -29,9 +38,6 @@
     <lastmod>2020-05-04</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2020/05/03/jdbc-batching/</loc>
-    <lastmod>2020-05-03</lastmod>
-  </url>  <url>
-    <loc>http://qsli.github.io/2020/05/03/jdbc-connector/</loc>
     <lastmod>2020-05-03</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2019/01/06/mybatis-get-generated-id/</loc>
@@ -142,9 +148,6 @@
     <loc>http://qsli.github.io/2015/10/09/shadowsocks/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
-    <loc>http://qsli.github.io/2017/02/28/servlet-async/</loc>
-    <lastmod>2018-08-11</lastmod>
-  </url>  <url>
     <loc>http://qsli.github.io/2018/07/08/reference/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
@@ -164,9 +167,6 @@
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2017/01/08/pip/</loc>
-    <lastmod>2018-08-11</lastmod>
-  </url>  <url>
-    <loc>http://qsli.github.io/2016/09/30/pagination/</loc>
     <lastmod>2018-08-11</lastmod>
   </url>  <url>
     <loc>http://qsli.github.io/2016/12/18/nc/</loc>
