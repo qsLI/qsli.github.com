@@ -3,8 +3,8 @@ title: mysql jdbc驱动参数性能调优
 tags: java-connector
 category: jdbc
 toc: true
-typora-root-url: mysql jdbc驱动参数性能调优
-typora-copy-images-to: mysql jdbc驱动参数性能调优
+typora-root-url: jdbc-connector
+typora-copy-images-to: jdbc-connector
 date: 2020-05-03 08:46:01
 ---
 

@@ -56,6 +56,177 @@ CachedPool则把coreSize设成0，然后选用了一种特殊的Queue -- Synchro
 
 requestProcess.pdf
 
+
+
+Protocol只有一个， processor是每次new出来的
+
+```java
+// org.apache.coyote.AbstractProtocol.ConnectionHandler#process
+                if (processor == null) {
+                    processor = getProtocol().createProcessor();
+                    register(processor);
+                }
+// org.apache.coyote.http11.AbstractHttp11Protocol#createProcessor
+ @Override
+    protected Processor createProcessor() {
+        Http11Processor processor = new Http11Processor(getMaxHttpHeaderSize(),
+                getAllowHostHeaderMismatch(), getRejectIllegalHeaderName(), getEndpoint(),
+                getMaxTrailerSize(), allowedTrailerHeaders, getMaxExtensionSize(),
+                getMaxSwallowSize(), httpUpgradeProtocols, getSendReasonPhrase(),
+                relaxedPathChars, relaxedQueryChars);
+        processor.setAdapter(getAdapter());
+        processor.setMaxKeepAliveRequests(getMaxKeepAliveRequests());
+        processor.setConnectionUploadTimeout(getConnectionUploadTimeout());
+        processor.setDisableUploadTimeout(getDisableUploadTimeout());
+        processor.setCompressionMinSize(getCompressionMinSize());
+        processor.setCompression(getCompression());
+        processor.setNoCompressionUserAgents(getNoCompressionUserAgents());
+        processor.setCompressibleMimeTypes(getCompressibleMimeTypes());
+        processor.setRestrictedUserAgents(getRestrictedUserAgents());
+        processor.setMaxSavePostSize(getMaxSavePostSize());
+        processor.setServer(getServer());
+        processor.setServerRemoveAppProvidedValues(getServerRemoveAppProvidedValues());
+        return processor;
+    }
+```
+
+
+
+```java
+// org.apache.coyote.AbstractProtocol.ConnectionHandler#process 
+// Associate the processor with the connection
+                connections.put(socket, processor);
+
+// org.apache.coyote.AbstractProtocol.AsyncTimeout
+
+
+// org.apache.coyote.AbstractProtocol#start
+ @Override
+    public void start() throws Exception {
+        if (getLog().isInfoEnabled()) {
+            getLog().info(sm.getString("abstractProtocolHandler.start", getName()));
+        }
+
+        endpoint.start();
+
+        // Start async timeout thread
+        asyncTimeout = new AsyncTimeout();
+        Thread timeoutThread = new Thread(asyncTimeout, getNameInternal() + "-AsyncTimeout");
+        int priority = endpoint.getThreadPriority();
+        if (priority < Thread.MIN_PRIORITY || priority > Thread.MAX_PRIORITY) {
+            priority = Thread.NORM_PRIORITY;
+        }
+        timeoutThread.setPriority(priority);
+        timeoutThread.setDaemon(true);
+        timeoutThread.start();
+    }
+
+// org.apache.coyote.AbstractProcessor#timeoutAsync
+    @Override
+    public void timeoutAsync(long now) {
+        if (now < 0) {
+            doTimeoutAsync();
+        } else {
+            long asyncTimeout = getAsyncTimeout();
+            if (asyncTimeout > 0) {
+                long asyncStart = asyncStateMachine.getLastAsyncStart();
+                if ((now - asyncStart) > asyncTimeout) {
+                    doTimeoutAsync();
+                }
+            }
+        }
+    }
+
+// org.apache.tomcat.util.net.AbstractEndpoint#processSocket
+public boolean processSocket(SocketWrapperBase<S> socketWrapper, SocketEvent event, boolean dispatch) {
+        try {
+            if (socketWrapper == null) {
+                return false;
+            } else {
+                SocketProcessorBase<S> sc = (SocketProcessorBase)this.processorCache.pop();
+                if (sc == null) {
+                    sc = this.createSocketProcessor(socketWrapper, event);
+                } else {
+                    sc.reset(socketWrapper, event);
+                }
+
+                Executor executor = this.getExecutor();
+                if (dispatch && executor != null) {
+                    executor.execute(sc);
+                } else {
+                    sc.run();
+                }
+
+                return true;
+            }
+        } catch (RejectedExecutionException var6) {
+            this.getLog().warn(sm.getString("endpoint.executor.fail", new Object[]{socketWrapper}), var6);
+            return false;
+        } catch (Throwable var7) {
+            ExceptionUtils.handleThrowable(var7);
+            this.getLog().error(sm.getString("endpoint.process.fail"), var7);
+            return false;
+        }
+    }
+
+
+
+
+
+  
+  
+  
+  
+  
+onTimeout:27, AppAsyncListener (com.air.async)
+fireOnTimeout:44, AsyncListenerWrapper (org.apache.catalina.core)
+timeout:136, AsyncContextImpl (org.apache.catalina.core)
+asyncDispatch:153, CoyoteAdapter (org.apache.catalina.connector)
+dispatch:236, AbstractProcessor (org.apache.coyote)
+process:53, AbstractProcessorLight (org.apache.coyote)
+process:800, AbstractProtocol$ConnectionHandler (org.apache.coyote)
+doRun:1471, NioEndpoint$SocketProcessor (org.apache.tomcat.util.net)
+run:49, SocketProcessorBase (org.apache.tomcat.util.net)
+runWorker:1149, ThreadPoolExecutor (java.util.concurrent)
+run:624, ThreadPoolExecutor$Worker (java.util.concurrent)
+run:61, TaskThread$WrappingRunnable (org.apache.tomcat.util.threads)
+run:748, Thread (java.lang)
+				^  
+  			|
+  			| 
+processSocket:1048, AbstractEndpoint (org.apache.tomcat.util.net)  ---> 向线程池提交任务： executor.execute(sc);
+processSocket:712, SocketWrapperBase (org.apache.tomcat.util.net)
+processSocketEvent:744, AbstractProcessor (org.apache.coyote)
+doTimeoutAsync:617, AbstractProcessor (org.apache.coyote)
+timeoutAsync:606, AbstractProcessor (org.apache.coyote)
+run:1149, AbstractProtocol$AsyncTimeout (org.apache.coyote)
+run:748, Thread (java.lang)
+  
+  
+  
+
+org.apache.catalina.core.AsyncContextImpl#start
+    public void start(Runnable run) {
+        if (log.isDebugEnabled()) {
+            this.logDebug("start      ");
+        }
+
+        this.check();
+        Runnable wrapper = new AsyncContextImpl.RunnableWrapper(run, this.context, this.request.getCoyoteRequest());
+        this.request.getCoyoteRequest().action(ActionCode.ASYNC_RUN, wrapper);
+    }
+
+  case ASYNC_RUN:
+            this.asyncStateMachine.asyncRun((Runnable)param);
+            break;
+
+org.apache.coyote.AsyncStateMachine#asyncRun
+this.processor.getExecutor().execute(runnable);
+
+```
+
+
+
 1. [Java-Latte: Architecture of Apache Tomcat](http://java-latte.blogspot.kr/2014/10/introduction-to-architecture-of-apache-tomcat-with-server.xml.html)
 
 2. [Tomcat 系统架构与设计模式，第 1 部分: 工作原理](https://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/)

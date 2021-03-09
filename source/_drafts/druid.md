@@ -15,10 +15,13 @@ category:
 
 默认值
 
-socket超时的影响（1. 网络故障
+socket超时的影响（
+
+1.  网络故障
+
                 2. kill失败
-                ）
-一直等待，知道socket超时
+                                ）
+一直等待，直到socket超时
 
 
 
