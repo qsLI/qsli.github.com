@@ -3,8 +3,8 @@ title: http-transfer-encoding探秘
 tags: tranfer-encoding
 category: http
 toc: true
-typora-root-url: http-transfer-encoding探秘
-typora-copy-images-to: http-transfer-encoding探秘
+typora-root-url: http-transfer-encoding
+typora-copy-images-to: http-transfer-encoding
 date: 2020-07-26 01:09:13
 ---
 
