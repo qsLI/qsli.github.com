@@ -3,8 +3,8 @@ title: git-commit-id执行耗时过长
 tags: git-commit-id
 category: maven
 toc: true
-typora-root-url: git-commit-id执行耗时过长
-typora-copy-images-to: git-commit-id执行耗时过长
+typora-root-url: git-commit-id
+typora-copy-images-to: git-commit-id
 date: 2021-08-08 18:07:18
 ---
 
