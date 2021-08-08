@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>AccessProxy访问控制: 可选方式的身份认证</title>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="https://www.kuaishou.com/" target="_blank"><img alt="logo" src="/static/kuaishou_logo.png" class="img-rounded" height="25px" width="67px" /></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <h3>
+            AccessProxy访问控制: 可选方式的身份认证
+        </h3>
+        
+        <em>您正在进行<strong>docs.corp.kuaishou.com</strong>设置的身份认证，通过后即可访问此系统。认证状态: 0 / 2。<br>
+		请选择您偏爱的认证方式：</em>
+    </div>
+
+    <div class="container">
+		<!-- tab -->
+		<ul id="auth-type-tab" class="nav nav-tabs">
+         
+        <!-- <div class="col-xs-3"> -->
+        <li class="disabled ">
+            <a href= "#"  data-toggle="tab">
+             OTP 
+             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+			
+			</a>
+		</li>
+        <!-- </div> -->
+         
+        <!-- <div class="col-xs-3"> -->
+        <li class="disabled ">
+            <a href= "#"  data-toggle="tab">
+             SSO 
+             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+			
+			</a>
+		</li>
+        <!-- </div> -->
+         
+        <!-- <div class="col-xs-3"> -->
+        <li class=" active">
+            <a href= "#kim"  data-toggle="tab">
+             KIM 
+             <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 
+			</a>
+		</li>
+        <!-- </div> -->
+         
+        <!-- <div class="col-xs-3"> -->
+        <li class=" ">
+            <a href= "#wxwork"  data-toggle="tab">
+            企业微信
+            
+			</a>
+		</li>
+        <!-- </div> -->
+        
+		</ul>
+        <div id="myTabContent" class="tab-content">
+         
+            <div class="tab-pane fade " id="otp">
+			
+            </div> <!-- div .tab-panel #auth_type -->
+         
+            <div class="tab-pane fade " id="sso">
+			
+            </div> <!-- div .tab-panel #auth_type -->
+         
+            <div class="tab-pane fade in active" id="kim">
+			
+              
+				<!-- <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://kim.corp.kuaishou.com/oauth/authorize?client_id=sXuyidqMHgPQzKGae&redirect_uri=https://apsso.corp.kuaishou.com/callback/kim?request_id=ab189579-3ab6-462e-90d0-b65cf8ee29f5"></iframe> -->
+                <div>
+					<iframe height="600" frameBorder="0" width="100%" src="https://kim.corp.kuaishou.com/oauth/authorize?client_id=sXuyidqMHgPQzKGae&redirect_uri=https://apsso.corp.kuaishou.com/callback/kim?request_id=ab189579-3ab6-462e-90d0-b65cf8ee29f5"></iframe>
+				</div>
+             
+            
+            </div> <!-- div .tab-panel #auth_type -->
+         
+            <div class="tab-pane fade " id="wxwork">
+			
+               
+                <p id="wxwork-login-btn" style="padding:10px;"> <iframe frameBorder="0" allowTransparency="true" scrolling="no" width="300px" height="400px" src="https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=wwc31e38abdbe2d5ef&agentid=1000066&redirect_uri=https%3A%2F%2Fapsso.corp.kuaishou.com%2Fcallback%2Fwxwork&state=ab189579-3ab6-462e-90d0-b65cf8ee29f5"></iframe> </p>
+              
+            
+            </div> <!-- div .tab-panel #auth_type -->
+        
+        </div>
+        <hr>
+        <div class="container">
+	    	<h5 >提示:</h5>
+	    	<span id="helpBlock" class="help-block"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>: 当前环境下推荐您使用的认证方式, 也可以选择其他方式。</span>
+	    	<span id="helpBlock2" class="help-block"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>: 因您当前所处环境，该认证方式不适合为您开启，请选择其他方式。</span>
+	    	<span id="helpBlock3" class="help-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>: 您已通过这种认证方式，请选择其他方式进行认证。</span>
+            <hr>
+            <!-- Tribute to Love, Death and Robots -->
+        </div>
+        <div class="container"><small>
+            <b>关于AccessProxy</b><br>
+            AccessProxy是快手办公网安全建设方案（CorpSec）的重要组成之一，是访问内部Web应用的重要通道，可提供访问控制、Web防火墙等功能。<br>
+            如需帮助，请联系：<a href="mailto:security@kuaishou.com">security@kuaishou.com</a></small>
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer">
+            <hr>
+            <div class="container">
+                <p class="text-muted text-right">&copy kuaishou.com 2017-2018</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        // show the anchor(#) tab
+        var hash = window.location.hash;
+        hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+        // show another wxwork qrcode link
+        var url = window.location.href;
+        var app_identifiers = {
+            'default': {name: '', title: '快手正式员工&实习生点此切换至快手科技专用二维码/按钮。'},
+            'ksap_wb': {name: '外包', title: '快手外包同学点此切换至快手外包专用二维码/按钮。'}
+        };
+    
+        var url_app_identifier = url.match('app_identifier=([^&^#]*)');
+        var redirect_url = "";
+        var wxwork_login_btn = document.getElementById('wxwork-login-btn');
+    
+        if (url_app_identifier) {
+            var curr_identifier = url_app_identifier[1];
+            // 设置标签名称
+            if (curr_identifier != 'default' && app_identifiers[curr_identifier]) {
+                var wxtab = $('ul.nav a[href="#wxwork"]');
+                wxtab.html(wxtab.html() + '-' + app_identifiers[curr_identifier]['name']);
+            }
+            // 插入其他二维码链接
+            for (id in app_identifiers) {
+                if(id != curr_identifier){
+                    // insert an id
+                    var switch_p = document.createElement('p');
+                    redirect_url = url.replace(eval('/(app_identifier=)([^&^#]*)/gi'), 'app_identifier=' + id); 
+                    if (!hash) redirect_url = redirect_url + '#wxwork';
+
+                    switch_p.innerHTML = '<a href="' + redirect_url + '">'+ app_identifiers[id]['title'] + '</a>';
+                    wxwork_login_btn.insertAdjacentElement('afterend', switch_p);
+                } 
+            } 
+    
+        } else {
+            for (id in app_identifiers) {
+                if(id != 'default'){
+                    var switch_p = document.createElement('p');
+                    if (url.match('[\?]')) {
+                        redirect_url = url + '&' + 'app_identifier=' + id;
+                    } else {
+                        redirect_url = url + '?' + 'app_identifier=' + id;
+                    }
+                    if (!hash) redirect_url = redirect_url + '#wxwork';
+                    switch_p.innerHTML = '<a href="' + redirect_url + '">'+ app_identifiers[id]['title'] + '</a>';
+                    wxwork_login_btn.insertAdjacentElement('afterend', switch_p);
+                } 
+            }
+        }
+    
+    });
+
+	
+    </script>
+</body>
+</html>
+
