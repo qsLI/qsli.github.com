@@ -159,6 +159,8 @@ issue中也有人反馈tag过多导致执行慢的，但是通过使用本地的
 - JGit的性能不如native git，必要时可以进行替换
 - 发布脚本，在clone代码时，可以加上--depth=1，避免不必要的提交历史
 
+
+
 ## 参考
 
 - [GitHub - git-commit-id/git-commit-id-maven-plugin: Maven plugin which includes build-time git repository information into an POJO / *.properties). Make your apps tell you which version exactly they were built from! Priceless in large distributed deployments... :-)](https://github.com/git-commit-id/git-commit-id-maven-plugin)
