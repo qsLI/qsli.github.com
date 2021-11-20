@@ -4,6 +4,75 @@
   
     
     <entry>
+      <title><![CDATA[web.xml]]></title>
+      <url>http://qsli.github.io/2021/10/16/web-xml/</url>
+      <content type="html"><![CDATA[<h2 id="load-on-startup标签"><a href="#load-on-startup标签" class="headerlink" title="load-on-startup标签"></a>load-on-startup标签</h2><blockquote>
+<p>Servlets are initialized either lazily at request processing time or eagerly during<br>deployment. In the latter case, they are initialized in the order indicated by<br>their load-on-startup elements.</p>
+</blockquote>
+<p>在web容器启动的时候，可以采用<code>lazily</code>加载的方式和<code>eagerly</code>的方式。</p>
+<p><code>load-on-startup</code>中的值决定了进行哪种方式。</p>
+<blockquote>
+<p>If the value is a negative integer, or the element is not present, the<br>container is free to load the servlet whenever it chooses. If the value is a positive<br>integer or 0, the container must load and initialize the servlet as the application is<br>deployed.</p>
+</blockquote>
+<p>如果<load-on-startup>这个元素没有出现，或者出现了但是里面的值是负的，容器可以按照自己的需要选择加载Servlet的时机。</load-on-startup></p>
+<p>如果里面的值是正数或者0，容器必须保证在容器启动的时候加载和初始化这个servlet</p>
+<blockquote>
+<p> The container must guarantee that servlets marked with lower integers<br>are loaded before servlets marked with higher integers.</p>
+</blockquote>
+<p>这个值越小，优先级越高，容器优先加载。</p>
+<blockquote>
+<p>The container may choose<br>the order of loading of servlets with the same load-on-startup value.</p>
+</blockquote>
+<p>如果里面的值是一样的，那么加载的顺序由容器来决定（不同实现可能不同）</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li>Java Servlet Specification 3.0</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> tomcat </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> servlet </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[hexo迁移到ubuntu]]></title>
+      <url>http://qsli.github.io/2021/10/16/hexo-ubuntu/</url>
+      <content type="html"><![CDATA[<p>系统切换到ubuntu之后，使用的apt安装的node，默认权限是sudo。安装hexo之后也必须以sudo身份执行。<br>需要修改下node的权限，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  qsli.github.com (hexo|✚1…)  npm config get prefix</span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
+<p>修改owner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) $(npm config get prefix)/&#123;lib/node_modules,bin,share&#125;</span><br></pre></td></tr></table></figure>
+<p>修改owner之后就可以正常执行hexo了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions" rel="external nofollow noopener noreferrer" target="_blank">03 - Fixing npm permissions | npm Documentation</a></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> hexo </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[git-commit-id执行耗时过长]]></title>
       <url>http://qsli.github.io/2021/08/08/git-commit-id/</url>
       <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>maven的<code>git-commit-id</code>插件，可以在release jar包时，生成一个<code>git.properties</code>文件，文件中可以附带上git的一些信息。<code>git.properties</code>示例：</p>
@@ -2179,75 +2248,6 @@
         <tags>
             
             <tag> jdwp </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[web.xml]]></title>
-      <url>http://qsli.github.io/2018/08/11/web-xml/</url>
-      <content type="html"><![CDATA[<h2 id="load-on-startup标签"><a href="#load-on-startup标签" class="headerlink" title="load-on-startup标签"></a>load-on-startup标签</h2><blockquote>
-<p>Servlets are initialized either lazily at request processing time or eagerly during<br>deployment. In the latter case, they are initialized in the order indicated by<br>their load-on-startup elements.</p>
-</blockquote>
-<p>在web容器启动的时候，可以采用<code>lazily</code>加载的方式和<code>eagerly</code>的方式。</p>
-<p><code>load-on-startup</code>中的值决定了进行哪种方式。</p>
-<blockquote>
-<p>If the value is a negative integer, or the element is not present, the<br>container is free to load the servlet whenever it chooses. If the value is a positive<br>integer or 0, the container must load and initialize the servlet as the application is<br>deployed.</p>
-</blockquote>
-<p>如果<load-on-startup>这个元素没有出现，或者出现了但是里面的值是负的，容器可以按照自己的需要选择加载Servlet的时机。</load-on-startup></p>
-<p>如果里面的值是正数或者0，容器必须保证在容器启动的时候加载和初始化这个servlet</p>
-<blockquote>
-<p> The container must guarantee that servlets marked with lower integers<br>are loaded before servlets marked with higher integers.</p>
-</blockquote>
-<p>这个值越小，优先级越高，容器优先加载。</p>
-<blockquote>
-<p>The container may choose<br>the order of loading of servlets with the same load-on-startup value.</p>
-</blockquote>
-<p>如果里面的值是一样的，那么加载的顺序由容器来决定（不同实现可能不同）</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li>Java Servlet Specification 3.0</li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> tomcat </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> servlet </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[hexo迁移到ubuntu]]></title>
-      <url>http://qsli.github.io/2018/08/11/hexo-ubuntu/</url>
-      <content type="html"><![CDATA[<p>系统切换到ubuntu之后，使用的apt安装的node，默认权限是sudo。安装hexo之后也必须以sudo身份执行。<br>需要修改下node的权限，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  qsli.github.com (hexo|✚1…)  npm config get prefix</span><br><span class="line">/usr/local</span><br></pre></td></tr></table></figure>
-<p>修改owner</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) $(npm config get prefix)/&#123;lib/node_modules,bin,share&#125;</span><br></pre></td></tr></table></figure>
-<p>修改owner之后就可以正常执行hexo了。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions" rel="external nofollow noopener noreferrer" target="_blank">03 - Fixing npm permissions | npm Documentation</a></li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> hexo </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> hexo </tag>
             
         </tags>
         
