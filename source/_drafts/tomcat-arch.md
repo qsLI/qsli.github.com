@@ -228,17 +228,11 @@ this.processor.getExecutor().execute(runnable);
 
 
 1. [Java-Latte: Architecture of Apache Tomcat](http://java-latte.blogspot.kr/2014/10/introduction-to-architecture-of-apache-tomcat-with-server.xml.html)
-
 2. [Tomcat 系统架构与设计模式，第 1 部分: 工作原理](https://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/)
-
 3. [Guidewire, SAP, Oracle, UNIX, Genesys Technology Blog: Tomcat shutdown port 8005 - Remote Shutdown](http://singcheong.blogspot.kr/2012/10/tomcat-shutdown-port-8005-remote.html)
-
 4. [tomcat线程池策略 - xixicat - SegmentFault](https://segmentfault.com/a/1190000008052008)
-
 5. [Java ThreadPool的正确打开方式 | 江南白衣](http://calvin1978.blogcn.com/articles/java-threadpool.html)
-
 6. [Tomcat线程池，更符合大家想象的可扩展线程池 | 江南白衣](http://calvin1978.blogcn.com/articles/tomcat-threadpool.html)
-
 7. [Tomcat 架构探索 | 一派胡言](http://threezj.com/2016/06/25/Tomcat%20%E6%9E%B6%E6%9E%84%E6%8E%A2%E7%B4%A2/index.html)
-
+8. [05 | Tomcat系统架构（上）： 连接器是如何设计的？](https://time.geekbang.org/column/article/96328)
 
