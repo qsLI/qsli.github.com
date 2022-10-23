@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qsli.github.io/2022/10/23/tomcat-app-deploy/</loc>
+    
+    <lastmod>2022-10-23T09:10:13.663Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2021/11/20/tomcat-startup/</loc>
+    
+    <lastmod>2022-10-23T08:17:28.228Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://qsli.github.io/2021/11/27/tomcat-component-lifecycle/</loc>
+    
+    <lastmod>2022-10-22T10:12:15.222Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2022/10/19/tomcat-startup-3/</loc>
     
-    <lastmod>2022-10-19T14:58:12.335Z</lastmod>
+    <lastmod>2022-10-19T15:26:13.469Z</lastmod>
     
   </url>
   
@@ -61,20 +82,6 @@
     <loc>http://qsli.github.io/2022/07/08/open-tracing/</loc>
     
     <lastmod>2022-07-07T16:19:21.734Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2021/11/27/tomcat-component-lifecycle/</loc>
-    
-    <lastmod>2021-11-27T11:08:08.641Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2021/11/20/tomcat-startup/</loc>
-    
-    <lastmod>2021-11-27T09:41:09.105Z</lastmod>
     
   </url>
   
@@ -177,14 +184,14 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/tags/index.html</loc>
+    <loc>http://qsli.github.io/recommendation/index.html</loc>
     
     <lastmod>2021-10-16T09:45:06.890Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qsli.github.io/recommendation/index.html</loc>
+    <loc>http://qsli.github.io/tags/index.html</loc>
     
     <lastmod>2021-10-16T09:45:06.890Z</lastmod>
     
@@ -352,14 +359,14 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
+    <loc>http://qsli.github.io/2018/05/05/slf4j-bridge/</loc>
     
     <lastmod>2021-10-16T09:45:06.829Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2018/05/05/slf4j-bridge/</loc>
+    <loc>http://qsli.github.io/2016/12/17/spi/</loc>
     
     <lastmod>2021-10-16T09:45:06.829Z</lastmod>
     
@@ -590,6 +597,13 @@
   </url>
   
   <url>
+    <loc>http://qsli.github.io/2021/10/16/hexo-ubuntu/</loc>
+    
+    <lastmod>2021-10-16T09:45:06.741Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qsli.github.io/2015/10/08/hello-world/</loc>
     
     <lastmod>2021-10-16T09:45:06.741Z</lastmod>
@@ -598,13 +612,6 @@
   
   <url>
     <loc>http://qsli.github.io/2017/09/10/how-to-delete-file-correctly/</loc>
-    
-    <lastmod>2021-10-16T09:45:06.741Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qsli.github.io/2021/10/16/hexo-ubuntu/</loc>
     
     <lastmod>2021-10-16T09:45:06.741Z</lastmod>
     
@@ -716,14 +723,14 @@
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2016/10/23/custom-tag/</loc>
+    <loc>http://qsli.github.io/2017/02/20/cygwin-360/</loc>
     
     <lastmod>2021-10-16T09:45:06.710Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://qsli.github.io/2017/02/20/cygwin-360/</loc>
+    <loc>http://qsli.github.io/2016/10/23/custom-tag/</loc>
     
     <lastmod>2021-10-16T09:45:06.710Z</lastmod>
     
