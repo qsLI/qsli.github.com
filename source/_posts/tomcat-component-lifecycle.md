@@ -20,7 +20,7 @@ Lifecycle 接口主要定义三个功能：
 
 ![image-20211031182459713](/image-20211031182459713.png)
 
-- 获取当强状态的一些方法（getState/getStateName）
+- 获取当前状态的一些方法（getState/getStateName）
 - 以及Listener管理相关的方法（addLifecycleListener、findLifecycleListeners、removeLifecycleListener）
 
 
@@ -40,7 +40,7 @@ Lifecycle接口是tomcat中很基础的接口，tomcat的组件都直接或者�
 >  state transition rules for {@link Lifecycle#start()} and
 >  {@link Lifecycle#stop()}
 
-这个类实现了接口定义中的LifecycleListener管理、以及组件状态的管理。他的子类无需关系状态转移、以及Listener的通知，只用实现对应的抽象方法：
+这个类实现了接口定义中的LifecycleListener管理、以及组件状态的管理。他的子类无需关心状态转移、以及Listener的通知，只用实现对应的抽象方法：
 
 ```java
     protected abstract void startInternal() throws LifecycleException;
@@ -113,6 +113,7 @@ private synchronized void setStateInternal(LifecycleState state,
   }
 
   this.state = state;
+  // 状态转移对应的事件
   String lifecycleEvent = state.getLifecycleEvent();
   if (lifecycleEvent != null) {
     fireLifecycleEvent(lifecycleEvent, data);
@@ -129,6 +130,24 @@ protected void fireLifecycleEvent(String type, Object data) {
 ```
 
 这样状态转移的时候，listener也能感知到了，注意这都是在**一个线程**中通知的，不要在Listener中做特别重的操作。
+
+状态对应的event：
+
+```java
+// org.apache.catalina.LifecycleState
+NEW(false, null),
+INITIALIZING(false, Lifecycle.BEFORE_INIT_EVENT),
+INITIALIZED(false, Lifecycle.AFTER_INIT_EVENT),
+STARTING_PREP(false, Lifecycle.BEFORE_START_EVENT),
+STARTING(true, Lifecycle.START_EVENT),
+STARTED(true, Lifecycle.AFTER_START_EVENT),
+STOPPING_PREP(true, Lifecycle.BEFORE_STOP_EVENT),
+STOPPING(false, Lifecycle.STOP_EVENT),
+STOPPED(false, Lifecycle.AFTER_STOP_EVENT),
+DESTROYING(false, Lifecycle.BEFORE_DESTROY_EVENT),
+DESTROYED(false, Lifecycle.AFTER_DESTROY_EVENT),
+FAILED(false, null);
+```
 
 
 

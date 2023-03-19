@@ -318,6 +318,8 @@ debug，获取对应的socket信息
 
 ![image-20211031161736022](/image-20211031161736022.png)
 
+![image-20221019232618992](/image-20221019232618992.png)
+
 可以看出这个RMI调用是idea发起的，server是tomcat
 
 ```bash
@@ -445,7 +447,9 @@ idea通过RMI调用tomcat的DynamicBean，可以显示的指定app的class目录
 </Server>
 ```
 
+使用jmc也能看到tomcat暴露出来的mbena是包含一些operation的，可以通过RMI调用：
 
+![image-20221023161725436](/image-20221023161725436.png)
 
 ## 参考
 

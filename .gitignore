@@ -4,3 +4,4 @@ public
 *.class
 .vscode
 db.json
+.DS_Store

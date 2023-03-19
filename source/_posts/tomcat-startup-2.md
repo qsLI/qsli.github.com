@@ -16,10 +16,6 @@ date: 2021-12-05 20:07:45
 
 这篇文章，我们就分析下`Catalina`以及tomcat内部的关键组件的启动。
 
-
-
-
-
 先看下tomcat的整体组件，按web.xml中的声明，主要包含Catalina、Server、Service、Connector、Engine、Host、Context、Wrapper等，以及图中没有画到的Valve、Listener等组件。
 
 
@@ -28,7 +24,9 @@ date: 2021-12-05 20:07:45
 
 
 
+组件启动顺序：
 
+![tomcat-start-component](/tomcat-start-component.png)
 
 # Catalina
 
